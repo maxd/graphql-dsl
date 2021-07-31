@@ -45,7 +45,7 @@ GEM
     unicode-display_width (2.0.0)
 
 PLATFORMS
-  x86_64-darwin-20
+  ruby
 
 DEPENDENCIES
   graph_ql_dsl!
@@ -54,4 +54,4 @@ DEPENDENCIES
   rubocop-rspec (~> 2.4)
 
 BUNDLED WITH
-   2.2.15
+   2.2.22
