@@ -3,7 +3,8 @@
 module GraphQL
   module DSL
     ##
-    # Gem version
-    VERSION = '0.1.0'
+    # Module with GraphQL DSL nodes
+    module Nodes
+    end
   end
 end

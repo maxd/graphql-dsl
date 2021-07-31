@@ -11,3 +11,10 @@ Style/StringLiterals:
 Style/StringLiteralsInInterpolation:
   EnforcedStyle: single_quotes
 
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*_spec.rb
+
+Style/BlockDelimiters:
+  Exclude:
+    - spec/**/*_spec.rb
