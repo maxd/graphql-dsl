@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe GraphQL::DSL::Nodes::Query do
+RSpec.describe GraphQL::DSL::Nodes::QueryOperation do
   context 'to_gql' do
     context 'without name' do
       subject(:query) { described_class.new }

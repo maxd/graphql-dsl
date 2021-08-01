@@ -4,8 +4,8 @@ module GraphQL
   module DSL
     module Nodes
       ##
-      # Fragment GraphQL node
-      class Fragment < Node
+      # Fragment operation GraphQL node
+      class FragmentOperation < Node
         ##
         # @!parse [include] Fields
         include Fields
@@ -15,7 +15,7 @@ module GraphQL
         attr_reader :__type
 
         ##
-        # Create fragment
+        # Create fragment operation
         #
         # @param name [String, Symbol] fragment name
         # @param type [String, Symbol] fragment type or interface

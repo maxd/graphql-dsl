@@ -4,14 +4,14 @@ module GraphQL
   module DSL
     module Nodes
       ##
-      # Query GraphQL node
-      class Query < Node
+      # Query operation GraphQL node
+      class QueryOperation < Node
         ##
         # @!parse [include] Fields
         include Fields
 
         ##
-        # Create query
+        # Create query operation
         #
         # @param name [String, Symbol, nil] query name
         # @param block [Proc] declare DSL for sub-fields

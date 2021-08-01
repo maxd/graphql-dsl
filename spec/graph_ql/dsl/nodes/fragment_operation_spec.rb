@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe GraphQL::DSL::Nodes::Fragment do
+RSpec.describe GraphQL::DSL::Nodes::FragmentOperation do
   context 'initializer' do
     context 'without name' do
       shared_examples 'validate name argument' do |name|
