@@ -6,8 +6,8 @@ require_relative 'dsl/nodes/field'
 require_relative 'dsl/nodes/fields'
 require_relative 'dsl/nodes/fragment'
 require_relative 'dsl/nodes/inline_fragment'
+require_relative 'dsl/nodes/operation'
 require_relative 'dsl/nodes/fragment_operation'
-require_relative 'dsl/nodes/query_operation'
 require_relative 'dsl/nodes/executable_document'
 require_relative 'dsl/version'
 
@@ -33,7 +33,7 @@ module GraphQL
     #
     # @return [Nodes::QueryOperation] GraphQL query
     def self.query(name = nil, &block)
-      Nodes::QueryOperation.new(name, &block)
+      Nodes::Operation.new(:query, name, &block)
     end
 
     ##

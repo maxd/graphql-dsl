@@ -22,7 +22,7 @@ module GraphQL
         #
         # @return [void]
         def query(name = nil, &block)
-          @__nodes << Nodes::QueryOperation.new(name, &block)
+          @__nodes << Nodes::Operation.new(:query, name, &block)
         end
 
         ##

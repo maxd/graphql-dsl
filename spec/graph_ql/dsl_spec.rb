@@ -25,7 +25,8 @@ RSpec.describe GraphQL::DSL do
     subject(:query) { described_class.query }
 
     it 'create query' do
-      expect(query).to be_a(GraphQL::DSL::Nodes::QueryOperation)
+      expect(query).to be_a(GraphQL::DSL::Nodes::Operation)
+      expect(query.__operation_type).to eq(:query)
 
       expect(query.to_gql).to eq(<<~GQL.strip)
         {
