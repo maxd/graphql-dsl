@@ -23,5 +23,17 @@ module GraphQL
     def self.query(name = nil, &block)
       Nodes::Query.new(name, &block)
     end
+
+    ##
+    # Create GraphQL fragment
+    #
+    # @param name [String, Symbol] fragment name
+    # @param type [String, Symbol] fragment type or interface
+    # @param block [Proc] declare DSL for sub-fields
+    #
+    # @return [Fragment] GraphQL fragment
+    def self.fragment(name, type, &block)
+      Nodes::Fragment.new(name, type, &block)
+    end
   end
 end

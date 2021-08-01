@@ -13,4 +13,18 @@ RSpec.describe GraphQL::DSL do
       GQL
     end
   end
+
+  context 'fragment' do
+    subject(:fragment) { described_class.fragment(:fragment1, :Type1) }
+
+    it 'create query' do
+      expect(fragment).to be_a(GraphQL::DSL::Nodes::Fragment)
+
+      expect(fragment.to_gql).to eq(<<~GQL.strip)
+        fragment fragment1 on Type1
+        {
+        }
+      GQL
+    end
+  end
 end
