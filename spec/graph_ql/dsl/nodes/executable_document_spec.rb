@@ -13,6 +13,18 @@ RSpec.describe GraphQL::DSL::Nodes::ExecutableDocument do
         fragment(:fragment1, :Type1) {
           subfield1
         }
+
+        mutation(:mutation1) {
+          createObject(title: 'Object1') {
+            id
+          }
+        }
+
+        subscription(:subscription1) {
+          message {
+            field1
+          }
+        }
       end
     end
 
@@ -29,6 +41,22 @@ RSpec.describe GraphQL::DSL::Nodes::ExecutableDocument do
         fragment fragment1 on Type1
         {
           subfield1
+        }
+
+        mutation mutation1
+        {
+          createObject(title: "Object1")
+          {
+            id
+          }
+        }
+
+        subscription subscription1
+        {
+          message
+          {
+            field1
+          }
         }
       GQL
     end

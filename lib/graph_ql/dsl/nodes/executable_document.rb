@@ -26,6 +26,28 @@ module GraphQL
         end
 
         ##
+        # Create GraphQL mutation operation
+        #
+        # @param name [String, Symbol, nil] mutation name
+        # @param block [Proc] declare DSL for sub-fields
+        #
+        # @return [void]
+        def mutation(name = nil, &block)
+          @__nodes << Nodes::Operation.new(:mutation, name, &block)
+        end
+
+        ##
+        # Create GraphQL subscription operation
+        #
+        # @param name [String, Symbol, nil] subscription name
+        # @param block [Proc] declare DSL for sub-fields
+        #
+        # @return [void]
+        def subscription(name = nil, &block)
+          @__nodes << Nodes::Operation.new(:subscription, name, &block)
+        end
+
+        ##
         # Create GraphQL fragment operation
         #
         # @param name [String, Symbol] fragment name

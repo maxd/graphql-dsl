@@ -52,4 +52,6 @@ RSpec.describe GraphQL::DSL::Nodes::Operation do
   end
 
   it_behaves_like 'operation', :query
+  it_behaves_like 'operation', :mutation
+  it_behaves_like 'operation', :subscription
 end

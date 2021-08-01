@@ -31,9 +31,31 @@ module GraphQL
     # @param name [String, Symbol, nil] query name
     # @param block [Proc] declare DSL for sub-fields
     #
-    # @return [Nodes::QueryOperation] GraphQL query
+    # @return [Nodes::Operation] GraphQL query
     def self.query(name = nil, &block)
       Nodes::Operation.new(:query, name, &block)
+    end
+
+    ##
+    # Create GraphQL mutation operation
+    #
+    # @param name [String, Symbol, nil] mutation name
+    # @param block [Proc] declare DSL for sub-fields
+    #
+    # @return [Nodes::Operation] GraphQL mutation
+    def self.mutation(name = nil, &block)
+      Nodes::Operation.new(:mutation, name, &block)
+    end
+
+    ##
+    # Create GraphQL subscription operation
+    #
+    # @param name [String, Symbol, nil] subscription name
+    # @param block [Proc] declare DSL for sub-fields
+    #
+    # @return [Nodes::Operation] GraphQL subscription
+    def self.subscription(name = nil, &block)
+      Nodes::Operation.new(:subscription, name, &block)
     end
 
     ##
