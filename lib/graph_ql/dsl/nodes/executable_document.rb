@@ -9,9 +9,9 @@ module GraphQL
         ##
         # Create executable document
         #
-        # @param name [String, Symbol, nil] document name
-        def initialize(name = nil, &block)
-          super(name, &block)
+        # @param block [Proc] declare DSL for operations
+        def initialize(&block)
+          super(nil, &block)
         end
 
         ##

@@ -18,12 +18,11 @@ module GraphQL
     ##
     # Create executable GraphQL document
     #
-    # @param name [String, Symbol, nil] document name
     # @param block [Proc] declare DSL for operations
     #
     # @return [Nodes::ExecutableDocument] executable GraphQL document
-    def self.executable_document(name = nil, &block)
-      Nodes::ExecutableDocument.new(name, &block)
+    def self.executable_document(&block)
+      Nodes::ExecutableDocument.new(&block)
     end
 
     ##
