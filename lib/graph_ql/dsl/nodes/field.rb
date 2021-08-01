@@ -13,6 +13,10 @@ module GraphQL
         include Fields
 
         ##
+        # @return [String, Symbol] field alias
+        attr_reader :__alias
+
+        ##
         # @return [Hash] list of filed arguments
         attr_reader :__arguments
 
@@ -21,6 +25,7 @@ module GraphQL
         #
         # @param name [String, Symbol] field name
         # @param arguments [Hash] field arguments
+        # @option arguments [String, Symbol] :__alias filed alias
         # @param block [Proc] declare DSL for sub-fields
         def initialize(name, arguments = {}, &block)
           unless arguments.is_a?(Hash)
@@ -32,13 +37,14 @@ module GraphQL
 
           super(name, &block)
 
+          @__alias = arguments.delete(:__alias)
           @__arguments = arguments
         end
 
         ##
         # See {Node#to_gql}
         def to_gql(level = 0) # rubocop:disable Metrics/AbcSize
-          field_name = __name.to_s
+          field_name = __alias ? "#{__alias}: #{__name}" : __name.to_s
           field_arguments = __arguments.empty? ? '' : __arguments_to_s(__arguments, initial: true)
 
           result = []

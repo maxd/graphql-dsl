@@ -15,6 +15,19 @@ RSpec.describe GraphQL::DSL::Nodes::Field do
       it_behaves_like 'build query', :field1
     end
 
+    context 'with alias of name' do
+      shared_examples 'build query' do |name, name_alias|
+        subject(:field) { described_class.new(name, __alias: name_alias) }
+
+        it 'valid result' do
+          expect(field.to_gql).to eq("#{name_alias}: #{name}")
+        end
+      end
+
+      it_behaves_like 'build query', :field1, 'alias1'
+      it_behaves_like 'build query', :field1, :alias1
+    end
+
     context 'with name and arguments' do
       context 'reject ordered arguments' do
         subject(:field) { described_class.new('field1', 1) }
