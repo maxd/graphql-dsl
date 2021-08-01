@@ -8,6 +8,9 @@ Layout/LineLength:
 Layout/FirstHashElementIndentation:
   EnforcedStyle: consistent
 
+Layout/ArgumentAlignment:
+  EnforcedStyle: with_fixed_indentation
+
 Style/StringLiterals:
   EnforcedStyle: single_quotes
 

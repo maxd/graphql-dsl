@@ -41,6 +41,24 @@ module GraphQL
           @__arguments = arguments
         end
 
+        ###
+        # Insert GraphQL fragment
+        #
+        # @param name [String, Symbol] fragment name
+        # @param block [Proc] declare DSL for sub-fields
+        def __fragment(name, &block)
+          @__nodes << InlineFragment.new(name, nil, &block)
+        end
+
+        ###
+        # Insert GraphQL inline fragment
+        #
+        # @param type [String, Symbol, nil] fragment type
+        # @param block [Proc] declare DSL for sub-fields
+        def __inline_fragment(type, &block)
+          @__nodes << InlineFragment.new(nil, type, &block)
+        end
+
         ##
         # See {Node#to_gql}
         def to_gql(level = 0) # rubocop:disable Metrics/AbcSize

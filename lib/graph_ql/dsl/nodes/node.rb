@@ -16,7 +16,7 @@ module GraphQL
         ##
         # Create node
         #
-        # @param name [String, Symbol] node name
+        # @param name [String, Symbol, nil] node name
         # @param block [Proc] declare  DSL for sub-nodes
         def initialize(name, &block)
           @__name = name
