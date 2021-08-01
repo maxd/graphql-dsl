@@ -18,16 +18,20 @@ module GraphQL
           #
           # @return [void]
           #
-          # @example Declare fields use __field method
-          #   __field(:field1, id: 1) {
-          #     __field(:subfield1, id: 1)
-          #     __field(:subfield2, id: 2)
+          # @example Declare fields use __field method (i.e. use GraphQL query)
+          #   query = GraphQL::DSL.query {
+          #     __field(:field1, id: 1) {
+          #       __field(:subfield1, id: 1)
+          #       __field(:subfield2, id: 2)
+          #     }
           #   }
           #
-          # @example Declare fields use DSL
-          #   field1 id: 1 {
-          #     subfield1 id: 1
-          #     subfield2 id: 2
+          # @example Declare fields use DSL (i.e. use GraphQL query)
+          #   query = GraphQL::DSL.query {
+          #     field1 id: 1 {
+          #       subfield1 id: 1
+          #       subfield2 id: 2
+          #     }
           #   }
           def __filed(name, arguments = {}, &block)
             @__nodes << Field.new(name, arguments, &block)
@@ -35,10 +39,34 @@ module GraphQL
 
           private
 
+          ##
+          # Allow to respond to method missing at any case.
           def respond_to_missing?
             true
           end
 
+          ##
+          # Declare new GraphQL field
+          #
+          # @example Declare fields (i.e. use GraphQL query)
+          #   query = GraphQL::DSL.query {
+          #     items {
+          #       id
+          #       title
+          #     }
+          #   }
+          #
+          #   puts query.to_gql
+          #   # {
+          #   #   items
+          #   #   {
+          #   #      id
+          #   #      title
+          #   #   }
+          #   # }
+          #
+          #
+          # @see #__filed
           def method_missing(name, *args, &block)
             arguments = args.empty? ? {} : args[0]
 
