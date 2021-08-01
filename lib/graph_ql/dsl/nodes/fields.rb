@@ -15,6 +15,8 @@ module GraphQL
         # @param arguments [Hash] field arguments
         # @param block [Proc] declare sub-fields
         #
+        # @return [void]
+        #
         # @example Declare fields use __field method
         #   __field(:field1, id: 1) {
         #     __field(:subfield1, id: 1)

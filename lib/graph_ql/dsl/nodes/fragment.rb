@@ -30,7 +30,7 @@ module GraphQL
         end
 
         ##
-        # See {Node#to_gql}
+        # (see Node#to_gql)
         def to_gql(level = 0)
           result = []
 
