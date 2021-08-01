@@ -102,7 +102,7 @@ RSpec.describe GraphQL::DSL::Nodes::Field do
         expect(field.to_gql).to eq(<<~GQL.strip)
           field1
           {
-            ... fragment1
+            ...fragment1
           }
         GQL
       end

@@ -49,7 +49,7 @@ module GraphQL
         #
         # @return [void]
         def __fragment(name, &block)
-          @__nodes << InlineFragment.new(name, nil, &block)
+          @__nodes << Fragment.new(name, &block)
         end
 
         ###
@@ -60,7 +60,7 @@ module GraphQL
         #
         # @return [void]
         def __inline_fragment(type, &block)
-          @__nodes << InlineFragment.new(nil, type, &block)
+          @__nodes << InlineFragment.new(type, &block)
         end
 
         ##

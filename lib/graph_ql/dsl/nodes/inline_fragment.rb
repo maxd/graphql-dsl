@@ -15,29 +15,25 @@ module GraphQL
         attr_reader :__type
 
         ##
-        # Create field
+        # Create inline fragment
         #
-        # @param name [String, Symbol, nil] fragment name
         # @param type [String, Symbol, nil] fragment type
         # @param block [Proc] declare DSL for sub-fields
-        def initialize(name = nil, type = nil, &block)
-          raise GraphQL::DSL::Error, 'Only one from `name` or `type` arguments must be specified' if name && type
-          raise GraphQL::DSL::Error, 'Sub-fields must not be specified for fragment' if name && block
-          raise GraphQL::DSL::Error, 'Sub-fields must be specified for inline fragment' if type && block.nil?
+        def initialize(type = nil, &block)
+          raise GraphQL::DSL::Error, 'Sub-fields must be specified for inline fragment' if block.nil?
 
-          super(name, &block)
+          super(nil, &block)
 
           @__type = type
         end
 
         ##
         # (see Node#to_gql)
-        def to_gql(level = 0) # rubocop:disable Metrics/AbcSize
-          fragment_name = __name
-          fragment_type = __type ? "on #{__type}" : ''
+        def to_gql(level = 0)
+          inline_fragment_type = __type ? " on #{__type}" : ''
 
           result = []
-          result << __indent(level) + "... #{fragment_name}#{fragment_type}"
+          result << __indent(level) + "...#{inline_fragment_type}"
 
           unless __nodes.empty?
             result << "#{__indent(level)}{"
