@@ -8,7 +8,7 @@ module GraphQL
       class InlineFragment < Node
         ##
         # @!parse [include] Fields
-        include Fields
+        include Mixins::Fields
 
         ##
         # @return [String, Symbol] inline fragment type or interface

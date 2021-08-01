@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'fields'
-
 module GraphQL
   module DSL
     module Nodes
@@ -10,7 +8,7 @@ module GraphQL
       class Field < Node
         ##
         # @!parse [include] Fields
-        include Fields
+        include Mixins::Fields
 
         ##
         # @return [String, Symbol] field alias

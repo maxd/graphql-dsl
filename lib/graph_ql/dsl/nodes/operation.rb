@@ -8,7 +8,7 @@ module GraphQL
       class Operation < Node
         ##
         # @!parse [include] Fields
-        include Fields
+        include Mixins::Fields
 
         ##
         # @return [Symbol] operation type

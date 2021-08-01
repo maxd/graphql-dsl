@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 require_relative 'dsl/error'
+require_relative 'dsl/nodes/mixins'
+require_relative 'dsl/nodes/mixins/fields'
 require_relative 'dsl/nodes/node'
 require_relative 'dsl/nodes/field'
-require_relative 'dsl/nodes/fields'
 require_relative 'dsl/nodes/fragment'
 require_relative 'dsl/nodes/inline_fragment'
 require_relative 'dsl/nodes/operation'

@@ -8,7 +8,7 @@ module GraphQL
       class FragmentOperation < Node
         ##
         # @!parse [include] Fields
-        include Fields
+        include Mixins::Fields
 
         ##
         # @return [String, Symbol] fragment type or interface
