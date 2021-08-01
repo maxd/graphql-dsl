@@ -8,12 +8,24 @@ require_relative 'dsl/nodes/fragment'
 require_relative 'dsl/nodes/inline_fragment'
 require_relative 'dsl/nodes/fragment_operation'
 require_relative 'dsl/nodes/query_operation'
+require_relative 'dsl/nodes/executable_document'
 require_relative 'dsl/version'
 
 module GraphQL
   ##
   # GraphQL DSL entry-point
   module DSL
+    ##
+    # Create executable GraphQL document
+    #
+    # @param name [String, Symbol, nil] document name
+    # @param block [Proc] declare DSL for operations
+    #
+    # @return [Nodes::ExecutableDocument] executable GraphQL document
+    def self.executable_document(name = nil, &block)
+      Nodes::ExecutableDocument.new(name, &block)
+    end
+
     ##
     # Create GraphQL query operation
     #

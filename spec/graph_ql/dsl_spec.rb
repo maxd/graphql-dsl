@@ -1,6 +1,26 @@
 # frozen_string_literal: true
 
 RSpec.describe GraphQL::DSL do
+  context 'executable_document' do
+    subject(:query) do
+      described_class.executable_document do
+        query {
+          field1
+        }
+      end
+    end
+
+    it 'create query' do
+      expect(query).to be_a(GraphQL::DSL::Nodes::ExecutableDocument)
+
+      expect(query.to_gql).to eq(<<~GQL.strip)
+        {
+          field1
+        }
+      GQL
+    end
+  end
+
   context 'query' do
     subject(:query) { described_class.query }
 
