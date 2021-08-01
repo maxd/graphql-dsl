@@ -23,6 +23,13 @@ module GraphQL
         # @param arguments [Hash] field arguments
         # @param block [Proc] declare DSL for sub-fields
         def initialize(name, arguments = {}, &block)
+          unless arguments.is_a?(Hash)
+            raise GraphQL::DSL::Error.new('GraphQL field accept named arguments only', {
+              field_name: name,
+              field_arguments: arguments,
+            })
+          end
+
           super(name, &block)
 
           @__arguments = arguments

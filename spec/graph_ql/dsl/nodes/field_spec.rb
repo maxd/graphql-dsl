@@ -16,6 +16,14 @@ RSpec.describe GraphQL::DSL::Nodes::Field do
     end
 
     context 'with name and arguments' do
+      context 'reject ordered arguments' do
+        subject(:field) { described_class.new('field1', 1) }
+
+        it 'raise error' do
+          expect { field }.to raise_error GraphQL::DSL::Error, 'GraphQL field accept named arguments only'
+        end
+      end
+
       shared_examples 'with value' do |value, expected_arguments|
         subject(:field) { described_class.new('field1', { value: value }) }
 

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative 'dsl/error'
 require_relative 'dsl/nodes/node'
 require_relative 'dsl/nodes/field'
 require_relative 'dsl/nodes/fields'

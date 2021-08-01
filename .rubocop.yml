@@ -5,11 +5,17 @@ AllCops:
 Layout/LineLength:
   Max: 120
 
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+
 Style/StringLiterals:
   EnforcedStyle: single_quotes
 
 Style/StringLiteralsInInterpolation:
   EnforcedStyle: single_quotes
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: consistent_comma
 
 Metrics/BlockLength:
   Exclude:
