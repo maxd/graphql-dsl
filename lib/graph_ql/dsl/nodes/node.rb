@@ -35,8 +35,6 @@ module GraphQL
           raise NotImplementedError
         end
 
-        alias to_s to_gql
-
         protected
 
         ##
