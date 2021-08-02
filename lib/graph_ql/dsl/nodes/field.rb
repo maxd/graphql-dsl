@@ -96,6 +96,8 @@ module GraphQL
             __arguments_to_array(arguments)
           when String, Symbol
             __arguments_to_string(arguments)
+          when NilClass
+            'null'
           else
             arguments.to_s
           end

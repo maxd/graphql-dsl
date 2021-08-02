@@ -45,6 +45,7 @@ RSpec.describe GraphQL::DSL::Nodes::Field do
         end
       end
 
+      it_behaves_like 'with value', nil, 'null'
       it_behaves_like 'with value', 1, '1'
       it_behaves_like 'with value', 1.0, '1.0'
       it_behaves_like 'with value', 'string', '"string"'
