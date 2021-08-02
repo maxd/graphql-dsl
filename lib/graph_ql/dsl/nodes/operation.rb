@@ -11,13 +11,16 @@ module GraphQL
         include Mixins::Fields
 
         ##
-        # @return [Symbol] operation type
+        # @return [Symbol] operation type (see {#initialize})
         attr_reader :__operation_type
 
         ##
         # Create operation (query, mutation, subscription)
         #
         # @param operation_type [Symbol] operation type
+        # @option operation_type [Symbol] :query query operation
+        # @option operation_type [Symbol] :mutation mutation operation
+        # @option operation_type [Symbol] :subscription subscription operation
         # @param name [String, Symbol, nil] operation name
         # @param block [Proc] declare DSL for sub-fields
         def initialize(operation_type, name = nil, &block)

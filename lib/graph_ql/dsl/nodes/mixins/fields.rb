@@ -65,7 +65,6 @@ module GraphQL
           #   #   }
           #   # }
           #
-          #
           # @see #__filed
           def method_missing(name, *args, &block)
             arguments = args.empty? ? {} : args[0]
