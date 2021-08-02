@@ -6,8 +6,6 @@ module GraphQL
       ##
       # Fragment operation GraphQL node
       class FragmentOperation < Node
-        ##
-        # @!parse [include] Fields
         include Mixins::Fields
 
         ##

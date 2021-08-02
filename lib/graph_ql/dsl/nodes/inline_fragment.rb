@@ -6,8 +6,6 @@ module GraphQL
       ##
       # Inline fragment GraphQL node
       class InlineFragment < Node
-        ##
-        # @!parse [include] Fields
         include Mixins::Fields
 
         ##

@@ -6,11 +6,7 @@ module GraphQL
       ##
       # Field GraphQL node
       class Field < Node
-        ##
-        # @!parse [include] Fields
         include Mixins::Fields
-        ##
-        # @!parse [include] Arguments
         include Mixins::Arguments
 
         ##

@@ -6,8 +6,6 @@ module GraphQL
       ##
       # Operation GraphQL node
       class Operation < Node
-        ##
-        # @!parse [include] Fields
         include Mixins::Fields
 
         ##
