@@ -1,51 +1,178 @@
 # frozen_string_literal: true
 
 RSpec.describe GraphQL::DSL do
+  shared_examples 'create operation' do
+    let(:test_class) { Class.new }
+
+    let(:instance) { test_class.new }
+    let(:operation) { instance.create_operation }
+
+    it 'create query' do
+      expect(operation.to_gql).to eq(instance.expected_query)
+    end
+  end
+
   context 'executable_document' do
-    subject(:query) do
-      described_class.executable_document do
-        query {
-          field1
-        }
+    it_behaves_like 'create operation' do
+      let(:test_class) do
+        Class.new do
+          include GraphQL::DSL
+
+          def create_operation
+            executable_document do
+              query { field1 }
+            end
+          end
+
+          def expected_query
+            "{\n  field1\n}"
+          end
+        end
       end
     end
 
-    it 'create query' do
-      expect(query).to be_a(GraphQL::DSL::Nodes::ExecutableDocument)
+    it_behaves_like 'create operation' do
+      let(:test_class) do
+        Class.new do
+          def create_operation
+            GraphQL::DSL.executable_document do
+              query { field1 }
+            end
+          end
 
-      expect(query.to_gql).to eq(<<~GQL.strip)
-        {
-          field1
-        }
-      GQL
+          def expected_query
+            "{\n  field1\n}"
+          end
+        end
+      end
     end
   end
 
   context 'query' do
-    subject(:query) { described_class.query }
+    it_behaves_like 'create operation' do
+      let(:test_class) do
+        Class.new do
+          include GraphQL::DSL
 
-    it 'create query' do
-      expect(query).to be_a(GraphQL::DSL::Nodes::Operation)
-      expect(query.__operation_type).to eq(:query)
+          def create_operation
+            query { field1 }
+          end
 
-      expect(query.to_gql).to eq(<<~GQL.strip)
-        {
-        }
-      GQL
+          def expected_query
+            "{\n  field1\n}"
+          end
+        end
+      end
+    end
+
+    it_behaves_like 'create operation' do
+      let(:test_class) do
+        Class.new do
+          def create_operation
+            GraphQL::DSL.query { field1 }
+          end
+
+          def expected_query
+            "{\n  field1\n}"
+          end
+        end
+      end
+    end
+  end
+
+  context 'mutation' do
+    it_behaves_like 'create operation' do
+      let(:test_class) do
+        Class.new do
+          include GraphQL::DSL
+
+          def create_operation
+            mutation { field1 }
+          end
+
+          def expected_query
+            "mutation\n{\n  field1\n}"
+          end
+        end
+      end
+    end
+
+    it_behaves_like 'create operation' do
+      let(:test_class) do
+        Class.new do
+          def create_operation
+            GraphQL::DSL.mutation { field1 }
+          end
+
+          def expected_query
+            "mutation\n{\n  field1\n}"
+          end
+        end
+      end
+    end
+  end
+
+  context 'subscription' do
+    it_behaves_like 'create operation' do
+      let(:test_class) do
+        Class.new do
+          include GraphQL::DSL
+
+          def create_operation
+            subscription { field1 }
+          end
+
+          def expected_query
+            "subscription\n{\n  field1\n}"
+          end
+        end
+      end
+    end
+
+    it_behaves_like 'create operation' do
+      let(:test_class) do
+        Class.new do
+          def create_operation
+            GraphQL::DSL.subscription { field1 }
+          end
+
+          def expected_query
+            "subscription\n{\n  field1\n}"
+          end
+        end
+      end
     end
   end
 
   context 'fragment' do
-    subject(:fragment) { described_class.fragment(:fragment1, :Type1) }
+    it_behaves_like 'create operation' do
+      let(:test_class) do
+        Class.new do
+          include GraphQL::DSL
 
-    it 'create query' do
-      expect(fragment).to be_a(GraphQL::DSL::Nodes::FragmentOperation)
+          def create_operation
+            fragment(:fragment1, :Type1) { field1 }
+          end
 
-      expect(fragment.to_gql).to eq(<<~GQL.strip)
-        fragment fragment1 on Type1
-        {
-        }
-      GQL
+          def expected_query
+            "fragment fragment1 on Type1\n{\n  field1\n}"
+          end
+        end
+      end
+    end
+
+    it_behaves_like 'create operation' do
+      let(:test_class) do
+        Class.new do
+          def create_operation
+            GraphQL::DSL.fragment(:fragment1, :Type1) { field1 }
+          end
+
+          def expected_query
+            "fragment fragment1 on Type1\n{\n  field1\n}"
+          end
+        end
+      end
     end
   end
 end

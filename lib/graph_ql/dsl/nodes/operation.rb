@@ -32,12 +32,24 @@ module GraphQL
         def to_gql(level = 0)
           result = []
 
-          result << __indent(level) + "#{__operation_type} #{__name}" if __name
+          operation_definition = to_gql_operation_definition
+
+          result << __indent(level) + operation_definition if operation_definition
           result << "#{__indent(level)}{"
           result += __nodes.map { |node| node.to_gql(level + 1) }
           result << "#{__indent(level)}}"
 
           result.join("\n")
+        end
+
+        private
+
+        def to_gql_operation_definition
+          if __operation_type == :query
+            __name ? "#{__operation_type} #{__name}" : nil
+          else
+            __operation_type.to_s + (__name ? " #{__name}" : '')
+          end
         end
       end
     end

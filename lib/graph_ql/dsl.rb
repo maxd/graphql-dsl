@@ -66,9 +66,11 @@ module GraphQL
     #  #   name
     #  #   age
     #  # }
-    def self.executable_document(&block)
+    def executable_document(&block)
       Nodes::ExecutableDocument.new(&block)
     end
+
+    module_function :executable_document
 
     ##
     # Create GraphQL query operation
@@ -95,9 +97,11 @@ module GraphQL
     #   #     age
     #   #   }
     #   # }
-    def self.query(name = nil, &block)
+    def query(name = nil, &block)
       Nodes::Operation.new(:query, name, &block)
     end
+
+    module_function :query
 
     ##
     # Create GraphQL mutation operation
@@ -126,9 +130,11 @@ module GraphQL
     #   #     age
     #   #   }
     #   # }
-    def self.mutation(name = nil, &block)
+    def mutation(name = nil, &block)
       Nodes::Operation.new(:mutation, name, &block)
     end
+
+    module_function :mutation
 
     ##
     # Create GraphQL subscription operation
@@ -157,9 +163,11 @@ module GraphQL
     #   #     age
     #   #   }
     #   # }
-    def self.subscription(name = nil, &block)
+    def subscription(name = nil, &block)
       Nodes::Operation.new(:subscription, name, &block)
     end
+
+    module_function :subscription
 
     ##
     # Create GraphQL fragment operation
@@ -184,8 +192,10 @@ module GraphQL
     #   #   name
     #   #   age
     #   # }
-    def self.fragment(name, type, &block)
+    def fragment(name, type, &block)
       Nodes::FragmentOperation.new(name, type, &block)
     end
+
+    module_function :fragment
   end
 end

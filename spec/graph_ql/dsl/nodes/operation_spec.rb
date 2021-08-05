@@ -8,6 +8,7 @@ RSpec.describe GraphQL::DSL::Nodes::Operation do
 
         it 'valid result' do
           expect(operation.to_gql).to eq(<<~GQL.strip)
+            #{operation_type == :query ? '' : operation_type}
             {
             }
           GQL
@@ -41,6 +42,7 @@ RSpec.describe GraphQL::DSL::Nodes::Operation do
 
         it 'valid result' do
           expect(operation.to_gql).to eq(<<~GQL.strip)
+            #{operation_type == :query ? '' : operation_type}
             {
               field1
               field2
