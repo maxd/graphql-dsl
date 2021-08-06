@@ -2,6 +2,7 @@
 
 require_relative 'dsl/error'
 require_relative 'dsl/nodes/mixins'
+require_relative 'dsl/nodes/mixins/values'
 require_relative 'dsl/nodes/mixins/arguments'
 require_relative 'dsl/nodes/mixins/fields'
 require_relative 'dsl/nodes/node'
