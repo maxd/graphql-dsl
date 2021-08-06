@@ -29,16 +29,8 @@ RSpec.describe GraphQL::DSL::Nodes::Field do
     end
 
     context 'with name and arguments' do
-      context 'reject ordered arguments' do
-        subject(:field) { described_class.new('field1', 1) }
-
-        it 'raise error' do
-          expect { field }.to raise_error GraphQL::DSL::Error, 'GraphQL field accept named arguments only'
-        end
-      end
-
       shared_examples 'with value' do |value, expected_arguments|
-        subject(:field) { described_class.new('field1', { value: value }) }
+        subject(:field) { described_class.new('field1', value: value) }
 
         it "valid result with #{value.class.name}" do
           expect(field.to_gql).to eq("field1(value: #{expected_arguments})")
@@ -75,7 +67,7 @@ RSpec.describe GraphQL::DSL::Nodes::Field do
 
     context 'with sub-fields and arguments' do
       subject(:field) do
-        described_class.new('field1', { id: 1 }) {
+        described_class.new('field1', id: 1) {
           subfield1 id: 1
           subfield2 id: 2
         }

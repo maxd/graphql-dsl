@@ -14,6 +14,7 @@ module GraphQL
           # This method can help to avoid name collisions i.e. `__field(:object_d)`
           #
           # @param name [String, Symbol] field name
+          # @param __alias [String, Symbol] field alias
           # @param arguments [Hash] field arguments
           # @param block [Proc] declare sub-fields
           #
@@ -34,8 +35,8 @@ module GraphQL
           #       subfield2 id: 2
           #     }
           #   }
-          def __filed(name, arguments = {}, &block)
-            @__nodes << Field.new(name, arguments, &block)
+          def __filed(name, __alias: nil, **arguments, &block) # rubocop:disable Lint/UnderscorePrefixedVariableName
+            @__nodes << Field.new(name, __alias: __alias, **arguments, &block)
           end
 
           private
@@ -70,7 +71,7 @@ module GraphQL
           def method_missing(name, *args, &block)
             arguments = args.empty? ? {} : args[0]
 
-            __filed(name, arguments, &block)
+            __filed(name, **arguments, &block)
           end
         end
       end

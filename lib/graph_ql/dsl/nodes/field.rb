@@ -21,20 +21,13 @@ module GraphQL
         # Create field
         #
         # @param name [String, Symbol] field name
+        # @param __alias [String, Symbol] field alias
         # @param arguments [Hash] field arguments
-        # @option arguments [String, Symbol] :__alias filed alias
         # @param block [Proc] declare DSL for sub-fields
-        def initialize(name, arguments = {}, &block)
-          unless arguments.is_a?(Hash)
-            raise GraphQL::DSL::Error.new('GraphQL field accept named arguments only', {
-              field_name: name,
-              field_arguments: arguments,
-            })
-          end
-
+        def initialize(name, __alias: nil, **arguments, &block) # rubocop:disable Lint/UnderscorePrefixedVariableName
           super(name, &block)
 
-          @__alias = arguments.delete(:__alias)
+          @__alias = __alias
           @__arguments = arguments
         end
 
