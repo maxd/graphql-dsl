@@ -7,7 +7,7 @@ module GraphQL
       # @abstract Base class for all GraphQL DSL nodes
       class Node
         ##
-        # @return [String, Symbol] node name
+        # @return [String, Symbol, nil] node name
         attr_reader :__name
 
         # @return [Array<Node>] list of sub-nodes
@@ -18,7 +18,7 @@ module GraphQL
         #
         # @param name [String, Symbol, nil] node name
         # @param block [Proc] declare  DSL for sub-nodes
-        def initialize(name, &block)
+        def initialize(name = nil, &block)
           @__name = name
           @__nodes = []
 
