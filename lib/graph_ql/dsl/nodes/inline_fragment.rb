@@ -9,7 +9,7 @@ module GraphQL
         include Mixins::Fields
 
         ##
-        # @return [String, Symbol] inline fragment type or interface
+        # @return [String, Symbol, nil] inline fragment type or interface
         attr_reader :__type
 
         ##

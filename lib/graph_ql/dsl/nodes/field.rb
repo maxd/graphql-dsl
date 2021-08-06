@@ -10,7 +10,7 @@ module GraphQL
         include Mixins::Arguments
 
         ##
-        # @return [String, Symbol] field alias
+        # @return [String, Symbol, nil] field alias
         attr_reader :__alias
 
         ##
@@ -21,7 +21,7 @@ module GraphQL
         # Create field
         #
         # @param name [String, Symbol] field name
-        # @param __alias [String, Symbol] field alias
+        # @param __alias [String, Symbol, nil] field alias
         # @param arguments [Hash] field arguments
         # @param block [Proc] declare DSL for sub-fields
         def initialize(name, __alias: nil, **arguments, &block) # rubocop:disable Lint/UnderscorePrefixedVariableName
