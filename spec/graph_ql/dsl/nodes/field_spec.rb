@@ -49,7 +49,7 @@ RSpec.describe GraphQL::DSL::Nodes::Field do
       it_behaves_like 'with value', 1, '1'
       it_behaves_like 'with value', 1.0, '1.0'
       it_behaves_like 'with value', 'string', '"string"'
-      it_behaves_like 'with value', :symbol, '"symbol"'
+      it_behaves_like 'with value', :symbol, 'symbol'
       it_behaves_like 'with value', { a: 1, b: { c: 2 } }, '{a: 1, b: {c: 2}}'
       it_behaves_like 'with value', [1, '2', 3.0], '[1, "2", 3.0]'
     end

@@ -21,8 +21,10 @@ module GraphQL
               __arguments_to_hash(arguments, initial)
             when Array
               __arguments_to_array(arguments)
-            when String, Symbol
+            when String
               __arguments_to_string(arguments)
+            when Symbol
+              __arguments_to_enum(arguments)
             when NilClass
               'null'
             else
@@ -62,11 +64,21 @@ module GraphQL
           ##
           # Convert arguments to string
           #
-          # @param arguments [String, Symbol] arguments
+          # @param arguments [String] arguments
           #
           # @return [String] representation of arguments as string
           def __arguments_to_string(arguments)
             %("#{arguments}")
+          end
+
+          ##
+          # Convert arguments to enum
+          #
+          # @param arguments [Symbol] arguments
+          #
+          # @return [String] representation of arguments as enum
+          def __arguments_to_enum(arguments)
+            arguments.to_s
           end
         end
       end
