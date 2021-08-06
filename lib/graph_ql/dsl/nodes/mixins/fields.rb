@@ -4,6 +4,7 @@ module GraphQL
   module DSL
     module Nodes
       module Mixins
+        ##
         # This mixin help to reuse creation of new fields
         # i.e. in Query, Field, etc. classes
         module Fields

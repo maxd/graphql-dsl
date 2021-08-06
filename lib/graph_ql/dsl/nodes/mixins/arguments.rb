@@ -4,6 +4,7 @@ module GraphQL
   module DSL
     module Nodes
       module Mixins
+        ##
         # This mixin help to reuse arguments
         module Arguments
           private
