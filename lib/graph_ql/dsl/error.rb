@@ -14,7 +14,7 @@ module GraphQL
       #
       # @param msg [String] error message
       # @param arguments [Hash] additional error arguments
-      def initialize(msg = nil, arguments = {})
+      def initialize(msg = nil, **arguments)
         super(msg)
 
         @arguments = arguments

@@ -34,10 +34,7 @@ module GraphQL
             when Hash
               __value_to_object(value)
             else
-              raise GraphQL::DSL::Error.new('Unsupported value type', {
-                class: value.class.name,
-                value: value,
-              })
+              raise GraphQL::DSL::Error.new('Unsupported value type', class: value.class.name, value: value)
             end
           end
 
