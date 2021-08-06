@@ -11,10 +11,10 @@ module GraphQL
           ##
           # Declare new GraphQL field
           #
-          # This method can help to avoid name collisions i.e. `__field(:object_d)`
+          # This method can help to avoid name collisions i.e. +__field(:object_id)+
           #
           # @param name [String, Symbol] field name
-          # @param __alias [String, Symbol] field alias
+          # @param __alias [String, Symbol, nil] field alias
           # @param arguments [Hash] field arguments
           # @param block [Proc] declare sub-fields
           #
