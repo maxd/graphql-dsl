@@ -4,10 +4,10 @@ module GraphQL
   module DSL
     module Nodes
       ##
-      # Fragment GraphQL node
-      class Fragment < Node
+      # Fragment spread GraphQL node
+      class FragmentSpread < Node
         ##
-        # Create fragment
+        # Create fragment spread
         #
         # @param name [String, Symbol] fragment name
         def initialize(name) # rubocop:disable Lint/UselessMethodDefinition

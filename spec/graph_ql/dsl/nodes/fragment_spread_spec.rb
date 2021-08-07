@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe GraphQL::DSL::Nodes::Fragment do
+RSpec.describe GraphQL::DSL::Nodes::FragmentSpread do
   context 'to_gql' do
     context 'with name' do
       shared_examples 'build query' do |name|

@@ -39,7 +39,7 @@ module GraphQL
         #
         # @return [void]
         def __fragment(name, &block)
-          @__nodes << Fragment.new(name, &block)
+          @__nodes << FragmentSpread.new(name, &block)
         end
 
         ###
