@@ -20,9 +20,9 @@ module GraphQL
         def initialize(type = nil, &block)
           raise GraphQL::DSL::Error, 'Sub-fields must be specified for inline fragment' if block.nil?
 
-          super(nil, &block)
-
           @__type = type
+
+          super(nil, &block)
         end
 
         ##

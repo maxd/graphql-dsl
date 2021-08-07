@@ -22,9 +22,9 @@ module GraphQL
           raise GraphQL::DSL::Error, '`name` must be specified' if name.nil? || name.empty?
           raise GraphQL::DSL::Error, '`type` must be specified' if type.nil? || type.empty?
 
-          super(name, &block)
-
           @__type = type
+
+          super(name, &block)
         end
 
         ##

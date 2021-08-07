@@ -25,10 +25,10 @@ module GraphQL
         # @param arguments [Hash] field arguments
         # @param block [Proc] declare DSL for sub-fields
         def initialize(name, __alias: nil, **arguments, &block) # rubocop:disable Lint/UnderscorePrefixedVariableName
-          super(name, &block)
-
           @__alias = __alias
           @__arguments = arguments
+
+          super(name, &block)
         end
 
         ###
