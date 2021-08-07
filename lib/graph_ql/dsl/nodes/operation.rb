@@ -7,7 +7,7 @@ module GraphQL
       # Operation GraphQL node
       class Operation < Node
         include Mixins::VariableDefinitions
-        include Mixins::Fields
+        include Mixins::SelectionSets
 
         ##
         # @return [Symbol] operation type (see {#initialize})

@@ -6,7 +6,7 @@ module GraphQL
       ##
       # Fragment operation GraphQL node
       class FragmentOperation < Node
-        include Mixins::Fields
+        include Mixins::SelectionSets
 
         ##
         # @return [String, Symbol] fragment type or interface

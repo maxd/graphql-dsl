@@ -6,7 +6,7 @@ module GraphQL
       ##
       # Field GraphQL node
       class Field < Node
-        include Mixins::Fields
+        include Mixins::SelectionSets
         include Mixins::Arguments
 
         ##
