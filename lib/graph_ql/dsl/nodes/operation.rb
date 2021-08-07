@@ -28,10 +28,25 @@ module GraphQL
         # @param variable_definitions [Hash] variable definitions
         # @param block [Proc] declare DSL for sub-fields
         def initialize(operation_type, name = nil, **variable_definitions, &block)
-          super(name, &block)
-
           @__operation_type = operation_type
           @__variable_definitions = variable_definitions
+
+          super(name, &block)
+        end
+
+        ##
+        # Declare operation variable
+        #
+        # @param name [Symbol, String] variable name
+        # @param type [Symbol, String] variable type
+        # @param default [] variable default value
+        #
+        # @return [void]
+        def __var(name, type, default: UNDEFINED)
+          variable_definition = { type: type }
+          variable_definition.merge!(default: default) if default != UNDEFINED
+
+          @__variable_definitions[name.to_sym] = variable_definition
         end
 
         ##
@@ -50,6 +65,10 @@ module GraphQL
         end
 
         private
+
+        ##
+        # Help to mark default parameter as undefined
+        UNDEFINED = Object.new
 
         ##
         # Build operation definition

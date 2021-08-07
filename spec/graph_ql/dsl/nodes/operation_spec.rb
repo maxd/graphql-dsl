@@ -7,11 +7,7 @@ RSpec.describe GraphQL::DSL::Nodes::Operation do
         subject(:operation) { described_class.new(operation_type) }
 
         it 'valid result' do
-          expect(operation.to_gql).to eq(<<~GQL.strip)
-            #{operation_type == :query ? '' : operation_type}
-            {
-            }
-          GQL
+          expect(operation.to_gql).to include((operation_type == :query ? '' : operation_type).to_s)
         end
       end
 
@@ -20,11 +16,7 @@ RSpec.describe GraphQL::DSL::Nodes::Operation do
           subject(:operation) { described_class.new(operation_type, name) }
 
           it 'valid result' do
-            expect(operation.to_gql).to eq(<<~GQL.strip)
-              #{operation_type} #{name}
-              {
-              }
-            GQL
+            expect(operation.to_gql).to include(%(#{operation_type} #{name}))
           end
         end
 
@@ -34,14 +26,38 @@ RSpec.describe GraphQL::DSL::Nodes::Operation do
 
       context 'with variable definitions' do
         shared_examples 'build query' do |name|
-          subject(:operation) { described_class.new(operation_type, name, a: :String) }
+          context 'declare variable with parameters' do
+            subject(:operation) { described_class.new(operation_type, name, a: :String) }
 
-          it 'valid result' do
-            expect(operation.to_gql).to eq(<<~GQL.strip)
-              #{operation_type}#{name ? " #{name}" : ''}($a: String)
-              {
-              }
-            GQL
+            it 'valid result' do
+              expect(operation.to_gql).to include(%[#{operation_type}#{name ? " #{name}" : ''}($a: String)])
+            end
+          end
+
+          context 'declare variable with __var method' do
+            context 'with name and type only' do
+              subject(:operation) do
+                described_class.new(operation_type, name) do
+                  __var :a, :String
+                end
+              end
+
+              it 'valid result' do
+                expect(operation.to_gql).to include(%[#{operation_type}#{name ? " #{name}" : ''}($a: String)])
+              end
+            end
+
+            context 'with default value' do
+              subject(:operation) do
+                described_class.new(operation_type, name) do
+                  __var :a, :String, default: 'Value'
+                end
+              end
+
+              it 'valid result' do
+                expect(operation.to_gql).to include(%[#{operation_type}#{name ? " #{name}" : ''}($a: String = "Value")])
+              end
+            end
           end
         end
 
