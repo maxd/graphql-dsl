@@ -55,5 +55,44 @@ RSpec.describe GraphQL::DSL::Nodes::InlineFragment do
         GQL
       end
     end
+
+    context 'with fragment' do
+      subject(:inline_fragment) do
+        described_class.new(:Type1) {
+          __fragment :fragment1
+        }
+      end
+
+      it 'valid result' do
+        expect(inline_fragment.to_gql).to eq(<<~GQL.strip)
+          ... on Type1
+          {
+            ...fragment1
+          }
+        GQL
+      end
+    end
+
+    context 'with inline fragment' do
+      subject(:inline_fragment) do
+        described_class.new(:Type1) {
+          __inline_fragment(:Type2) {
+            field1
+          }
+        }
+      end
+
+      it 'valid result' do
+        expect(inline_fragment.to_gql).to eq(<<~GQL.strip)
+          ... on Type1
+          {
+            ... on Type2
+            {
+              field1
+            }
+          }
+        GQL
+      end
+    end
   end
 end

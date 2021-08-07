@@ -38,11 +38,39 @@ module GraphQL
             @__nodes << Field.new(name, __alias: __alias, **arguments, &block)
           end
 
+          ###
+          # Insert GraphQL fragment
+          #
+          # @param name [String, Symbol] fragment name
+          #
+          # @return [void]
+          #
+          # @example Insert fragment with +fragment1+ name
+          #   query = GraphQL::DSL.query {
+          #     field1 id: 1 {
+          #       __fragment :fragment1
+          #     }
+          #   }
+          def __fragment(name)
+            @__nodes << FragmentSpread.new(name)
+          end
+
+          ###
+          # Insert GraphQL inline fragment
+          #
+          # @param type [String, Symbol, nil] fragment type
+          # @param block [Proc] declare DSL for sub-fields
+          #
+          # @return [void]
+          def __inline_fragment(type, &block)
+            @__nodes << InlineFragment.new(type, &block)
+          end
+
           private
 
           ##
           # Allow to respond to method missing at any case.
-          def respond_to_missing?
+          def respond_to_missing?(_method_name, _include_private = false)
             true
           end
 
