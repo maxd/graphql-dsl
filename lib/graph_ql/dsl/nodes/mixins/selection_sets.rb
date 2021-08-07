@@ -34,7 +34,7 @@ module GraphQL
           #       subfield2 id: 2
           #     }
           #   }
-          def __filed(name, __alias: nil, **arguments, &block) # rubocop:disable Lint/UnderscorePrefixedVariableName
+          def __field(name, __alias: nil, **arguments, &block) # rubocop:disable Lint/UnderscorePrefixedVariableName
             @__nodes << Field.new(name, __alias: __alias, **arguments, &block)
           end
 
@@ -66,11 +66,11 @@ module GraphQL
           #   #   }
           #   # }
           #
-          # @see #__filed
+          # @see #__field
           def method_missing(name, *args, &block)
             arguments = args.empty? ? {} : args[0]
 
-            __filed(name, **arguments, &block)
+            __field(name, **arguments, &block)
           end
         end
       end
