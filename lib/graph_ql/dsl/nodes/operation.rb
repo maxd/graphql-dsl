@@ -32,7 +32,7 @@ module GraphQL
         def to_gql(level = 0)
           result = []
 
-          operation_definition = to_gql_operation_definition
+          operation_definition = __operation_definition_to_s
 
           result << __indent(level) + operation_definition if operation_definition
           result << "#{__indent(level)}{"
@@ -44,7 +44,11 @@ module GraphQL
 
         private
 
-        def to_gql_operation_definition
+        ##
+        # Build operation definition
+        #
+        # @return [String, nil] representation of operation definition as string
+        def __operation_definition_to_s
           if __operation_type == :query
             __name ? "#{__operation_type} #{__name}" : nil
           else
