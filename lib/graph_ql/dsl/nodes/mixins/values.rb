@@ -15,7 +15,7 @@ module GraphQL
           # @param value [] value
           #
           # @return [String] representation of value as string
-          def __value_to_s(value) # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity
+          def __value_to_s(value) # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
             case value
             when Integer
               __value_to_integer(value)
@@ -28,7 +28,11 @@ module GraphQL
             when NilClass
               __value_to_null(value)
             when Symbol
-              __value_to_enum(value)
+              if value.start_with?('$')
+                __value_to_variable(value)
+              else
+                __value_to_enum(value)
+              end
             when Array
               __value_to_list(value)
             when Hash
@@ -86,6 +90,16 @@ module GraphQL
           # @return [String] representation of value as null value
           def __value_to_null(_value)
             'null'
+          end
+
+          ##
+          # Convert value to variable value
+          #
+          # @param value [Symbol] value
+          #
+          # @return [String] representation of value as variable value
+          def __value_to_variable(value)
+            value.to_s
           end
 
           ##

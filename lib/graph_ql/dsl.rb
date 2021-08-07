@@ -3,6 +3,7 @@
 require_relative 'dsl/error'
 require_relative 'dsl/nodes/mixins'
 require_relative 'dsl/nodes/mixins/values'
+require_relative 'dsl/nodes/mixins/variable_definitions'
 require_relative 'dsl/nodes/mixins/arguments'
 require_relative 'dsl/nodes/mixins/fields'
 require_relative 'dsl/nodes/node'
@@ -77,6 +78,7 @@ module GraphQL
     # Create GraphQL query operation
     #
     # @param name [String, Symbol, nil] query name
+    # @param variable_definitions [Hash] variable definitions
     # @param block [Proc] declare DSL for sub-fields
     #
     # @return [Nodes::Operation] GraphQL query
@@ -98,8 +100,8 @@ module GraphQL
     #   #     age
     #   #   }
     #   # }
-    def query(name = nil, &block)
-      Nodes::Operation.new(:query, name, &block)
+    def query(name = nil, **variable_definitions, &block)
+      Nodes::Operation.new(:query, name, **variable_definitions, &block)
     end
 
     module_function :query
@@ -108,6 +110,7 @@ module GraphQL
     # Create GraphQL mutation operation
     #
     # @param name [String, Symbol, nil] mutation name
+    # @param variable_definitions [Hash] variable definitions
     # @param block [Proc] declare DSL for sub-fields
     #
     # @return [Nodes::Operation] GraphQL mutation
@@ -131,8 +134,8 @@ module GraphQL
     #   #     age
     #   #   }
     #   # }
-    def mutation(name = nil, &block)
-      Nodes::Operation.new(:mutation, name, &block)
+    def mutation(name = nil, **variable_definitions, &block)
+      Nodes::Operation.new(:mutation, name, **variable_definitions, &block)
     end
 
     module_function :mutation
@@ -141,6 +144,7 @@ module GraphQL
     # Create GraphQL subscription operation
     #
     # @param name [String, Symbol, nil] subscription name
+    # @param variable_definitions [Hash] variable definitions
     # @param block [Proc] declare DSL for sub-fields
     #
     # @return [Nodes::Operation] GraphQL subscription
@@ -164,8 +168,8 @@ module GraphQL
     #   #     age
     #   #   }
     #   # }
-    def subscription(name = nil, &block)
-      Nodes::Operation.new(:subscription, name, &block)
+    def subscription(name = nil, **variable_definitions, &block)
+      Nodes::Operation.new(:subscription, name, **variable_definitions, &block)
     end
 
     module_function :subscription

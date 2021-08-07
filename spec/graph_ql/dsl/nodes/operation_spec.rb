@@ -32,6 +32,23 @@ RSpec.describe GraphQL::DSL::Nodes::Operation do
         it_behaves_like 'build query', :operation1
       end
 
+      context 'with variable definitions' do
+        shared_examples 'build query' do |name|
+          subject(:operation) { described_class.new(operation_type, name, a: :String) }
+
+          it 'valid result' do
+            expect(operation.to_gql).to eq(<<~GQL.strip)
+              #{operation_type}#{name ? " #{name}" : ''}($a: String)
+              {
+              }
+            GQL
+          end
+        end
+
+        it_behaves_like 'build query', nil
+        it_behaves_like 'build query', :operation1
+      end
+
       context 'with fields' do
         subject(:operation) do
           described_class.new(operation_type) {

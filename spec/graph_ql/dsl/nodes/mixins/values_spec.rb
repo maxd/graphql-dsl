@@ -54,6 +54,10 @@ RSpec.describe GraphQL::DSL::Nodes::Mixins::Values do
     it { expect(__value_to_s(nil)).to eq('null') }
   end
 
+  context 'variable value' do
+    it { expect(__value_to_s(:$variable)).to eq('$variable') }
+  end
+
   context 'enum value' do
     it { expect(__value_to_s(:Type1)).to eq('Type1') }
   end

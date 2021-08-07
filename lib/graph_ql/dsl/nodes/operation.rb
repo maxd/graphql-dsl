@@ -6,11 +6,16 @@ module GraphQL
       ##
       # Operation GraphQL node
       class Operation < Node
+        include Mixins::VariableDefinitions
         include Mixins::Fields
 
         ##
         # @return [Symbol] operation type (see {#initialize})
         attr_reader :__operation_type
+
+        ##
+        # @return [Hash] variable definitions
+        attr_reader :__variable_definitions
 
         ##
         # Create operation (query, mutation, subscription)
@@ -20,11 +25,13 @@ module GraphQL
         # @option operation_type [Symbol] :mutation mutation operation
         # @option operation_type [Symbol] :subscription subscription operation
         # @param name [String, Symbol, nil] operation name
+        # @param variable_definitions [Hash] variable definitions
         # @param block [Proc] declare DSL for sub-fields
-        def initialize(operation_type, name = nil, &block)
+        def initialize(operation_type, name = nil, **variable_definitions, &block)
           super(name, &block)
 
           @__operation_type = operation_type
+          @__variable_definitions = variable_definitions
         end
 
         ##
@@ -49,11 +56,22 @@ module GraphQL
         #
         # @return [String, nil] representation of operation definition as string
         def __operation_definition_to_s
-          if __operation_type == :query
-            __name ? "#{__operation_type} #{__name}" : nil
-          else
-            __operation_type.to_s + (__name ? " #{__name}" : '')
-          end
+          operation_name = [__operation_type_to_s, __name].compact
+
+          operation_signature = [
+            operation_name.empty? ? nil : operation_name.join(' '),
+            __variable_definitions_to_s(__variable_definitions)
+          ].compact
+
+          operation_signature.empty? ? nil : operation_signature.join
+        end
+
+        ##
+        # Build operation type
+        #
+        # @return [String, nil] representation of operation type as string
+        def __operation_type_to_s
+          __operation_type.to_s if __operation_type != :query || __name || !__variable_definitions.empty?
         end
       end
     end
