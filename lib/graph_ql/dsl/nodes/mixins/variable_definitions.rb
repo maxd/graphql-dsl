@@ -88,7 +88,7 @@ module GraphQL
             result = []
 
             result << variable_definition.fetch(:type)
-            result << "= #{__value_to_s(variable_definition[:default])}" if variable_definition.key?(:default)
+            result << "= #{__value_to_s(variable_definition[:default], true)}" if variable_definition.key?(:default)
 
             result.compact.join(' ')
           end
@@ -107,7 +107,7 @@ module GraphQL
             result = []
 
             result << variable_definition.fetch(0)
-            result << "= #{__value_to_s(variable_definition[1])}" if variable_definition.size > 1
+            result << "= #{__value_to_s(variable_definition[1], true)}" if variable_definition.size > 1
 
             result.compact.join(' ')
           end

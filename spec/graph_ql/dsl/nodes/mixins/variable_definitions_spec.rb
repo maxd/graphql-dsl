@@ -64,6 +64,11 @@ RSpec.describe GraphQL::DSL::Nodes::Mixins::VariableDefinitions do
 
       it { expect(__variable_definition_to_s({ type: :String, default: 'Value' })).to eq('String = "Value"') }
       it { expect(__variable_definition_to_s({ type: 'String', default: 'Value' })).to eq('String = "Value"') }
+
+      it 'variables restricted in default values' do
+        expect { __variable_definition_to_s({ type: 'String', default: :$variable }) }
+          .to raise_error GraphQL::DSL::Error, 'Value must be constant'
+      end
     end
 
     context 'variable definition as array' do
@@ -86,6 +91,11 @@ RSpec.describe GraphQL::DSL::Nodes::Mixins::VariableDefinitions do
 
       it { expect(__variable_definition_to_s([:String, 'Value'])).to eq('String = "Value"') }
       it { expect(__variable_definition_to_s(%w[String Value])).to eq('String = "Value"') }
+
+      it 'variables restricted in default values' do
+        expect { __variable_definition_to_s(%i[String $variable]) }
+          .to raise_error GraphQL::DSL::Error, 'Value must be constant'
+      end
     end
   end
 end

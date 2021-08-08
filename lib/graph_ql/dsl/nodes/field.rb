@@ -35,7 +35,7 @@ module GraphQL
         # (see Node#to_gql)
         def to_gql(level = 0) # rubocop:disable Metrics/AbcSize
           field_name = __alias ? "#{__alias}: #{__name}" : __name.to_s
-          field_arguments = __arguments_to_s(__arguments)
+          field_arguments = __arguments_to_s(__arguments, false)
 
           result = []
           result << __indent(level) + field_name + field_arguments

@@ -13,9 +13,10 @@ module GraphQL
           # Convert value to string
           #
           # @param value [] value
+          # @param is_const [Boolean] allow to use variables or not i.e. value is constant or not
           #
           # @return [String] representation of value as string
-          def __value_to_s(value) # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
+          def __value_to_s(value, is_const) # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
             case value
             when Integer
               __value_to_integer(value)
@@ -29,14 +30,14 @@ module GraphQL
               __value_to_null(value)
             when Symbol
               if value.start_with?('$')
-                __value_to_variable(value)
+                __value_to_variable(value, is_const)
               else
                 __value_to_enum(value)
               end
             when Array
-              __value_to_list(value)
+              __value_to_list(value, is_const)
             when Hash
-              __value_to_object(value)
+              __value_to_object(value, is_const)
             else
               raise GraphQL::DSL::Error.new('Unsupported value type', class: value.class.name, value: value)
             end
@@ -96,9 +97,12 @@ module GraphQL
           # Convert value to variable value
           #
           # @param value [Symbol] value
+          # @param is_const [Boolean] allow to use variables or not
           #
           # @return [String] representation of value as variable value
-          def __value_to_variable(value)
+          def __value_to_variable(value, is_const)
+            raise GraphQL::DSL::Error.new('Value must be constant', value: value) if is_const
+
             value.to_s
           end
 
@@ -116,11 +120,12 @@ module GraphQL
           # Convert value to list value
           #
           # @param value [Array] value
+          # @param is_const [Boolean] allow to use variables or not
           #
           # @return [String] representation of value as list value
-          def __value_to_list(value)
+          def __value_to_list(value, is_const)
             result = value.map do |element|
-              __value_to_s(element)
+              __value_to_s(element, is_const)
             end.join(', ')
 
             "[#{result}]"
@@ -130,11 +135,12 @@ module GraphQL
           # Convert value to object value
           #
           # @param value [Hash] value
+          # @param is_const [Boolean] allow to use variables or not
           #
           # @return [String] representation of value as object value
-          def __value_to_object(value)
+          def __value_to_object(value, is_const)
             result = value.map do |n, v|
-              "#{n}: #{__value_to_s(v)}"
+              "#{n}: #{__value_to_s(v, is_const)}"
             end.join(', ')
 
             "{#{result}}"

@@ -9,8 +9,8 @@ RSpec.describe GraphQL::DSL::Nodes::Mixins::Values do
 
   let(:object) { test_class.new }
 
-  def __value_to_s(value)
-    object.send(:__value_to_s, value)
+  def __value_to_s(value, is_const: false)
+    object.send(:__value_to_s, value, is_const)
   end
 
   context 'integer value' do
@@ -56,6 +56,9 @@ RSpec.describe GraphQL::DSL::Nodes::Mixins::Values do
 
   context 'variable value' do
     it { expect(__value_to_s(:$variable)).to eq('$variable') }
+    it do
+      expect { __value_to_s(:$variable, is_const: true) }.to raise_error GraphQL::DSL::Error, 'Value must be constant'
+    end
   end
 
   context 'enum value' do
