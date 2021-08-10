@@ -15,7 +15,7 @@ RSpec.describe GraphQL::DSL::Nodes::Mixins::Arguments do
     end
 
     context 'without arguments' do
-      it { expect(__arguments_to_s({})).to eq('') }
+      it { expect(__arguments_to_s({})).to be_nil }
     end
 
     context 'with arguments' do

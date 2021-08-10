@@ -3,8 +3,9 @@
 require_relative 'dsl/error'
 require_relative 'dsl/nodes/mixins'
 require_relative 'dsl/nodes/mixins/values'
-require_relative 'dsl/nodes/mixins/variable_definitions'
 require_relative 'dsl/nodes/mixins/arguments'
+require_relative 'dsl/nodes/mixins/directives'
+require_relative 'dsl/nodes/mixins/variable_definitions'
 require_relative 'dsl/nodes/mixins/selection_sets'
 require_relative 'dsl/nodes/node'
 require_relative 'dsl/nodes/field'
@@ -79,6 +80,7 @@ module GraphQL
     #
     # @param name [String, Symbol, nil] query name
     # @param variable_definitions [Hash] variable definitions
+    # @param directives [Array] list of directives
     # @param block [Proc] declare DSL for sub-fields
     #
     # @return [Nodes::Operation] GraphQL query
@@ -100,8 +102,8 @@ module GraphQL
     #   #     age
     #   #   }
     #   # }
-    def query(name = nil, **variable_definitions, &block)
-      Nodes::Operation.new(:query, name, **variable_definitions, &block)
+    def query(name = nil, variable_definitions = {}, directives = [], &block)
+      Nodes::Operation.new(:query, name, variable_definitions, directives, &block)
     end
 
     module_function :query
@@ -111,6 +113,7 @@ module GraphQL
     #
     # @param name [String, Symbol, nil] mutation name
     # @param variable_definitions [Hash] variable definitions
+    # @param directives [Array] list of directives
     # @param block [Proc] declare DSL for sub-fields
     #
     # @return [Nodes::Operation] GraphQL mutation
@@ -134,8 +137,8 @@ module GraphQL
     #   #     age
     #   #   }
     #   # }
-    def mutation(name = nil, **variable_definitions, &block)
-      Nodes::Operation.new(:mutation, name, **variable_definitions, &block)
+    def mutation(name = nil, variable_definitions = {}, directives = [], &block)
+      Nodes::Operation.new(:mutation, name, variable_definitions, directives, &block)
     end
 
     module_function :mutation
@@ -145,6 +148,7 @@ module GraphQL
     #
     # @param name [String, Symbol, nil] subscription name
     # @param variable_definitions [Hash] variable definitions
+    # @param directives [Array] list of directives
     # @param block [Proc] declare DSL for sub-fields
     #
     # @return [Nodes::Operation] GraphQL subscription
@@ -168,8 +172,8 @@ module GraphQL
     #   #     age
     #   #   }
     #   # }
-    def subscription(name = nil, **variable_definitions, &block)
-      Nodes::Operation.new(:subscription, name, **variable_definitions, &block)
+    def subscription(name = nil, variable_definitions = {}, directives = [], &block)
+      Nodes::Operation.new(:subscription, name, variable_definitions, directives, &block)
     end
 
     module_function :subscription
@@ -179,6 +183,7 @@ module GraphQL
     #
     # @param name [String, Symbol] fragment name
     # @param type [String, Symbol] fragment type or interface
+    # @param directives [Array] list of directives
     # @param block [Proc] declare DSL for sub-fields
     #
     # @return [Nodes::FragmentOperation] GraphQL fragment
@@ -197,8 +202,8 @@ module GraphQL
     #   #   name
     #   #   age
     #   # }
-    def fragment(name, type, &block)
-      Nodes::FragmentOperation.new(name, type, &block)
+    def fragment(name, type, directives = [], &block)
+      Nodes::FragmentOperation.new(name, type, directives, &block)
     end
 
     module_function :fragment

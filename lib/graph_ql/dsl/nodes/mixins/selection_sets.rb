@@ -14,6 +14,7 @@ module GraphQL
           #
           # @param name [String, Symbol] field name
           # @param __alias [String, Symbol, nil] field alias
+          # @param __directives [Array] list of directives
           # @param arguments [Hash] field arguments
           # @param block [Proc] declare sub-fields
           #
@@ -34,14 +35,15 @@ module GraphQL
           #       subfield2 id: 2
           #     }
           #   }
-          def __field(name, __alias: nil, **arguments, &block) # rubocop:disable Lint/UnderscorePrefixedVariableName
-            @__nodes << Field.new(name, __alias: __alias, **arguments, &block)
+          def __field(name, __alias: nil, __directives: [], **arguments, &block) # rubocop:disable Lint/UnderscorePrefixedVariableName
+            @__nodes << Field.new(name, __alias, arguments, __directives, &block)
           end
 
           ###
           # Insert GraphQL fragment
           #
           # @param name [String, Symbol] fragment name
+          # @param __directives [Array] list of directives
           #
           # @return [void]
           #
@@ -51,19 +53,20 @@ module GraphQL
           #       __fragment :fragment1
           #     }
           #   }
-          def __fragment(name)
-            @__nodes << FragmentSpread.new(name)
+          def __fragment(name, __directives: []) # rubocop:disable Lint/UnderscorePrefixedVariableName
+            @__nodes << FragmentSpread.new(name, __directives)
           end
 
           ###
           # Insert GraphQL inline fragment
           #
           # @param type [String, Symbol, nil] fragment type
+          # @param __directives [Array] list of directives
           # @param block [Proc] declare DSL for sub-fields
           #
           # @return [void]
-          def __inline_fragment(type, &block)
-            @__nodes << InlineFragment.new(type, &block)
+          def __inline_fragment(type, __directives: [], &block) # rubocop:disable Lint/UnderscorePrefixedVariableName
+            @__nodes << InlineFragment.new(type, __directives, &block)
           end
 
           private

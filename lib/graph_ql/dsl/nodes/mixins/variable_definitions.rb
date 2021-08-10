@@ -8,6 +8,7 @@ module GraphQL
         # This mixin help to use variable definitions
         module VariableDefinitions
           include Mixins::Values
+          include Mixins::Directives
 
           private
 
@@ -80,7 +81,7 @@ module GraphQL
           # @param variable_definition [Hash] variable definition
           #
           # @return [String] representation of variable definition as string
-          def __variable_definition_as_hash(variable_definition)
+          def __variable_definition_as_hash(variable_definition) # rubocop:disable Metrics/AbcSize
             if variable_definition[:type].nil? || variable_definition[:type].empty?
               raise GraphQL::DSL::Error, 'Variable type must be specified'
             end
@@ -89,6 +90,7 @@ module GraphQL
 
             result << variable_definition.fetch(:type)
             result << "= #{__value_to_s(variable_definition[:default], true)}" if variable_definition.key?(:default)
+            result << __directives_to_s(variable_definition[:directives], true) if variable_definition.key?(:directives)
 
             result.compact.join(' ')
           end
@@ -99,7 +101,7 @@ module GraphQL
           # @param variable_definition [Array] variable definition
           #
           # @return [String] representation of variable definition as string
-          def __variable_definition_as_array(variable_definition)
+          def __variable_definition_as_array(variable_definition) # rubocop:disable Metrics/AbcSize
             if variable_definition[0].nil? || variable_definition[0].empty?
               raise GraphQL::DSL::Error, 'Variable type must be specified'
             end
@@ -108,6 +110,7 @@ module GraphQL
 
             result << variable_definition.fetch(0)
             result << "= #{__value_to_s(variable_definition[1], true)}" if variable_definition.size > 1
+            result << __directives_to_s(variable_definition[2], true) if variable_definition.size > 2
 
             result.compact.join(' ')
           end

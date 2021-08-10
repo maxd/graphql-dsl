@@ -65,8 +65,16 @@ RSpec.describe GraphQL::DSL::Nodes::Mixins::VariableDefinitions do
       it { expect(__variable_definition_to_s({ type: :String, default: 'Value' })).to eq('String = "Value"') }
       it { expect(__variable_definition_to_s({ type: 'String', default: 'Value' })).to eq('String = "Value"') }
 
+      it do
+        expect(__variable_definition_to_s({
+          type: :String,
+          default: 'Value',
+          directives: [[:directive1, { a: 1 }], [:directive2, { b: 2 }]],
+        })).to eq('String = "Value" @directive1(a: 1) @directive2(b: 2)')
+      end
+
       it 'variables restricted in default values' do
-        expect { __variable_definition_to_s({ type: 'String', default: :$variable }) }
+        expect { __variable_definition_to_s({ type: :String, default: :$variable }) }
           .to raise_error GraphQL::DSL::Error, 'Value must be constant'
       end
     end
@@ -91,6 +99,14 @@ RSpec.describe GraphQL::DSL::Nodes::Mixins::VariableDefinitions do
 
       it { expect(__variable_definition_to_s([:String, 'Value'])).to eq('String = "Value"') }
       it { expect(__variable_definition_to_s(%w[String Value])).to eq('String = "Value"') }
+
+      it do
+        expect(__variable_definition_to_s([
+          :String,
+          'Value',
+          [[:directive1, { a: 1 }], [:directive2, { b: 2 }]],
+        ])).to eq('String = "Value" @directive1(a: 1) @directive2(b: 2)')
+      end
 
       it 'variables restricted in default values' do
         expect { __variable_definition_to_s(%i[String $variable]) }

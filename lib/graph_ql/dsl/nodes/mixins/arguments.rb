@@ -19,7 +19,7 @@ module GraphQL
           #
           # @return [String] representation of arguments as string
           def __arguments_to_s(arguments, is_const)
-            return '' if arguments.empty?
+            return nil if arguments.empty?
 
             result = arguments.map do |name, value|
               "#{name}: #{__value_to_s(value, is_const)}"

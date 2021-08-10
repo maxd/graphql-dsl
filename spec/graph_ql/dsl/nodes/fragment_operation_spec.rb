@@ -83,6 +83,25 @@ RSpec.describe GraphQL::DSL::Nodes::FragmentOperation do
       end
     end
 
+    context 'with directives' do
+      subject(:fragment) do
+        described_class.new(:fragment1, :Type1, [[:directive1, { a: 1 }]]) {
+          field1
+          field2
+        }
+      end
+
+      it 'valid result' do
+        expect(fragment.to_gql).to eq(<<~GQL.strip)
+          fragment fragment1 on Type1 @directive1(a: 1)
+          {
+            field1
+            field2
+          }
+        GQL
+      end
+    end
+
     context 'with fragment' do
       subject(:fragment) do
         described_class.new(:fragment1, :Type1) {

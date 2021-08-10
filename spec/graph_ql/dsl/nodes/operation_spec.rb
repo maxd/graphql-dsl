@@ -30,7 +30,7 @@ RSpec.describe GraphQL::DSL::Nodes::Operation do
             subject(:operation) { described_class.new(operation_type, name, a: :String) }
 
             it 'valid result' do
-              expect(operation.to_gql).to include(%[#{operation_type}#{name ? " #{name}" : ''}($a: String)])
+              expect(operation.to_gql).to include(%[#{operation_type} #{name}($a: String)])
             end
           end
 
@@ -43,7 +43,7 @@ RSpec.describe GraphQL::DSL::Nodes::Operation do
               end
 
               it 'valid result' do
-                expect(operation.to_gql).to include(%[#{operation_type}#{name ? " #{name}" : ''}($a: String)])
+                expect(operation.to_gql).to include(%[#{operation_type} #{name}($a: String)])
               end
             end
 
@@ -55,7 +55,19 @@ RSpec.describe GraphQL::DSL::Nodes::Operation do
               end
 
               it 'valid result' do
-                expect(operation.to_gql).to include(%[#{operation_type}#{name ? " #{name}" : ''}($a: String = "Value")])
+                expect(operation.to_gql).to include(%[#{operation_type} #{name}($a: String = "Value")])
+              end
+            end
+
+            context 'with directives' do
+              subject(:operation) do
+                described_class.new(operation_type, name) do
+                  __var :a, :String, directives: [[:directive1, { a: 1 }]]
+                end
+              end
+
+              it 'valid result' do
+                expect(operation.to_gql).to include(%[#{operation_type} #{name}($a: String @directive1(a: 1))])
               end
             end
           end
@@ -63,6 +75,16 @@ RSpec.describe GraphQL::DSL::Nodes::Operation do
 
         it_behaves_like 'build query', nil
         it_behaves_like 'build query', :operation1
+      end
+
+      context 'with directives' do
+        subject(:operation) do
+          described_class.new(operation_type, :operation1, {}, [[:directive1, { a: 1 }]])
+        end
+
+        it 'valid result' do
+          expect(operation.to_gql).to include(%[#{operation_type} operation1 @directive1(a: 1)])
+        end
       end
 
       context 'with fields' do

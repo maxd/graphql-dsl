@@ -56,6 +56,25 @@ RSpec.describe GraphQL::DSL::Nodes::InlineFragment do
       end
     end
 
+    context 'with directives' do
+      subject(:inline_fragment) do
+        described_class.new(:Type1, [[:directive1, { a: 1 }]]) {
+          field1
+          field2
+        }
+      end
+
+      it 'valid result' do
+        expect(inline_fragment.to_gql).to eq(<<~GQL.strip)
+          ... on Type1 @directive1(a: 1)
+          {
+            field1
+            field2
+          }
+        GQL
+      end
+    end
+
     context 'with fragment' do
       subject(:inline_fragment) do
         described_class.new(:Type1) {

@@ -8,6 +8,7 @@ module GraphQL
       class Operation < Node
         include Mixins::VariableDefinitions
         include Mixins::SelectionSets
+        include Mixins::Directives
 
         ##
         # @return [Symbol] operation type (see {#initialize})
@@ -18,6 +19,10 @@ module GraphQL
         attr_reader :__variable_definitions
 
         ##
+        # @return [Array] list of directives
+        attr_reader :__directives
+
+        ##
         # Create operation (query, mutation, subscription)
         #
         # @param operation_type [Symbol] operation type
@@ -26,10 +31,12 @@ module GraphQL
         # @option operation_type [Symbol] :subscription subscription operation
         # @param name [String, Symbol, nil] operation name
         # @param variable_definitions [Hash] variable definitions
+        # @param directives [Array] list of directives
         # @param block [Proc] declare DSL for sub-fields
-        def initialize(operation_type, name = nil, **variable_definitions, &block)
+        def initialize(operation_type, name = nil, variable_definitions = {}, directives = [], &block)
           @__operation_type = operation_type
           @__variable_definitions = variable_definitions
+          @__directives = directives
 
           super(name, &block)
         end
@@ -39,12 +46,14 @@ module GraphQL
         #
         # @param name [Symbol, String] variable name
         # @param type [Symbol, String] variable type
+        # @param directives [Array] variable directives
         # @param default [] variable default value
         #
         # @return [void]
-        def __var(name, type, default: UNDEFINED)
+        def __var(name, type, default: UNDEFINED, directives: [])
           variable_definition = { type: type }
           variable_definition.merge!(default: default) if default != UNDEFINED
+          variable_definition.merge!(directives: directives) unless directives.empty?
 
           @__variable_definitions[name.to_sym] = variable_definition
         end
@@ -75,14 +84,18 @@ module GraphQL
         #
         # @return [String, nil] representation of operation definition as string
         def __operation_definition_to_s
-          operation_name = [__operation_type_to_s, __name].compact
-
-          operation_signature = [
-            operation_name.empty? ? nil : operation_name.join(' '),
-            __variable_definitions_to_s(__variable_definitions)
+          operation_name_and_variables = [
+            __name,
+            __variable_definitions_to_s(__variable_definitions),
           ].compact
 
-          operation_signature.empty? ? nil : operation_signature.join
+          operation_signature = [
+            __operation_type_to_s,
+            (operation_name_and_variables.join unless operation_name_and_variables.empty?),
+            __directives_to_s(__directives, false),
+          ].compact
+
+          operation_signature.empty? ? nil : operation_signature.join(' ')
         end
 
         ##
