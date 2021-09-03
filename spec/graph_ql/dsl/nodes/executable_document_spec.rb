@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe GraphQL::DSL::Nodes::ExecutableDocument do
-  context 'to_gql' do
+  context '#initialize' do
     subject(:executable_document) do
       described_class.new do
         query(:query1) {
@@ -28,37 +28,13 @@ RSpec.describe GraphQL::DSL::Nodes::ExecutableDocument do
       end
     end
 
-    it 'valid result' do
-      expect(executable_document.to_gql).to eq(<<~GQL.strip)
-        query query1
-        {
-          field1
-          {
-            ...fragment1
-          }
-        }
+    it 'expected name' do
+      expect(executable_document.__name).to be_nil
+    end
 
-        fragment fragment1 on Type1
-        {
-          subfield1
-        }
-
-        mutation mutation1
-        {
-          createObject(title: "Object1")
-          {
-            id
-          }
-        }
-
-        subscription subscription1
-        {
-          message
-          {
-            field1
-          }
-        }
-      GQL
+    it 'expected nodes' do
+      node_names = executable_document.__nodes.map(&:__name)
+      expect(node_names).to eq(%i[query1 fragment1 mutation1 subscription1])
     end
   end
 end

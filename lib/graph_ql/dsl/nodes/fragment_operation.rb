@@ -7,7 +7,6 @@ module GraphQL
       # Fragment operation GraphQL node
       class FragmentOperation < Node
         include Mixins::SelectionSets
-        include Mixins::Directives
 
         ##
         # @return [String, Symbol] fragment type or interface
@@ -32,25 +31,6 @@ module GraphQL
           @__directives = directives
 
           super(name, &block)
-        end
-
-        ##
-        # (see Node#to_gql)
-        def to_gql(level = 0) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-          result = []
-
-          fragment_signature = [
-            "fragment #{__name}",
-            "on #{__type}",
-            __directives_to_s(__directives, false),
-          ].compact.join(' ')
-
-          result << __indent(level) + fragment_signature
-          result << "#{__indent(level)}{"
-          result += __nodes.map { |node| node.to_gql(level + 1) }
-          result << "#{__indent(level)}}"
-
-          result.join("\n")
         end
       end
     end

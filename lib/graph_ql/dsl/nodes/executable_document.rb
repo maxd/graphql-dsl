@@ -58,14 +58,6 @@ module GraphQL
         def fragment(name, type, &block)
           @__nodes << Nodes::FragmentOperation.new(name, type, &block)
         end
-
-        ##
-        # (see Node#to_gql)
-        def to_gql(level = 0)
-          result = []
-          result += __nodes.map { |node| node.to_gql(level) }
-          result.join("\n\n")
-        end
       end
     end
   end

@@ -1,116 +1,29 @@
 # frozen_string_literal: true
 
 RSpec.describe GraphQL::DSL::Nodes::InlineFragment do
-  context 'initializer' do
+  context '#initializer' do
+    context 'with all arguments' do
+      subject(:inline_fragment) do
+        described_class.new(:Type1, [[:directive1, { a: 1 }]]) {
+          subfield1
+        }
+      end
+
+      it('expected type') { expect(inline_fragment.__type).to eq(:Type1) }
+      it('expected directives') { expect(inline_fragment.__directives).to eq([[:directive1, { a: 1 }]]) }
+
+      it 'expected nodes' do
+        node_names = inline_fragment.__nodes.map(&:__name)
+        expect(node_names).to eq(%i[subfield1])
+      end
+    end
+
     context 'without block' do
       subject(:inline_fragment) { described_class.new(:Type1) }
 
       it 'valid result' do
         expect { inline_fragment }.to raise_error GraphQL::DSL::Error,
           'Sub-fields must be specified for inline fragment'
-      end
-    end
-  end
-
-  context 'to_gql' do
-    context 'with type' do
-      shared_examples 'build query' do |type|
-        subject(:inline_fragment) do
-          described_class.new(type) {
-            field1
-            field2
-          }
-        end
-
-        it 'valid result' do
-          expect(inline_fragment.to_gql).to eq(<<~GQL.strip)
-            ... on #{type}
-            {
-              field1
-              field2
-            }
-          GQL
-        end
-      end
-
-      it_behaves_like 'build query', 'Type1'
-      it_behaves_like 'build query', :Type1
-    end
-
-    context 'without type' do
-      subject(:inline_fragment) do
-        described_class.new {
-          field1
-          field2
-        }
-      end
-
-      it 'valid result' do
-        expect(inline_fragment.to_gql).to eq(<<~GQL.strip)
-          ...
-          {
-            field1
-            field2
-          }
-        GQL
-      end
-    end
-
-    context 'with directives' do
-      subject(:inline_fragment) do
-        described_class.new(:Type1, [[:directive1, { a: 1 }]]) {
-          field1
-          field2
-        }
-      end
-
-      it 'valid result' do
-        expect(inline_fragment.to_gql).to eq(<<~GQL.strip)
-          ... on Type1 @directive1(a: 1)
-          {
-            field1
-            field2
-          }
-        GQL
-      end
-    end
-
-    context 'with fragment' do
-      subject(:inline_fragment) do
-        described_class.new(:Type1) {
-          __fragment :fragment1
-        }
-      end
-
-      it 'valid result' do
-        expect(inline_fragment.to_gql).to eq(<<~GQL.strip)
-          ... on Type1
-          {
-            ...fragment1
-          }
-        GQL
-      end
-    end
-
-    context 'with inline fragment' do
-      subject(:inline_fragment) do
-        described_class.new(:Type1) {
-          __inline_fragment(:Type2) {
-            field1
-          }
-        }
-      end
-
-      it 'valid result' do
-        expect(inline_fragment.to_gql).to eq(<<~GQL.strip)
-          ... on Type1
-          {
-            ... on Type2
-            {
-              field1
-            }
-          }
-        GQL
       end
     end
   end

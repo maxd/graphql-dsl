@@ -6,8 +6,6 @@ module GraphQL
       ##
       # Fragment spread GraphQL node
       class FragmentSpread < Node
-        include Mixins::Directives
-
         ##
         # @return [Array] list of directives
         attr_reader :__directives
@@ -21,17 +19,6 @@ module GraphQL
           @__directives = directives
 
           super(name)
-        end
-
-        ##
-        # (see Node#to_gql)
-        def to_gql(level = 0)
-          fragment_spread_signature = [
-            __name,
-            __directives_to_s(__directives, false),
-          ].compact.join(' ')
-
-          __indent(level) + "...#{fragment_spread_signature}"
         end
       end
     end

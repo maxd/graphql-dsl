@@ -29,22 +29,11 @@ module GraphQL
         # Generate GraphQL query
         #
         # @param level [Integer] indent level
+        # @param formatter [GraphQL::DSL::Formatter] GraphQL query formatter
         #
         # @return [String] GraphQL query string
-        def to_gql(level = 0)
-          raise NotImplementedError
-        end
-
-        protected
-
-        ##
-        # Generate indent for formatting
-        #
-        # @param level [Integer] indent level
-        #
-        # @return [String] string for indent
-        def __indent(level)
-          '  ' * level
+        def to_gql(level = 0, formatter = GraphQL::DSL::Formatter.new)
+          formatter.format_node(self, level)
         end
       end
     end
