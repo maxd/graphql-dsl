@@ -7,7 +7,7 @@ module GraphQL
     #
     # @param block [Proc] declare DSL for operations
     #
-    # @return [Nodes::ExecutableDocument] executable GraphQL document
+    # @return [ExecutableDocument] executable GraphQL document
     #
     # @example Create executable document with several queries
     #  executable_document = GraphQL::DSL.executable_document {
@@ -52,7 +52,7 @@ module GraphQL
     #  #   age
     #  # }
     def executable_document(&block)
-      Nodes::ExecutableDocument.new(&block)
+      ExecutableDocument.new(&block)
     end
 
     module_function :executable_document
@@ -65,7 +65,7 @@ module GraphQL
     # @param directives [Array] list of directives
     # @param block [Proc] declare DSL for sub-fields
     #
-    # @return [Nodes::Operation] GraphQL query
+    # @return [Operation] GraphQL query
     #
     # @example Create query
     #   query = GraphQL::DSL.query(:sheep) {
@@ -85,7 +85,7 @@ module GraphQL
     #   #   }
     #   # }
     def query(name = nil, variable_definitions = {}, directives = [], &block)
-      Nodes::Operation.new(:query, name, variable_definitions, directives, &block)
+      Operation.new(:query, name, variable_definitions, directives, &block)
     end
 
     module_function :query
@@ -98,7 +98,7 @@ module GraphQL
     # @param directives [Array] list of directives
     # @param block [Proc] declare DSL for sub-fields
     #
-    # @return [Nodes::Operation] GraphQL mutation
+    # @return [Operation] GraphQL mutation
     #
     # @example Create mutation
     #   mutation = GraphQL::DSL.mutation(:create_sheep) {
@@ -120,7 +120,7 @@ module GraphQL
     #   #   }
     #   # }
     def mutation(name = nil, variable_definitions = {}, directives = [], &block)
-      Nodes::Operation.new(:mutation, name, variable_definitions, directives, &block)
+      Operation.new(:mutation, name, variable_definitions, directives, &block)
     end
 
     module_function :mutation
@@ -133,7 +133,7 @@ module GraphQL
     # @param directives [Array] list of directives
     # @param block [Proc] declare DSL for sub-fields
     #
-    # @return [Nodes::Operation] GraphQL subscription
+    # @return [Operation] GraphQL subscription
     #
     # @example Create subscription
     #   subscription = GraphQL::DSL.subscription(:sheep_jumps) {
@@ -155,7 +155,7 @@ module GraphQL
     #   #   }
     #   # }
     def subscription(name = nil, variable_definitions = {}, directives = [], &block)
-      Nodes::Operation.new(:subscription, name, variable_definitions, directives, &block)
+      Operation.new(:subscription, name, variable_definitions, directives, &block)
     end
 
     module_function :subscription
@@ -168,7 +168,7 @@ module GraphQL
     # @param directives [Array] list of directives
     # @param block [Proc] declare DSL for sub-fields
     #
-    # @return [Nodes::FragmentOperation] GraphQL fragment
+    # @return [FragmentOperation] GraphQL fragment
     #
     # @example Create fragment
     #   fragment = GraphQL::DSL.fragment(:animal, :Animal) {
@@ -185,7 +185,7 @@ module GraphQL
     #   #   age
     #   # }
     def fragment(name, type, directives = [], &block)
-      Nodes::FragmentOperation.new(name, type, directives, &block)
+      FragmentOperation.new(name, type, directives, &block)
     end
 
     module_function :fragment

@@ -8,7 +8,7 @@ module GraphQL
       ##
       # Format field as string
       #
-      # @param field [GraphQL::DSL::Nodes::Field] field node
+      # @param field [Field] field node
       # @param level [Integer] indent level
       #
       # @return [String] representation of field as string
@@ -28,7 +28,7 @@ module GraphQL
       ##
       # Format field signature as string
       #
-      # @param field [GraphQL::DSL::Nodes::Field] field node
+      # @param field [Field] field node
       #
       # @return [String] representation of field signature as string
       def format_field_signature(field)

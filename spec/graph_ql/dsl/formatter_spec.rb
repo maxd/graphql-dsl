@@ -20,16 +20,16 @@ RSpec.describe GraphQL::DSL::Formatter do
         end
       end
 
-      it_behaves_like 'format', GraphQL::DSL::Nodes::ExecutableDocument, :format_executable_document
-      it_behaves_like 'format', GraphQL::DSL::Nodes::Operation, :format_operation
-      it_behaves_like 'format', GraphQL::DSL::Nodes::FragmentOperation, :format_fragment_operation
-      it_behaves_like 'format', GraphQL::DSL::Nodes::Field, :format_field
-      it_behaves_like 'format', GraphQL::DSL::Nodes::FragmentSpread, :format_fragment_spread
-      it_behaves_like 'format', GraphQL::DSL::Nodes::InlineFragment, :format_inline_fragment
+      it_behaves_like 'format', GraphQL::DSL::ExecutableDocument, :format_executable_document
+      it_behaves_like 'format', GraphQL::DSL::Operation, :format_operation
+      it_behaves_like 'format', GraphQL::DSL::FragmentOperation, :format_fragment_operation
+      it_behaves_like 'format', GraphQL::DSL::Field, :format_field
+      it_behaves_like 'format', GraphQL::DSL::FragmentSpread, :format_fragment_spread
+      it_behaves_like 'format', GraphQL::DSL::InlineFragment, :format_inline_fragment
     end
 
     context 'format unknown node' do
-      let(:unknown_node) { Class.new(GraphQL::DSL::Nodes::Node) }
+      let(:unknown_node) { Class.new(GraphQL::DSL::Node) }
 
       it { expect { format_node(unknown_node) }.to raise_error GraphQL::DSL::Error, 'Unknown node' }
     end

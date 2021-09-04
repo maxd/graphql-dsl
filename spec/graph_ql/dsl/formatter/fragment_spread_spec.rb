@@ -5,7 +5,7 @@ RSpec.describe GraphQL::DSL::Formatter do
 
   context '#format_fragment_spread' do
     def fragment_spread(name, directives = [])
-      GraphQL::DSL::Nodes::FragmentSpread.new(name, directives)
+      GraphQL::DSL::FragmentSpread.new(name, directives)
     end
 
     def format_fragment_spread(fragment_spread, level = 0)

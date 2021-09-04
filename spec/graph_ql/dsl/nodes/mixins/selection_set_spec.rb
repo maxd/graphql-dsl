@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe GraphQL::DSL::Nodes::Mixins::SelectionSet do
+RSpec.describe GraphQL::DSL::SelectionSet do
   let(:test_class) do
     Class.new do
       attr_reader :__nodes
@@ -9,7 +9,7 @@ RSpec.describe GraphQL::DSL::Nodes::Mixins::SelectionSet do
         @__nodes = []
       end
 
-      include GraphQL::DSL::Nodes::Mixins::SelectionSet
+      include GraphQL::DSL::SelectionSet
     end
   end
 

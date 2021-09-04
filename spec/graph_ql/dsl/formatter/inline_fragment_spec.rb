@@ -5,7 +5,7 @@ RSpec.describe GraphQL::DSL::Formatter do
 
   context '#format_inline_fragment' do
     def inline_fragment(type = nil, directives = [], &block)
-      GraphQL::DSL::Nodes::InlineFragment.new(type, directives, &block)
+      GraphQL::DSL::InlineFragment.new(type, directives, &block)
     end
 
     def format_inline_fragment(inline_fragment, level = 0)

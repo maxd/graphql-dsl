@@ -8,7 +8,7 @@ module GraphQL
       ##
       # Format executable document as string
       #
-      # @param executable_document [GraphQL::DSL::Nodes::ExecutableDocument] executable document node
+      # @param executable_document [ExecutableDocument] executable document node
       # @param level [Integer] indent level
       #
       # @return [String] representation of executable document as string

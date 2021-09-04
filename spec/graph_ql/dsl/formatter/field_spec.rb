@@ -5,7 +5,7 @@ RSpec.describe GraphQL::DSL::Formatter do
 
   context '#format_field' do
     def field(field_name, field_alias = nil, arguments = {}, directives = [], &block)
-      GraphQL::DSL::Nodes::Field.new(field_name, field_alias, arguments, directives, &block)
+      GraphQL::DSL::Field.new(field_name, field_alias, arguments, directives, &block)
     end
 
     def format_field(field, level = 0)

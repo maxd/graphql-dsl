@@ -32,18 +32,5 @@ module GraphQL
   ##
   # GraphQL DSL entry-point
   module DSL
-    ##
-    # Module with GraphQL DSL nodes
-    module Nodes
-      ##
-      # Module with GraphQL DSL containers
-      module Containers
-      end
-
-      ##
-      # Module with GraphQL DSL mixins
-      module Mixins
-      end
-    end
   end
 end

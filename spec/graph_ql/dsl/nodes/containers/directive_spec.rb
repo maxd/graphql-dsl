@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe GraphQL::DSL::Nodes::Containers::Directive do
+RSpec.describe GraphQL::DSL::Directive do
   context '#initialize' do
     context 'with all arguments' do
       subject(:directive) { described_class.new(:directive1, { a: 1 }) }

@@ -2,24 +2,22 @@
 
 module GraphQL
   module DSL
-    module Nodes
+    ##
+    # Fragment spread GraphQL node
+    class FragmentSpread < Node
       ##
-      # Fragment spread GraphQL node
-      class FragmentSpread < Node
-        ##
-        # @return [Array<GraphQL::DSL::Nodes::Containers::Directive>] list of directives
-        attr_reader :__directives
+      # @return [Array<Directive>] list of directives
+      attr_reader :__directives
 
-        ##
-        # Create fragment spread
-        #
-        # @param name [String, Symbol] fragment name
-        # @param directives [Array<Hash, Array, GraphQL::DSL::Nodes::Containers::Directive>] list of directives
-        def initialize(name, directives = [])
-          @__directives = directives.map { |directive| Containers::Directive.from(directive) }
+      ##
+      # Create fragment spread
+      #
+      # @param name [String, Symbol] fragment name
+      # @param directives [Array<Hash, Array, Directive>] list of directives
+      def initialize(name, directives = [])
+        @__directives = directives.map { |directive| Directive.from(directive) }
 
-          super(name)
-        end
+        super(name)
       end
     end
   end

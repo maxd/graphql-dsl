@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe GraphQL::DSL::Nodes::ExecutableDocument do
+RSpec.describe GraphQL::DSL::ExecutableDocument do
   context '#initialize' do
     subject(:executable_document) do
       described_class.new do

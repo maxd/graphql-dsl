@@ -8,7 +8,7 @@ module GraphQL
       ##
       # Format fragment operation as string
       #
-      # @param fragment_operation [GraphQL::DSL::Nodes::FragmentOperation] fragment operation node
+      # @param fragment_operation [FragmentOperation] fragment operation node
       # @param level [Integer] indent level
       #
       # @return [String] representation of fragment operation as string
@@ -26,7 +26,7 @@ module GraphQL
       ##
       # Format fragment operation signature as string
       #
-      # @param fragment_operator [GraphQL::DSL::Nodes::FragmentOperation] fragment operation node
+      # @param fragment_operator [FragmentOperation] fragment operation node
       #
       # @return [String] representation of fragment operation signature as string
       def format_fragment_operation_signature(fragment_operator)

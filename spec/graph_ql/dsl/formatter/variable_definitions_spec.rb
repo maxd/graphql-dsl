@@ -6,7 +6,7 @@ RSpec.describe GraphQL::DSL::Formatter do
   context '#format_variable_definitions' do
     def format_variable_definitions(variable_definitions)
       variable_definitions = variable_definitions.map do |variable_name, variable_definition|
-        GraphQL::DSL::Nodes::Containers::VariableDefinition.from(variable_name, variable_definition)
+        GraphQL::DSL::VariableDefinition.from(variable_name, variable_definition)
       end
       formatter.send(:format_variable_definitions, variable_definitions)
     end
@@ -24,7 +24,7 @@ RSpec.describe GraphQL::DSL::Formatter do
   context '#format_variable_definition' do
     def format_variable_definition(variable_definition)
       variable_name, variable_signature = variable_definition.first
-      variable_definition = GraphQL::DSL::Nodes::Containers::VariableDefinition.from(variable_name, variable_signature)
+      variable_definition = GraphQL::DSL::VariableDefinition.from(variable_name, variable_signature)
 
       formatter.send(:format_variable_definition, variable_definition)
     end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe GraphQL::DSL::Nodes::Node do
+RSpec.describe GraphQL::DSL::Node do
   let(:node_class) do
     Class.new(described_class) do
       def test_method

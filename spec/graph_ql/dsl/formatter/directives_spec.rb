@@ -5,7 +5,7 @@ RSpec.describe GraphQL::DSL::Formatter do
 
   context '#format_directives' do
     def format_directives(directives, is_const: false)
-      directives = directives.map { |directive| GraphQL::DSL::Nodes::Containers::Directive.from(directive) }
+      directives = directives.map { |directive| GraphQL::DSL::Directive.from(directive) }
       formatter.send(:format_directives, directives, is_const)
     end
 

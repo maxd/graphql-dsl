@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe GraphQL::DSL::Nodes::Containers::VariableDefinition do
+RSpec.describe GraphQL::DSL::VariableDefinition do
   context '#initialize' do
     context 'with all arguments' do
       subject(:variable_definition) do
@@ -11,7 +11,7 @@ RSpec.describe GraphQL::DSL::Nodes::Containers::VariableDefinition do
       it('expected type') { expect(variable_definition.type).to eq(:Type1) }
       it('expected default value') { expect(variable_definition.default).to eq(1) }
       it('expected directives') do
-        expect(variable_definition.directives).to all be_a(GraphQL::DSL::Nodes::Containers::Directive)
+        expect(variable_definition.directives).to all be_a(GraphQL::DSL::Directive)
       end
     end
   end
@@ -24,7 +24,7 @@ RSpec.describe GraphQL::DSL::Nodes::Containers::VariableDefinition do
       it('expected type') { expect(variable_definition.type).to eq(:Type1) }
       it('expected default value') { expect(variable_definition.default).to eq(1) }
       it('expected directives') do
-        expect(variable_definition.directives).to all be_a(GraphQL::DSL::Nodes::Containers::Directive)
+        expect(variable_definition.directives).to all be_a(GraphQL::DSL::Directive)
       end
     end
 

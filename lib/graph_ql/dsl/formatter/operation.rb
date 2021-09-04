@@ -8,7 +8,7 @@ module GraphQL
       ##
       # Format operation as string
       #
-      # @param operation [GraphQL::DSL::Nodes::FragmentOperation] operation node
+      # @param operation [FragmentOperation] operation node
       # @param level [Integer] indent level
       #
       # @return [String] representation of operation as string

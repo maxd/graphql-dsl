@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe GraphQL::DSL::Nodes::FragmentOperation do
+RSpec.describe GraphQL::DSL::FragmentOperation do
   context '#initializer' do
     context 'with all arguments' do
       subject(:fragment) { described_class.new(:fragment1, :Type1) }

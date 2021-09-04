@@ -5,7 +5,7 @@ RSpec.describe GraphQL::DSL::Formatter do
 
   context '#format_operation' do
     def operation(operation_type, name = nil, variable_definitions = {}, directives = [], &block)
-      GraphQL::DSL::Nodes::Operation.new(operation_type, name, variable_definitions, directives, &block)
+      GraphQL::DSL::Operation.new(operation_type, name, variable_definitions, directives, &block)
     end
 
     def format_operation(operation, level = 0)

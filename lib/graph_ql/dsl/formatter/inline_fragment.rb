@@ -8,7 +8,7 @@ module GraphQL
       ##
       # Format inline fragment as string
       #
-      # @param inline_fragment [GraphQL::DSL::Nodes::InlineFragment] inline fragment node
+      # @param inline_fragment [InlineFragment] inline fragment node
       # @param level [Integer] indent level
       #
       # @return [String] representation of inline fragment as string
@@ -28,7 +28,7 @@ module GraphQL
       ##
       # Format inline fragment signature as string
       #
-      # @param inline_fragment [GraphQL::DSL::Nodes::InlineFragment] inline fragment node
+      # @param inline_fragment [InlineFragment] inline fragment node
       #
       # @return [String] representation of inline fragment signature as string
       def format_inline_fragment_signature(inline_fragment)

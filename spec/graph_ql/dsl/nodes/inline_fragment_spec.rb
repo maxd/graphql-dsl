@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe GraphQL::DSL::Nodes::InlineFragment do
+RSpec.describe GraphQL::DSL::InlineFragment do
   context '#initializer' do
     context 'with all arguments' do
       subject(:inline_fragment) do
@@ -11,7 +11,7 @@ RSpec.describe GraphQL::DSL::Nodes::InlineFragment do
 
       it('expected type') { expect(inline_fragment.__type).to eq(:Type1) }
       it('expected directives') do
-        expect(inline_fragment.__directives).to all be_a(GraphQL::DSL::Nodes::Containers::Directive)
+        expect(inline_fragment.__directives).to all be_a(GraphQL::DSL::Directive)
       end
 
       it 'expected nodes' do

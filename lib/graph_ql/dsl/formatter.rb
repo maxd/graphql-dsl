@@ -14,14 +14,14 @@ module GraphQL
       # @return [String] representation of node as GraphQL string
       def format_node(node, level)
         case node
-        when Nodes::ExecutableDocument then format_executable_document(node, level)
-        when Nodes::Operation then format_operation(node, level)
-        when Nodes::FragmentOperation then format_fragment_operation(node, level)
-        when Nodes::Field then format_field(node, level)
-        when Nodes::FragmentSpread then format_fragment_spread(node, level)
-        when Nodes::InlineFragment then format_inline_fragment(node, level)
+        when ExecutableDocument then format_executable_document(node, level)
+        when Operation then format_operation(node, level)
+        when FragmentOperation then format_fragment_operation(node, level)
+        when Field then format_field(node, level)
+        when FragmentSpread then format_fragment_spread(node, level)
+        when InlineFragment then format_inline_fragment(node, level)
         else
-          raise GraphQL::DSL::Error.new('Unknown node', class: node.class.name)
+          raise Error.new('Unknown node', class: node.class.name)
         end
       end
 

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe GraphQL::DSL::Nodes::Field do
+RSpec.describe GraphQL::DSL::Field do
   context '#initialize' do
     context 'with all arguments' do
       subject(:field) do
@@ -12,7 +12,7 @@ RSpec.describe GraphQL::DSL::Nodes::Field do
       it('expected field name') { expect(field.__name).to eq(:field1) }
       it('expected field alias') { expect(field.__alias).to eq(:alias1) }
       it('expected arguments') { expect(field.__arguments).to eq({ a: 1 }) }
-      it('expected directives') { expect(field.__directives).to all be_a(GraphQL::DSL::Nodes::Containers::Directive) }
+      it('expected directives') { expect(field.__directives).to all be_a(GraphQL::DSL::Directive) }
 
       it 'expected nodes' do
         node_names = field.__nodes.map(&:__name)

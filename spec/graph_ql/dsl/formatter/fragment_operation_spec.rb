@@ -5,7 +5,7 @@ RSpec.describe GraphQL::DSL::Formatter do
 
   context '#format_fragment_operation' do
     def fragment_operator(name, type, directives = [], &block)
-      GraphQL::DSL::Nodes::FragmentOperation.new(name, type, directives, &block)
+      GraphQL::DSL::FragmentOperation.new(name, type, directives, &block)
     end
 
     def format_fragment_operation(fragment_operator, level = 0)

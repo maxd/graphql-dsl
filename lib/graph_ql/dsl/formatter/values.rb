@@ -35,7 +35,7 @@ module GraphQL
         when Hash
           format_value_to_object(value, is_const)
         else
-          raise GraphQL::DSL::Error.new('Unsupported value type', class: value.class.name, value: value)
+          raise Error.new('Unsupported value type', class: value.class.name, value: value)
         end
       end
 
@@ -97,7 +97,7 @@ module GraphQL
       #
       # @return [String] representation of value as variable value
       def format_value_to_variable(value, is_const)
-        raise GraphQL::DSL::Error.new('Value must be constant', value: value) if is_const
+        raise Error.new('Value must be constant', value: value) if is_const
 
         value.to_s
       end

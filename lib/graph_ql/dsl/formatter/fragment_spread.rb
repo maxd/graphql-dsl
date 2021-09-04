@@ -8,7 +8,7 @@ module GraphQL
       ##
       # Format fragment spread as string
       #
-      # @param fragment_spread [GraphQL::DSL::Nodes::FragmentSpread] fragment spread node
+      # @param fragment_spread [FragmentSpread] fragment spread node
       # @param level [Integer] indent level
       #
       # @return [String] representation of fragment spread as string
