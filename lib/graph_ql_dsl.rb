@@ -3,7 +3,7 @@
 require 'graph_ql/dsl'
 require 'graph_ql/dsl/constants'
 require 'graph_ql/dsl/error'
-require 'graph_ql/dsl/formatter'
+require 'graph_ql/dsl/formatter/formatter'
 require 'graph_ql/dsl/formatter/arguments'
 require 'graph_ql/dsl/formatter/directives'
 require 'graph_ql/dsl/formatter/executable_document'
