@@ -8,7 +8,9 @@ RSpec.describe GraphQL::DSL::Nodes::FragmentSpread do
       end
 
       it('expected name') { expect(fragment_spread.__name).to eq(:field1) }
-      it('expected directives') { expect(fragment_spread.__directives).to eq([[:directive1, { a: 1 }]]) }
+      it('expected directives') do
+        expect(fragment_spread.__directives).to all be_a(GraphQL::DSL::Nodes::Containers::Directive)
+      end
     end
   end
 end

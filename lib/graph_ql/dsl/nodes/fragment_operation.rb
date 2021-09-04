@@ -13,7 +13,7 @@ module GraphQL
         attr_reader :__type
 
         ##
-        # @return [Array] list of directives
+        # @return [Array<GraphQL::DSL::Nodes::Containers::Directive>] list of directives
         attr_reader :__directives
 
         ##
@@ -21,14 +21,14 @@ module GraphQL
         #
         # @param name [String, Symbol] fragment name
         # @param type [String, Symbol] fragment type or interface
-        # @param directives [Array] list of directives
+        # @param directives [Array<Hash, Array, GraphQL::DSL::Nodes::Containers::Directive>] list of directives
         # @param block [Proc] declare DSL for sub-fields
         def initialize(name, type, directives = [], &block)
           raise GraphQL::DSL::Error, '`name` must be specified' if name.nil? || name.empty?
           raise GraphQL::DSL::Error, '`type` must be specified' if type.nil? || type.empty?
 
           @__type = type
-          @__directives = directives
+          @__directives = directives.map { |directive| Containers::Directive.from(directive) }
 
           super(name, &block)
         end

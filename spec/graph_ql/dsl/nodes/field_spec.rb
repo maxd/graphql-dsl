@@ -12,7 +12,7 @@ RSpec.describe GraphQL::DSL::Nodes::Field do
       it('expected field name') { expect(field.__name).to eq(:field1) }
       it('expected field alias') { expect(field.__alias).to eq(:alias1) }
       it('expected arguments') { expect(field.__arguments).to eq({ a: 1 }) }
-      it('expected directives') { expect(field.__directives).to eq([[:directive1, { a: 1 }]]) }
+      it('expected directives') { expect(field.__directives).to all be_a(GraphQL::DSL::Nodes::Containers::Directive) }
 
       it 'expected nodes' do
         node_names = field.__nodes.map(&:__name)

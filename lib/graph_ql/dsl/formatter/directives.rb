@@ -30,55 +30,10 @@ module GraphQL
       #
       # @return [String] representation of directive as string
       def format_directive(directive, is_const)
-        case directive
-        when Hash
-          format_directive_from_hash(directive, is_const)
-        when Array
-          format_directive_from_array(directive, is_const)
-        else
-          raise GraphQL::DSL::Error.new('Unsupported directive type',
-            class: directive.class.name, directive: directive)
-        end
-      end
-
-      ##
-      # Format directive to string
-      #
-      # @param directive [Hash] directive
-      # @param is_const [Boolean] allow to use variables or not
-      #
-      # @return [String] representation of directive as string
-      def format_directive_from_hash(directive, is_const)
-        name = directive[:name]
-        arguments = directive[:args]
-
-        raise GraphQL::DSL::Error, 'Directive name must be specified' if name.nil? || name.empty?
-
         result = []
 
-        result << format_directive_name(name)
-        result << format_arguments(arguments, is_const) if directive.key?(:args)
-
-        result.compact.join
-      end
-
-      ##
-      # Format directive to string
-      #
-      # @param directive [Array] directive
-      # @param is_const [Boolean] allow to use variables or not
-      #
-      # @return [String] representation of directive as string
-      def format_directive_from_array(directive, is_const)
-        name = directive[0]
-        arguments = directive[1]
-
-        raise GraphQL::DSL::Error, 'Directive name must be specified' if name.nil? || name.empty?
-
-        result = []
-
-        result << format_directive_name(name)
-        result << format_arguments(arguments, is_const) if directive.size > 1
+        result << format_directive_name(directive.name)
+        result << format_arguments(directive.arguments, is_const) unless directive.arguments.empty?
 
         result.compact.join
       end

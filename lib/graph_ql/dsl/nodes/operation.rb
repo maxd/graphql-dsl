@@ -13,11 +13,11 @@ module GraphQL
         attr_reader :__operation_type
 
         ##
-        # @return [Hash] variable definitions
+        # @return [Array<GraphQL::DSL::Nodes::Containers::VariableDefinition>] variable definitions
         attr_reader :__variable_definitions
 
         ##
-        # @return [Array] list of directives
+        # @return [Array<GraphQL::DSL::Nodes::Containers::Directive>] list of directives
         attr_reader :__directives
 
         ##
@@ -29,12 +29,14 @@ module GraphQL
         # @option operation_type [Symbol] :subscription subscription operation
         # @param name [String, Symbol, nil] operation name
         # @param variable_definitions [Hash] variable definitions
-        # @param directives [Array] list of directives
+        # @param directives [Array<Hash, Array, GraphQL::DSL::Nodes::Containers::Directive>] list of directives
         # @param block [Proc] declare DSL for sub-fields
         def initialize(operation_type, name = nil, variable_definitions = {}, directives = [], &block)
           @__operation_type = operation_type
-          @__variable_definitions = variable_definitions
-          @__directives = directives
+          @__variable_definitions = variable_definitions.map do |variable_name, variable_definition|
+            Containers::VariableDefinition.from(variable_name, variable_definition)
+          end
+          @__directives = directives.map { |directive| Containers::Directive.from(directive) }
 
           super(name, &block)
         end
@@ -44,16 +46,12 @@ module GraphQL
         #
         # @param name [Symbol, String] variable name
         # @param type [Symbol, String] variable type
-        # @param directives [Array] variable directives
+        # @param directives [Array<Hash, Array, GraphQL::DSL::Nodes::Containers::Directive>] variable directives
         # @param default [Object] variable default value
         #
         # @return [void]
         def __var(name, type, default: UNDEFINED, directives: [])
-          variable_definition = { type: type }
-          variable_definition.merge!(default: default) if default != UNDEFINED
-          variable_definition.merge!(directives: directives) unless directives.empty?
-
-          @__variable_definitions[name.to_sym] = variable_definition
+          @__variable_definitions << Containers::VariableDefinition.new(name, type, default, directives)
         end
       end
     end

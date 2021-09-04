@@ -14,6 +14,8 @@ require 'graph_ql/dsl/formatter/inline_fragment'
 require 'graph_ql/dsl/formatter/operation'
 require 'graph_ql/dsl/formatter/values'
 require 'graph_ql/dsl/formatter/variable_definitions'
+require 'graph_ql/dsl/nodes/containers/directive'
+require 'graph_ql/dsl/nodes/containers/variable_definition'
 require 'graph_ql/dsl/nodes/mixins/selection_sets'
 require 'graph_ql/dsl/nodes/node'
 require 'graph_ql/dsl/nodes/executable_document'
@@ -33,6 +35,11 @@ module GraphQL
     ##
     # Module with GraphQL DSL nodes
     module Nodes
+      ##
+      # Module with GraphQL DSL containers
+      module Containers
+      end
+
       ##
       # Module with GraphQL DSL mixins
       module Mixins
