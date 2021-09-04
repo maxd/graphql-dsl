@@ -6,7 +6,7 @@ module GraphQL
       module Mixins
         ##
         # This mixin help to reuse selections sets
-        module SelectionSets
+        module SelectionSet
           ##
           # Declare new GraphQL field
           #

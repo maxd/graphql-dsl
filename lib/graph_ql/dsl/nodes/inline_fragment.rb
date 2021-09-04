@@ -6,7 +6,7 @@ module GraphQL
       ##
       # Inline fragment GraphQL node
       class InlineFragment < Node
-        include Mixins::SelectionSets
+        include Mixins::SelectionSet
 
         ##
         # @return [String, Symbol, nil] inline fragment type or interface

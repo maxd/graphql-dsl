@@ -6,7 +6,7 @@ module GraphQL
       ##
       # Field GraphQL node
       class Field < Node
-        include Mixins::SelectionSets
+        include Mixins::SelectionSet
 
         ##
         # @return [String, Symbol, nil] field alias
