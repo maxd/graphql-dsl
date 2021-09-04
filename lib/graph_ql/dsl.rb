@@ -1,21 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'dsl/error'
-require_relative 'dsl/nodes/mixins'
-require_relative 'dsl/nodes/mixins/selection_sets'
-require_relative 'dsl/nodes/node'
-require_relative 'dsl/nodes/field'
-require_relative 'dsl/nodes/fragment_spread'
-require_relative 'dsl/nodes/inline_fragment'
-require_relative 'dsl/nodes/operation'
-require_relative 'dsl/nodes/fragment_operation'
-require_relative 'dsl/nodes/executable_document'
-require_relative 'dsl/formatter'
-require_relative 'dsl/version'
-
 module GraphQL
-  ##
-  # GraphQL DSL entry-point
   module DSL
     ##
     # Create executable GraphQL document

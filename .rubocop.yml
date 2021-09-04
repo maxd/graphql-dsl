@@ -14,6 +14,13 @@ Layout/FirstArrayElementIndentation:
 Layout/ArgumentAlignment:
   EnforcedStyle: with_fixed_indentation
 
+Style/Documentation:
+  AllowedConstants:
+    - GraphQL
+    - DSL
+    - Nodes
+    - Mixins
+
 Style/StringLiterals:
   EnforcedStyle: single_quotes
 

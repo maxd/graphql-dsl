@@ -1,16 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'formatter/arguments'
-require_relative 'formatter/directives'
-require_relative 'formatter/executable_document'
-require_relative 'formatter/field'
-require_relative 'formatter/fragment_operation'
-require_relative 'formatter/fragment_spread'
-require_relative 'formatter/inline_fragment'
-require_relative 'formatter/operation'
-require_relative 'formatter/values'
-require_relative 'formatter/variable_definitions'
-
 module GraphQL
   module DSL
     ##
