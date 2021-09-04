@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'graph_ql/dsl'
+require 'graph_ql/dsl/constants'
 require 'graph_ql/dsl/error'
 require 'graph_ql/dsl/formatter'
 require 'graph_ql/dsl/formatter/arguments'

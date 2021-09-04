@@ -55,12 +55,6 @@ module GraphQL
 
           @__variable_definitions[name.to_sym] = variable_definition
         end
-
-        ##
-        # Help to mark default parameter as undefined
-        UNDEFINED = Object.new
-
-        private_constant :UNDEFINED
       end
     end
   end
