@@ -16,7 +16,7 @@ task :update_readme do
       end
     end
 
-    example_file = $1
+    example_file = Regexp.last_match(1)
     example_code = File.read(example_file)
     example_result = mod.module_eval(example_code, example_file, 0)
 
