@@ -2,5 +2,5 @@
 
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in graph_ql_dsl.gemspec
+# Specify your gem's dependencies in graphql-dsl.gemspec
 gemspec

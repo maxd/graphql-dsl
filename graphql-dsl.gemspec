@@ -1,24 +1,24 @@
 # frozen_string_literal: true
 
-require_relative 'lib/graph_ql/dsl/version'
+require_relative 'lib/graphql/dsl/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'graph_ql_dsl'
+  spec.name          = 'graphql-dsl'
   spec.version       = GraphQL::DSL::VERSION
   spec.authors       = ['Maxim Dobryakov']
   spec.email         = ['maxim.dobryakov@gmail.com']
 
   spec.summary       = 'GraphQL DSL'
   spec.description   = 'Ruby DSL for GraphQL'
-  spec.homepage      = 'https://github.com/maxd/graph-ql-dsl'
+  spec.homepage      = 'https://github.com/maxd/graphql-dsl'
   spec.license       = 'MIT'
   spec.required_ruby_version = Gem::Requirement.new('>= 2.6.0')
 
   # spec.metadata['allowed_push_host'] = "Set to 'http://mygemserver.com'"
 
   spec.metadata['homepage_uri'] = spec.homepage
-  spec.metadata['source_code_uri'] = 'https://github.com/maxd/graph-ql-dsl'
-  spec.metadata['changelog_uri'] = 'https://github.com/maxd/graph-ql-dsl/releases'
+  spec.metadata['source_code_uri'] = 'https://github.com/maxd/graphql-dsl'
+  spec.metadata['changelog_uri'] = 'https://github.com/maxd/graphql-dsl/releases'
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.

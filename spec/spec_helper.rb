@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'graph_ql_dsl'
+require 'graphql_dsl'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

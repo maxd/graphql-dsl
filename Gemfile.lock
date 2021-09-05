@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    graph_ql_dsl (0.1.0)
+    graphql-dsl (0.1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -52,7 +52,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  graph_ql_dsl!
+  graphql-dsl!
   rake (~> 13.0)
   rspec (~> 3.10)
   rubocop (~> 1.18)

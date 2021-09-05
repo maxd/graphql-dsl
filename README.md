@@ -1,6 +1,6 @@
 # GraphQL DSL
 
-[![main](https://github.com/maxd/graph_ql_dsl/actions/workflows/main.yml/badge.svg)](https://github.com/maxd/graph_ql_dsl/actions/workflows/main.yml)
+[![main](https://github.com/maxd/graph-ql-dsl/actions/workflows/main.yml/badge.svg)](https://github.com/maxd/graphql-dsl/actions/workflows/main.yml)
 
 `graphql-dsl` lets you easy create GraphQL queries by code:
 
@@ -45,7 +45,7 @@ I wanted to create GraphQL queries by code with some Ruby DSL instead of writing
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'graph_ql_dsl'
+gem 'graphql-dsl'
 ```
 
 And then execute:
@@ -54,7 +54,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install graph_ql_dsl
+    $ gem install graphql-dsl
 
 ## Usage
 
@@ -71,9 +71,9 @@ which will create a git tag for the version, push git commits and the created ta
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/maxd/graph_ql_dsl. This project is intended 
+Bug reports and pull requests are welcome on GitHub at https://github.com/maxd/graphql-dsl. This project is intended 
 to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the 
-[code of conduct](https://github.com/maxd/graph_ql_dsl/blob/master/CODE_OF_CONDUCT.md).
+[code of conduct](https://github.com/maxd/graphql-dsl/blob/master/CODE_OF_CONDUCT.md).
 
 ## License
 
@@ -82,4 +82,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 ## Code of Conduct
 
 Everyone interacting in the GraphQlDsl project's codebases, issue trackers, chat rooms and mailing lists is expected to 
-follow the [code of conduct](https://github.com/maxd/graph_ql_dsl/blob/master/CODE_OF_CONDUCT.md).
+follow the [code of conduct](https://github.com/maxd/graphql-dsl/blob/master/CODE_OF_CONDUCT.md).

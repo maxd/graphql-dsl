@@ -14,6 +14,10 @@ Layout/FirstArrayElementIndentation:
 Layout/ArgumentAlignment:
   EnforcedStyle: with_fixed_indentation
 
+Naming/FileName:
+  Exclude:
+    - lib/graphql-dsl.rb
+
 Style/Documentation:
   AllowedConstants:
     - GraphQL
