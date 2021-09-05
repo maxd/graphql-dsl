@@ -1,6 +1,6 @@
 # GraphQL DSL
 
-[![main](https://github.com/maxd/graph-ql-dsl/actions/workflows/main.yml/badge.svg)](https://github.com/maxd/graphql-dsl/actions/workflows/main.yml)
+[![main](https://github.com/maxd/graphql-dsl/actions/workflows/main.yml/badge.svg)](https://github.com/maxd/graphql-dsl/actions/workflows/main.yml)
 
 `graphql-dsl` lets you easy create GraphQL queries by code:
 
