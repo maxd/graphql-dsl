@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'graph_ql_dsl'
-
 module ReadmeUpdater # rubocop:disable Style/Documentation
   class << self
     README_FILE = 'README.md'
@@ -50,6 +48,7 @@ module ReadmeUpdater # rubocop:disable Style/Documentation
 end
 
 namespace :readme do
+  desc 'Update README.md file (i.e. examples queries, etc.)'
   task :update do
     ReadmeUpdater.update
   end
