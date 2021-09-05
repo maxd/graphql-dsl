@@ -4,7 +4,7 @@
 
 `graphql-dsl` lets you easy create GraphQL queries by code:
 
-* without writing cumbersome heredoc blocks
+* without writing cumbersome heredoc
 * allow to union queries dynamically without concatenation of string
 
 ```ruby
@@ -54,79 +54,79 @@ There are three ways how to use GraphQL DSL.
 
 1. Call methods of `GraphQL::DSL` module directly
 
-```ruby
-rockets_query = GraphQL::DSL.query {
-  rockets {
-    name
-  }
-}.to_gql
-
-puts rockets_query
-```
-
-```graphql
-{
-  rockets
-  {
-    name
-  }
-}
-```
-
-1. Extend class or module with `GraphQL:DSL`
-
-```ruby
-module SpaceXQueries
-  extend GraphQL::DSL
-  
-  ROCKETS = query {
-    rockets {
-      name
-    }
-  }.to_gql
-end
-
-puts SpaceXQueries::ROCKETS
-```
-
-```graphql
-{
-  rockets
-  {
-    name
-  }
-}
-```
-
-1. Include `GraphQL:DSL` to class
-
-```ruby
-class SpaceXQueries
-  include GraphQL::DSL
-  
-  # use memorization or lazy initialization 
-  # to avoid generation of query on each method call 
-  def rockets
-    query {
+    ```ruby
+    rockets_query = GraphQL::DSL.query {
       rockets {
         name
       }
     }.to_gql
-  end
-end
+    
+    puts rockets_query
+    ```
+    
+    ```graphql
+    {
+      rockets
+      {
+        name
+      }
+    }
+    ```
 
-queries = SpaceXQueries.new
-puts queries.rockets
-```
+1. Extend class or module with `GraphQL:DSL`
 
-```graphql
-{
-  rockets
-  {
-    name
-  }
-}
-```
+    ```ruby
+    module SpaceXQueries
+      extend GraphQL::DSL
+      
+      ROCKETS = query {
+        rockets {
+          name
+        }
+      }.to_gql
+    end
+    
+    puts SpaceXQueries::ROCKETS
+    ```
+    
+    ```graphql
+    {
+      rockets
+      {
+        name
+      }
+    }
+    ```
+
+1. Include `GraphQL:DSL` to class
+
+    ```ruby
+    class SpaceXQueries
+      include GraphQL::DSL
+      
+      # use memorization or lazy initialization 
+      # to avoid generation of query on each method call 
+      def rockets
+        query {
+          rockets {
+            name
+          }
+        }.to_gql
+      end
+    end
+    
+    queries = SpaceXQueries.new
+    puts queries.rockets
+    ```
+    
+    ```graphql
+    {
+      rockets
+      {
+        name
+      }
+    }
+    ```
 
 ## Development
 

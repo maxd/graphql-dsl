@@ -7,9 +7,9 @@ module ReadmeUpdater # rubocop:disable Style/Documentation
     VERSION_REGEXP = /gem 'graphql-dsl', '~> .+'/.freeze
 
     EXAMPLE_REGEXP = <<~REGEXP
-      ```ruby\n((?:(?!```).*\n)*?)\n?```
-
-      ```graphql\n(?:(?!```).*\n)*?\n?```
+      \s*```ruby\n((?:\s*(?!```).*\n)*?)\n?\s*```
+      \s*
+      \s*```graphql\n(?:\s*(?!```).*\n)*?\n?\s*```
     REGEXP
 
     def update
@@ -30,15 +30,7 @@ module ReadmeUpdater # rubocop:disable Style/Documentation
         example_code = Regexp.last_match(1).rstrip
         example_result = execute_example_code(example_code)
 
-        <<~BLOCK
-          ```ruby
-          #{example_code}
-          ```
-
-          ```graphql
-          #{example_result}
-          ```
-        BLOCK
+        format_example(example_code, example_result)
       end
     end
 
@@ -52,6 +44,22 @@ module ReadmeUpdater # rubocop:disable Style/Documentation
       end
 
       mod.module_eval(example_code)
+    end
+
+    def format_example(example_code, example_result)
+      indent = example_code[/\A\s*/]
+
+      example_code = example_code.gsub(/^#{indent}/, '')
+
+      <<~EXAMPLE.gsub(/^/, indent)
+        ```ruby
+        #{example_code}
+        ```
+
+        ```graphql
+        #{example_result}
+        ```
+      EXAMPLE
     end
   end
 end
