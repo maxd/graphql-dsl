@@ -25,7 +25,7 @@ RSpec.describe GraphQL::DSL::InlineFragment do
 
       it 'valid result' do
         expect { inline_fragment }.to raise_error GraphQL::DSL::Error,
-          'Sub-fields must be specified for inline fragment'
+          /Sub-fields must be specified for inline fragment/
       end
     end
   end

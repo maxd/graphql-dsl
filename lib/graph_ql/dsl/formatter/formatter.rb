@@ -21,7 +21,7 @@ module GraphQL
         when FragmentSpread then format_fragment_spread(node, level)
         when InlineFragment then format_inline_fragment(node, level)
         else
-          raise Error.new('Unknown node', class: node.class.name)
+          raise Error.new('Unknown node', class: node.class.name, node: node)
         end
       end
 

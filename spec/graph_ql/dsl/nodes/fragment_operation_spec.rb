@@ -14,7 +14,7 @@ RSpec.describe GraphQL::DSL::FragmentOperation do
         subject(:fragment) { described_class.new(name, :Type1) }
 
         it 'valid result' do
-          expect { fragment }.to raise_error GraphQL::DSL::Error, '`name` must be specified'
+          expect { fragment }.to raise_error GraphQL::DSL::Error, /`name` must be specified/
         end
       end
 
@@ -27,7 +27,7 @@ RSpec.describe GraphQL::DSL::FragmentOperation do
         subject(:fragment) { described_class.new(:field1, type) }
 
         it 'valid result' do
-          expect { fragment }.to raise_error GraphQL::DSL::Error, '`type` must be specified'
+          expect { fragment }.to raise_error GraphQL::DSL::Error, /`type` must be specified/
         end
       end
 

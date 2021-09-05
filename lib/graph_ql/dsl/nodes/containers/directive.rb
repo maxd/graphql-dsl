@@ -37,7 +37,8 @@ module GraphQL
           when Directive then value
           when Hash then from_hash(value)
           when Array then from_array(value)
-          else raise Error, 'Unsupported format of directive'
+          else
+            raise Error.new('Unsupported format of directive', class: value.class.name, value: value)
           end
         end
 

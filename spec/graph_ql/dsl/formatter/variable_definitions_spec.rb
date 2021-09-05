@@ -31,13 +31,13 @@ RSpec.describe GraphQL::DSL::Formatter do
 
     it 'validate type definition', :aggregate_failures do
       expect { format_variable_definition(a: {}) }.to raise_error GraphQL::DSL::Error,
-        'Variable type must be specified'
+        /Variable type must be specified/
       expect { format_variable_definition(a: { type: nil }) }.to raise_error GraphQL::DSL::Error,
-        'Variable type must be specified'
+        /Variable type must be specified/
       expect { format_variable_definition(a: { type: :'' }) }.to raise_error GraphQL::DSL::Error,
-        'Variable type must be specified'
+        /Variable type must be specified/
       expect { format_variable_definition(a: { type: '' }) }.to raise_error GraphQL::DSL::Error,
-        'Variable type must be specified'
+        /Variable type must be specified/
     end
 
     it { expect(format_variable_definition(a: { type: :String })).to eq('$a: String') }
@@ -56,7 +56,7 @@ RSpec.describe GraphQL::DSL::Formatter do
 
     it 'variables restricted in default values' do
       expect { format_variable_definition(a: { type: :String, default: :$variable }) }
-        .to raise_error GraphQL::DSL::Error, 'Value must be constant'
+        .to raise_error GraphQL::DSL::Error, /Value must be constant/
     end
   end
 end

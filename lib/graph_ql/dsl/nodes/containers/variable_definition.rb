@@ -52,7 +52,7 @@ module GraphQL
           when Hash then from_hash(name, value)
           when Array then from_array(name, value)
           else
-            raise Error.new('Unsupported format of variable definition', class: value.class.name)
+            raise Error.new('Unsupported format of variable definition', class: value.class.name, value: value)
           end
         end
 

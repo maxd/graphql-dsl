@@ -19,6 +19,10 @@ module GraphQL
 
         @arguments = arguments
       end
+
+      def message
+        super + (arguments ? "\nArguments: #{arguments}" : '')
+      end
     end
   end
 end

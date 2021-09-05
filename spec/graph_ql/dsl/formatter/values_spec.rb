@@ -53,7 +53,7 @@ RSpec.describe GraphQL::DSL::Formatter do
       it { expect(format_value(:$variable)).to eq('$variable') }
       it do
         expect { format_value(:$variable, is_const: true) }.to raise_error GraphQL::DSL::Error,
-          'Value must be constant'
+          /Value must be constant/
       end
     end
 
@@ -92,7 +92,7 @@ RSpec.describe GraphQL::DSL::Formatter do
     end
 
     context 'unknown value' do
-      it { expect { format_value(Object.new) }.to raise_error GraphQL::DSL::Error, 'Unsupported value type' }
+      it { expect { format_value(Object.new) }.to raise_error GraphQL::DSL::Error, /Unsupported value type/ }
     end
   end
 end

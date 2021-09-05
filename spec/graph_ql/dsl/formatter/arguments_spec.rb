@@ -22,7 +22,7 @@ RSpec.describe GraphQL::DSL::Formatter do
 
       it do
         expect { format_arguments({ a: :$a }, is_const: true) }.to raise_error GraphQL::DSL::Error,
-          'Value must be constant'
+          /Value must be constant/
       end
     end
   end

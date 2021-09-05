@@ -31,7 +31,7 @@ RSpec.describe GraphQL::DSL::Formatter do
     context 'format unknown node' do
       let(:unknown_node) { Class.new(GraphQL::DSL::Node) }
 
-      it { expect { format_node(unknown_node) }.to raise_error GraphQL::DSL::Error, 'Unknown node' }
+      it { expect { format_node(unknown_node) }.to raise_error GraphQL::DSL::Error, /Unknown node/ }
     end
   end
 
