@@ -4,6 +4,9 @@
 
 `graphql-dsl` lets you easy create GraphQL queries by code:
 
+* without writing cumbersome heredoc blocks
+* allow to union queries dynamically without concatenation of string
+
 ```ruby
 puts query(:aliveCharacters, species: [:String!, 'Human']) {
   characters(filter: { status: 'Alive', species: :$species }) {
@@ -31,15 +34,10 @@ query aliveCharacters($species: String! = "Human")
 
 ## Contents
 
-* [Why?](#why)
 * [Installation](#installation)
 * [Usage](#usage)
 * [Development](#development)
  
-## Why?
-
-I wanted to create GraphQL queries by code with some Ruby DSL instead of writing gigantic blocks of text. 
-
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -52,7 +50,83 @@ And then execute `bundle install`.
 
 ## Usage
 
-TODO: Write usage instructions here
+There are three ways how to use GraphQL DSL. 
+
+1. Call methods of `GraphQL::DSL` module directly
+
+```ruby
+rockets_query = GraphQL::DSL.query {
+  rockets {
+    name
+  }
+}.to_gql
+
+puts rockets_query
+```
+
+```graphql
+{
+  rockets
+  {
+    name
+  }
+}
+```
+
+1. Extend class or module with `GraphQL:DSL`
+
+```ruby
+module SpaceXQueries
+  extend GraphQL::DSL
+  
+  ROCKETS = query {
+    rockets {
+      name
+    }
+  }.to_gql
+end
+
+puts SpaceXQueries::ROCKETS
+```
+
+```graphql
+{
+  rockets
+  {
+    name
+  }
+}
+```
+
+1. Include `GraphQL:DSL` to class
+
+```ruby
+class SpaceXQueries
+  include GraphQL::DSL
+  
+  # use memorization or lazy initialization 
+  # to avoid generation of query on each method call 
+  def rockets
+    query {
+      rockets {
+        name
+      }
+    }.to_gql
+  end
+end
+
+queries = SpaceXQueries.new
+puts queries.rockets
+```
+
+```graphql
+{
+  rockets
+  {
+    name
+  }
+}
+```
 
 ## Development
 
