@@ -6,55 +6,25 @@
 
 ```ruby .readme/examples/intro.rb
 puts executable_document {
-  query(:alive_and_dead_characters, { species: [:String!, 'Human'] }) {
-    characters(__alias: :alive, filter: { status: 'Alive', species: :$species }) {
-      __fragment :short_info_about_characters
-    }
-
-    characters(__alias: :dead, filter: { status: 'Dead', species: :$species }) {
-      __fragment :short_info_about_characters
-
+  query(:alive_characters, species: [:String!, 'Human']) {
+    characters(filter: { status: 'Alive', species: :$species }) {
       results {
-        location(__alias: :last_known_location) {
-          name
-        }
+        name
+        image
       }
-    }
-  }
-
-  fragment(:short_info_about_characters, :Characters) {
-    results {
-      name
-      image
     }
   }
 }.to_gql
 
-# query alive_and_dead_characters($species: String! = "Human")
+# query alive_characters($species: String! = "Human")
 # {
-#   alive: characters(filter: {status: "Alive", species: $species})
+#   characters(filter: {status: "Alive", species: $species})
 #   {
-#     ...short_info_about_characters
-#   }
-#   dead: characters(filter: {status: "Dead", species: $species})
-#   {
-#     ...short_info_about_characters
 #     results
 #     {
-#       last_known_location: location
-#       {
-#         name
-#       }
+#       name
+#       image
 #     }
-#   }
-# }
-# 
-# fragment short_info_about_characters on Characters
-# {
-#   results
-#   {
-#     name
-#     image
 #   }
 # }
 ```
