@@ -5,7 +5,7 @@
 `graphql-dsl` lets you easy create GraphQL queries by code:
 
 ```ruby
-puts query(:alive_characters, species: [:String!, 'Human']) {
+puts query(:aliveCharacters, species: [:String!, 'Human']) {
   characters(filter: { status: 'Alive', species: :$species }) {
     results {
       name
@@ -16,7 +16,7 @@ puts query(:alive_characters, species: [:String!, 'Human']) {
 ```
 
 ```graphql
-query alive_characters($species: String! = "Human")
+query aliveCharacters($species: String! = "Human")
 {
   characters(filter: {status: "Alive", species: $species})
   {
