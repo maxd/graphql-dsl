@@ -17,33 +17,39 @@ module GraphQL
       # Create GraphQL query operation
       #
       # @param name [String, Symbol, nil] query name
+      # @param variable_definitions [Hash] variable definitions
+      # @param directives [Array<Directive, Hash, Array>] list of directives
       # @param block [Proc] declare DSL for sub-fields
       #
       # @return [void]
-      def query(name = nil, &block)
-        @__nodes << Operation.new(:query, name, &block)
+      def query(name = nil, variable_definitions = {}, directives = [], &block)
+        @__nodes << Operation.new(:query, name, variable_definitions, directives, &block)
       end
 
       ##
       # Create GraphQL mutation operation
       #
       # @param name [String, Symbol, nil] mutation name
+      # @param variable_definitions [Hash] variable definitions
+      # @param directives [Array<Directive, Hash, Array>] list of directives
       # @param block [Proc] declare DSL for sub-fields
       #
       # @return [void]
-      def mutation(name = nil, &block)
-        @__nodes << Operation.new(:mutation, name, &block)
+      def mutation(name = nil, variable_definitions = {}, directives = [], &block)
+        @__nodes << Operation.new(:mutation, name, variable_definitions, directives, &block)
       end
 
       ##
       # Create GraphQL subscription operation
       #
       # @param name [String, Symbol, nil] subscription name
+      # @param variable_definitions [Hash] variable definitions
+      # @param directives [Array<Directive, Hash, Array>] list of directives
       # @param block [Proc] declare DSL for sub-fields
       #
       # @return [void]
-      def subscription(name = nil, &block)
-        @__nodes << Operation.new(:subscription, name, &block)
+      def subscription(name = nil, variable_definitions = {}, directives = [], &block)
+        @__nodes << Operation.new(:subscription, name, variable_definitions, directives, &block)
       end
 
       ##
@@ -51,11 +57,12 @@ module GraphQL
       #
       # @param name [String, Symbol] fragment name
       # @param type [String, Symbol] fragment type or interface
+      # @param directives [Array<Directive, Hash, Array>] list of directives
       # @param block [Proc] declare DSL for sub-fields
       #
       # @return [void]
-      def fragment(name, type, &block)
-        @__nodes << FragmentOperation.new(name, type, &block)
+      def fragment(name, type, directives = [], &block)
+        @__nodes << FragmentOperation.new(name, type, directives, &block)
       end
     end
   end
