@@ -45,16 +45,10 @@ I wanted to create GraphQL queries by code with some Ruby DSL instead of writing
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'graphql-dsl'
+gem 'graphql-dsl', '~> 0.1.0'
 ```
 
-And then execute:
-
-    $ bundle install
-
-Or install it yourself as:
-
-    $ gem install graphql-dsl
+And then execute `bundle install`.
 
 ## Usage
 

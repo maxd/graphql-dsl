@@ -4,6 +4,8 @@ module ReadmeUpdater # rubocop:disable Style/Documentation
   class << self
     README_FILE = 'README.md'
 
+    VERSION_REGEXP = /gem 'graphql-dsl', '~> .+'/.freeze
+
     EXAMPLE_REGEXP = <<~REGEXP
       ```ruby\n((?m:.*?))\n?```
 
@@ -12,8 +14,15 @@ module ReadmeUpdater # rubocop:disable Style/Documentation
 
     def update
       readme = File.read(README_FILE)
+      update_version(readme)
       update_examples(readme)
       File.write(README_FILE, readme)
+    end
+
+    def update_version(readme)
+      readme.gsub!(VERSION_REGEXP) do
+        "gem 'graphql-dsl', '~> #{GraphQL::DSL::VERSION}'"
+      end
     end
 
     def update_examples(readme)
