@@ -6,11 +6,24 @@ module ReadmeUpdater # rubocop:disable Style/Documentation
 
     VERSION_REGEXP = /gem 'graphql-dsl', '~> .+'/.freeze
 
-    EXAMPLE_REGEXP = <<~REGEXP
-      \s*```ruby\n((?:\s*(?!```).*\n)*?)\n?\s*```
-      \s*
-      \s*```graphql\n(?:\s*(?!```).*\n)*?\n?\s*```
-    REGEXP
+    EXAMPLE_REGEXP = /
+      # [ \t]* is using instead of \s* because \s contains \n
+
+      [ \t]*```ruby\n
+        (
+          # lines between ``` separators
+          (?:(?![ \t]*```\n)[^\n]*\n)*?
+        )
+      [ \t]*```\n
+
+      # empty line between `ruby` and `graphql` code blocks
+      [ \t]*\n
+
+      [ \t]*```graphql\n
+        # lines between ``` separators
+        (?:(?![ \t]*```\n)[^\n]*\n)*?
+      [ \t]*```\n
+    /x.freeze
 
     def update
       readme = File.read(README_FILE)
@@ -26,8 +39,8 @@ module ReadmeUpdater # rubocop:disable Style/Documentation
     end
 
     def update_examples(readme)
-      readme.gsub!(Regexp.compile(EXAMPLE_REGEXP)) do
-        example_code = Regexp.last_match(1).rstrip
+      readme.gsub!(EXAMPLE_REGEXP) do
+        example_code = Regexp.last_match(1)
         example_result = execute_example_code(example_code)
 
         format_example(example_code, example_result)
@@ -53,11 +66,11 @@ module ReadmeUpdater # rubocop:disable Style/Documentation
 
       <<~EXAMPLE.gsub(/^/, indent)
         ```ruby
-        #{example_code}
+        #{example_code.strip}
         ```
 
         ```graphql
-        #{example_result}
+        #{example_result.strip}
         ```
       EXAMPLE
     end

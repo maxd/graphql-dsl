@@ -64,15 +64,6 @@ There are three ways how to use GraphQL DSL.
     puts rockets_query
     ```
     
-    ```graphql
-    {
-      rockets
-      {
-        name
-      }
-    }
-    ```
-
 1. Extend class or module with `GraphQL:DSL`
 
     ```ruby
@@ -89,15 +80,6 @@ There are three ways how to use GraphQL DSL.
     puts SpaceXQueries::ROCKETS
     ```
     
-    ```graphql
-    {
-      rockets
-      {
-        name
-      }
-    }
-    ```
-
 1. Include `GraphQL:DSL` to class
 
     ```ruby
@@ -117,15 +99,6 @@ There are three ways how to use GraphQL DSL.
     
     queries = SpaceXQueries.new
     puts queries.rockets
-    ```
-    
-    ```graphql
-    {
-      rockets
-      {
-        name
-      }
-    }
     ```
 
 ## Development
