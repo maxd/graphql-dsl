@@ -1,6 +1,10 @@
-# GraphQL DSL
+<h1 align="center">✨ GraphQL DSL ✨</h1>
 
-[![main](https://github.com/maxd/graphql-dsl/actions/workflows/main.yml/badge.svg)](https://github.com/maxd/graphql-dsl/actions/workflows/main.yml)
+<div align="center">
+  <a href="https://github.com/maxd/graphql-dsl/actions/workflows/main.yml">
+   <img src="https://github.com/maxd/graphql-dsl/actions/workflows/main.yml/badge.svg" alt="main">
+  </a>
+</div>
 
 `graphql-dsl` lets you easy create GraphQL queries by code:
 
@@ -29,13 +33,7 @@ query aliveCharacters($species: String! = "Human")
 }
 ```
 
-## Contents
-
-* [Installation](#installation)
-* [Getting Started](#getting-started)
-* [Development](#development)
- 
-## Installation
+## ⚙️ Installation
 
 Add this line to your application's Gemfile:
 
@@ -45,7 +43,7 @@ gem 'graphql-dsl', '~> 0.1.0'
 
 And then execute `bundle install`.
 
-## Getting Started
+## ⚡️ Getting Started
 
 Choose an appropriate way to use GraphQL DSL:
 
@@ -171,7 +169,7 @@ Choose an appropriate way to use GraphQL DSL:
       ```
     </details>
 
-## Development
+## 💻 Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `bundle exec rspec` to run the tests. 
 You can also run `bin/console` for an interactive prompt that will allow you to experiment.
@@ -183,7 +181,7 @@ To release a new version:
 * run `bundle exec rake release` to create a git tag for the version, push git commits and the created tag, 
   and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
-## Contributing
+## 👍 Contributing
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. 
 Any contributions you make are **greatly appreciated**.
@@ -194,11 +192,11 @@ Any contributions you make are **greatly appreciated**.
 4. Push to the Branch (`git push origin feature/NewFeature`)
 5. Open a Pull Request
 
-## License
+## 📜 License
 
 Distributed under the MIT License. See `LICENSE` for more information.
 
-## Code of Conduct
+## 🥰 Code of Conduct
 
 Everyone interacting in the GraphQL DSL project's codebases and issue trackers is expected to 
 follow the [code of conduct](https://github.com/maxd/graphql-dsl/blob/master/CODE_OF_CONDUCT.md).
