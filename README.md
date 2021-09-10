@@ -169,6 +169,168 @@ Choose an appropriate way to use GraphQL DSL:
       ```
     </details>
 
+## 👀 Examples
+
+SpaceX GraphQL API has been used for examples. So, you can test generated GraphQL queries [here](https://api.spacex.land/graphql/).  
+
+### Queries
+
+#### Anonymous query
+
+Call `GraphQL::DSL#query` method without any arguments to create anonymous query:
+
+```ruby
+puts GraphQL::DSL.query {
+   rockets {
+      name
+   }
+}.to_gql
+```
+
+```graphql
+{
+  rockets
+  {
+    name
+  }
+}
+```
+
+#### Named query
+
+Use strings or symbols to declare query name:
+
+```ruby
+puts GraphQL::DSL.query(:rockets) {
+   rockets {
+      name
+   }
+}.to_gql
+```
+
+```graphql
+query rockets
+{
+  rockets
+  {
+    name
+  }
+}
+```
+
+#### Parameterized query
+
+Pass variable definitions to second argument of `GraphQL::DSL#query` method:
+
+```ruby
+puts GraphQL::DSL.query(:rockets, limit: [:Int!, 3]) {
+   rockets(limit: :$limit) {
+      name
+   }
+}.to_gql
+```
+
+```graphql
+query rockets($limit: Int! = 3)
+{
+  rockets(limit: $limit)
+  {
+    name
+  }
+}
+```
+
+Choose appropriate notation to define variable type, default value and directives:
+
+* Use `String`:
+    ```ruby
+    # variable: "<type>", ...
+  
+    puts query(:users, user_ids: "[Int!]", active: "Boolean") {
+      users(user_ids: :$user_ids, active: :$active) {
+        id
+        name
+      }
+    }.to_gql
+    ```
+
+    ```graphql
+    query users($user_ids: [Int!], $active: Boolean)
+    {
+      users(user_ids: $user_ids, active: $active)
+      {
+        id
+        name
+      }
+    }
+    ```
+* Use `Symbol`:
+    ```ruby
+    # variable: :<type>, ...
+  
+    puts query(:user, id: :Int!) {
+      user(id: :$id) {
+        id
+        name
+      }
+    }.to_gql
+    ```
+
+    ```graphql
+    query user($id: Int!)
+    {
+      user(id: $id)
+      {
+        id
+        name
+      }
+    }
+    ```
+* Use `Array`: 
+    ```ruby
+    # variable: [<type>, <default value>, <directives>], ...
+    
+    puts query(:movies, genre: [:Genre, :ACTION]) {
+      movies(genre: :$genre) {
+        title
+      }
+    }.to_gql
+    ```
+
+    ```graphql
+    query movies($genre: Genre = ACTION)
+    {
+      movies(genre: $genre)
+      {
+        title
+      }
+    }
+    ```
+* Use `Hash`:
+    ```ruby
+    # variable: { 
+    #   type: <type>, 
+    #   default: <default value>, 
+    #   directives: <directives>
+    # }, ...
+  
+    puts query(:movies, genre: { type: :Genre, default: :ACTION }) {
+      movies(genre: :$genre) {
+        title
+      }
+    }.to_gql
+    ```
+
+    ```graphql
+    query movies($genre: Genre = ACTION)
+    {
+      movies(genre: $genre)
+      {
+        title
+      }
+    }
+    ```
+
 ## 💻 Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `bundle exec rspec` to run the tests. 
