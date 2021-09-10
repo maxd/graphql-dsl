@@ -20,6 +20,10 @@ module GraphQL
         @arguments = arguments
       end
 
+      ##
+      # Error message
+      #
+      # @return [String] error message
       def message
         super + (arguments ? "\nArguments: #{arguments}" : '')
       end
