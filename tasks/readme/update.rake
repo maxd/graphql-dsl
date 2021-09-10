@@ -25,19 +25,29 @@ module ReadmeUpdater # rubocop:disable Style/Documentation
 
     def update
       readme = File.read(README_FILE)
-      update_version(readme)
-      update_examples(readme)
+      readme = update_version(readme)
+      readme = update_examples(readme)
       File.write(README_FILE, readme)
     end
 
+    def check
+      original_readme = File.read(README_FILE)
+      updated_readme = update_version(original_readme)
+      updated_readme = update_examples(updated_readme)
+
+      return unless original_readme != updated_readme
+
+      abort 'Required update of README.md file. Run `rake readme:update` to update it.'
+    end
+
     def update_version(readme)
-      readme.gsub!(VERSION_REGEXP) do
+      readme.gsub(VERSION_REGEXP) do
         "gem 'graphql-dsl', '~> #{GraphQL::DSL::VERSION}'"
       end
     end
 
     def update_examples(readme)
-      readme.gsub!(EXAMPLE_REGEXP) do
+      readme.gsub(EXAMPLE_REGEXP) do
         example_code = Regexp.last_match(1)
         example_result = execute_example_code(example_code)
 
@@ -79,5 +89,10 @@ namespace :readme do
   desc 'Update README.md file (i.e. examples queries, etc.)'
   task :update do
     ReadmeUpdater.update
+  end
+
+  desc 'Check required changes of README.md file'
+  task :check do
+    ReadmeUpdater.check
   end
 end

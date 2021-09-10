@@ -17,5 +17,7 @@ jobs:
         run: bundle exec rspec
       - name: Run RuboCop
         run: bundle exec rubocop
+      - name: Check changes of README.md file
+        run: bundle exec rake readme:check
       - name: Run YARD statistics
         run: bundle exec yard stats --list-undoc --fail-on-warning
