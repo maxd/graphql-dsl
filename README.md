@@ -35,7 +35,7 @@ query aliveCharacters($species: String! = "Human")
 ## Contents
 
 * [Installation](#installation)
-* [Usage](#usage)
+* [Getting Started](#getting-started)
 * [Development](#development)
  
 ## Installation
@@ -48,9 +48,9 @@ gem 'graphql-dsl', '~> 0.1.0'
 
 And then execute `bundle install`.
 
-## Usage
+## Getting Started
 
-There are three ways how to use GraphQL DSL. 
+Choose appropriate way for your for use GraphQL DSL:
 
 1. Call methods of `GraphQL::DSL` module directly
 
@@ -70,6 +70,8 @@ There are three ways how to use GraphQL DSL.
     module SpaceXQueries
       extend GraphQL::DSL
       
+      # Create constant with GraphQL query
+   
       ROCKETS = query {
         rockets {
           name
@@ -79,7 +81,26 @@ There are three ways how to use GraphQL DSL.
     
     puts SpaceXQueries::ROCKETS
     ```
+
+    ```ruby
+    module SpaceXQueries
+      extend GraphQL::DSL
+      extend self # required to call of `SpaceXQueries.rockets`   
+   
+      # use memorization or lazy initialization 
+      # to avoid generation of query on each method call 
+      def rockets
+        query {
+          rockets {
+            name
+          }
+        }.to_gql
+      end 
+    end
     
+    puts SpaceXQueries.rockets
+    ```
+
 1. Include `GraphQL:DSL` to class
 
     ```ruby
@@ -115,15 +136,20 @@ To release a new version:
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/maxd/graphql-dsl. This project is intended 
-to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the 
-[code of conduct](https://github.com/maxd/graphql-dsl/blob/master/CODE_OF_CONDUCT.md).
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. 
+Any contributions you make are **greatly appreciated**.
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/NewFeature`)
+3. Commit your Changes (`git commit -m 'Add some NewFeature'`)
+4. Push to the Branch (`git push origin feature/NewFeature`)
+5. Open a Pull Request
 
 ## License
 
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Code of Conduct
 
-Everyone interacting in the GraphQL DSL project's codebases, issue trackers, chat rooms and mailing lists is expected to 
+Everyone interacting in the GraphQL DSL project's codebases and issue trackers is expected to 
 follow the [code of conduct](https://github.com/maxd/graphql-dsl/blob/master/CODE_OF_CONDUCT.md).
