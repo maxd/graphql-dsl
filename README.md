@@ -106,7 +106,10 @@ Choose an appropriate way to use GraphQL DSL:
     ```ruby
     module SpaceXQueries
       extend GraphQL::DSL
-      extend self # required to call of `SpaceXQueries.rockets`   
+   
+      # `extend self` or `module_function` required to 
+      # call of `SpaceXQueries.rockets`
+      extend self    
    
       # use memorization or lazy initialization 
       # to avoid generation of query on each method call 
