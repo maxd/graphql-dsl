@@ -4,9 +4,6 @@
 
 `graphql-dsl` lets you easy create GraphQL queries by code:
 
-* without writing cumbersome heredoc
-* allow to union queries dynamically without concatenation of string
-
 ```ruby
 puts query(:aliveCharacters, species: [:String!, 'Human']) {
   characters(filter: { status: 'Alive', species: :$species }) {
@@ -50,7 +47,7 @@ And then execute `bundle install`.
 
 ## Getting Started
 
-Choose appropriate way for your for use GraphQL DSL:
+Choose an appropriate way to use GraphQL DSL:
 
 1. Call methods of `GraphQL::DSL` module directly
 
@@ -77,7 +74,7 @@ Choose appropriate way for your for use GraphQL DSL:
       ```
     </details>
 
-1. Extend class or module with `GraphQL:DSL`
+1. Extend class or module with `GraphQL:DSL` module
 
     ```ruby
     module SpaceXQueries
@@ -140,7 +137,7 @@ Choose appropriate way for your for use GraphQL DSL:
       ```
     </details>
 
-1. Include `GraphQL:DSL` to class
+1. Include `GraphQL:DSL` module to class
 
     ```ruby
     class SpaceXQueries
