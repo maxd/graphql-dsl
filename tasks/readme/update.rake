@@ -7,22 +7,20 @@ module ReadmeUpdater # rubocop:disable Style/Documentation
     VERSION_REGEXP = /gem 'graphql-dsl', '~> .+'/.freeze
 
     EXAMPLE_REGEXP = /
-      # [ \t]* is using instead of \s* because \s contains \n
-
-      [ \t]*```ruby\n
+      \p{Blank}*```ruby\n
         (
           # lines between ``` separators
-          (?:(?![ \t]*```\n)[^\n]*\n)*?
+          (?:(?!\p{Blank}*```\n)[^\n]*\n)*?
         )
-      [ \t]*```\n
+      \p{Blank}*```\n
 
       # empty line between `ruby` and `graphql` code blocks
-      [ \t]*\n
+      \p{Blank}*\n
 
-      [ \t]*```graphql\n
+      \p{Blank}*```graphql\n
         # lines between ``` separators
-        (?:(?![ \t]*```\n)[^\n]*\n)*?
-      [ \t]*```\n
+        (?:(?!\p{Blank}*```\n)[^\n]*\n)*?
+      \p{Blank}*```\n
     /x.freeze
 
     def update
