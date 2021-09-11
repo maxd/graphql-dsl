@@ -381,7 +381,7 @@ Choose appropriate notation to define variable type, default value and directive
 
 :bulb: More information about type definitions you can find [here]().
 
-:bulb: More information about directives you can find [here]().
+:bulb: More information about directives you can find [here](#directives).
 
 #### Operation's directives
 
@@ -409,7 +409,7 @@ query capsules($status: String! = "active") @priority(level: LOW)
 }
 ```
 
-:bulb: More information about directives you can find [here]().
+:bulb: More information about directives you can find [here](#directives).
 
 ### Directives
 
