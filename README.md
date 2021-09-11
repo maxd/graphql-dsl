@@ -381,7 +381,140 @@ Choose appropriate notation to define variable type, default value and directive
 
 :bulb: More information about type definitions you can find [here]().
 
-:bulb: More information about directive definitions you can find [here]().
+:bulb: More information about directives you can find [here]().
+
+#### Operation's directives
+
+Pass operation's directives to third argument of correspond `GraphQL::DSL` method:
+
+```ruby
+puts GraphQL::DSL.query(:capsules, { status: [:String!, 'active'] }, [ [ :priority, level: :LOW ] ]) {
+  capsules(find: { status: :$status }) {
+    type
+    status
+    landings
+  }
+}.to_gql
+```
+
+```graphql
+query capsules($status: String! = "active") @priority(level: LOW)
+{
+  capsules(find: {status: $status})
+  {
+    type
+    status
+    landings
+  }
+}
+```
+
+:bulb: More information about directives you can find [here]().
+
+### Directives
+
+:warning: SpaceX GraphQL API doesn't support any directives therefore examples below will be fail with error.
+
+Choose appropriate notation to define directive:
+
+<details>
+  <summary>Use <code>String</code> notation</summary>
+
+  ```ruby
+  # "<name>", ...
+
+  puts GraphQL::DSL.query(:rockets, {}, ["lowPriority"]) {
+     rockets {
+        name
+    }
+  }.to_gql
+  ```
+
+  ```graphql
+  query rockets @lowPriority
+  {
+    rockets
+    {
+      name
+    }
+  }
+  ```
+</details>
+
+<details>
+  <summary>Use <code>Symbol</code> notation</summary>
+
+  ```ruby
+  # :<name>, ...
+   
+  puts GraphQL::DSL.query(:rockets, {}, [ :lowPriority ]) {
+     rockets {
+        name
+     }
+  }.to_gql
+  ```
+
+  ```graphql
+  query rockets @lowPriority
+  {
+    rockets
+    {
+      name
+    }
+  }
+  ```
+</details>
+
+<details>
+  <summary>Use <code>Array</code> notation</summary>
+
+  ```ruby
+  # variable: [<name>, <arguments>], ...
+
+  puts GraphQL::DSL.query(:rockets, {}, [ [ :priority, level: :LOW ] ]) {
+     rockets {
+        name
+     }
+  }.to_gql
+  ```
+
+  ```graphql
+  query rockets @priority(level: LOW)
+  {
+    rockets
+    {
+      name
+    }
+  }
+  ```
+</details>
+
+<details>
+  <summary>Use <code>Hash</code> notation</summary>
+
+  ```ruby
+  # variable: { 
+  #   name: <name>, 
+  #   args: <arguments>, 
+  # }, ...
+
+   puts GraphQL::DSL.query(:rockets, {}, [ { name: :priority, args: { level: :LOW } } ]) {
+      rockets {
+         name
+      }
+   }.to_gql
+  ```
+
+  ```graphql
+  query rockets @priority(level: LOW)
+  {
+    rockets
+    {
+      name
+    }
+  }
+  ```
+</details>
 
 ## 💻 Development
 
