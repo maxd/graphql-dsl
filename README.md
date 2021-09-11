@@ -1,11 +1,9 @@
 <h1 align="center">✨ GraphQL DSL ✨</h1>
 
-<div align="center">
-  <a href="https://github.com/maxd/graphql-dsl/actions/workflows/main.yml">
-   <img src="https://github.com/maxd/graphql-dsl/actions/workflows/main.yml/badge.svg" alt="main" />
-  </a>
-  <img src="https://img.shields.io/static/v1?label=language&message=ruby&color=CC342D&style=flat&logo=ruby&logoColor=CC342D" alt="ruby" />
-</div>
+<p align="center">
+  <a href="https://github.com/maxd/graphql-dsl/actions/workflows/main.yml"><img src="https://github.com/maxd/graphql-dsl/actions/workflows/main.yml/badge.svg" alt="main" /></a>
+  <a href="https://www.ruby-lang.org/en/"><img src="https://img.shields.io/static/v1?label=language&message=ruby&color=CC342D&style=flat&logo=ruby&logoColor=CC342D" alt="ruby" /></a> 
+</p>
 
 `graphql-dsl` lets you easy create GraphQL queries by code:
 
