@@ -365,3 +365,8 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 Everyone interacting in the GraphQL DSL project's codebases and issue trackers is expected to 
 follow the [code of conduct](https://github.com/maxd/graphql-dsl/blob/master/CODE_OF_CONDUCT.md).
+
+## 📚 Resources
+
+* [Introduction to GraphQL](https://graphql.org/learn/)
+* [GraphQL Specification](https://spec.graphql.org/)
