@@ -176,11 +176,25 @@ Choose an appropriate way to use GraphQL DSL:
 
 SpaceX GraphQL API has been used for examples. So, you can test generated GraphQL queries [here](https://api.spacex.land/graphql/).  
 
-### Queries
+### Operations
 
-#### Anonymous query
+GraphQL support three types of operations: 
 
-Call `GraphQL::DSL#query` method without any arguments to create anonymous query:
+* `query` - for fetch data.
+* `mutation` - for update data.
+* `subscription` - for fetch stream of data during a log time.
+
+To create these operations use correspond GraphQL DSL methods: 
+
+* `GraphQL::DSL#query`
+* `GraphQL::DSL#mutation`
+* `GraphQL::DSL#subscription`
+
+**Note**: _All of them have the same signatures therefore all examples below will use `query` operation._
+
+#### Anonymous operation
+
+Call correspond `GraphQL::DSL` method without any arguments to create anonymous operation:
 
 ```ruby
 puts GraphQL::DSL.query {
@@ -199,9 +213,9 @@ puts GraphQL::DSL.query {
 }
 ```
 
-#### Named query
+#### Named operation
 
-Use strings or symbols to declare query name:
+Use strings or symbols to specify operation name:
 
 ```ruby
 puts GraphQL::DSL.query(:rockets) {
@@ -221,118 +235,153 @@ query rockets
 }
 ```
 
-#### Parameterized query
+#### Parameterized operation
 
-Pass variable definitions to second argument of `GraphQL::DSL#query` method:
+Pass variable definitions to second argument of correspond `GraphQL::DSL` method:
 
 ```ruby
-puts GraphQL::DSL.query(:rockets, limit: [:Int!, 3]) {
-   rockets(limit: :$limit) {
-      name
-   }
+puts GraphQL::DSL.query(:capsules, type: :String, status: [:String!, 'active']) {
+  capsules(find: { type: :$type, status: :$status }) {
+    type
+    status
+    landings
+  }
 }.to_gql
 ```
 
 ```graphql
-query rockets($limit: Int! = 3)
+query capsules($type: String, $status: String! = "active")
 {
-  rockets(limit: $limit)
+  capsules(find: {type: $type, status: $status})
   {
-    name
+    type
+    status
+    landings
   }
 }
 ```
 
 Choose appropriate notation to define variable type, default value and directives:
 
-* Use `String`:
-    ```ruby
-    # variable: "<type>", ...
-  
-    puts query(:users, user_ids: "[Int!]", active: "Boolean") {
-      users(user_ids: :$user_ids, active: :$active) {
-        id
-        name
-      }
-    }.to_gql
-    ```
-
-    ```graphql
-    query users($user_ids: [Int!], $active: Boolean)
-    {
-      users(user_ids: $user_ids, active: $active)
-      {
-        id
-        name
-      }
-    }
-    ```
-* Use `Symbol`:
-    ```ruby
-    # variable: :<type>, ...
-  
-    puts query(:user, id: :Int!) {
-      user(id: :$id) {
-        id
-        name
-      }
-    }.to_gql
-    ```
-
-    ```graphql
-    query user($id: Int!)
-    {
-      user(id: $id)
-      {
-        id
-        name
-      }
-    }
-    ```
-* Use `Array`: 
-    ```ruby
-    # variable: [<type>, <default value>, <directives>], ...
+<details>
+  <summary>Use <code>String</code> notation</summary>
     
-    puts query(:movies, genre: [:Genre, :ACTION]) {
-      movies(genre: :$genre) {
-        title
-      }
-    }.to_gql
-    ```
+  ```ruby
+  # variable: "<type>", ...
 
-    ```graphql
-    query movies($genre: Genre = ACTION)
-    {
-      movies(genre: $genre)
-      {
-        title
-      }
+  puts GraphQL::DSL.query(:capsules, status: "String!") {
+    capsules(find: { status: :$status }) {
+      type
+      status
+      landings
     }
-    ```
-* Use `Hash`:
-    ```ruby
-    # variable: { 
-    #   type: <type>, 
-    #   default: <default value>, 
-    #   directives: <directives>
-    # }, ...
+  }.to_gql
+  ```
+
+  ```graphql
+  query capsules($status: String!)
+  {
+    capsules(find: {status: $status})
+    {
+      type
+      status
+      landings
+    }
+  }
+  ```
+</details>
+
+<details>
+  <summary>Use <code>Symbol</code> notation</summary>
   
-    puts query(:movies, genre: { type: :Genre, default: :ACTION }) {
-      movies(genre: :$genre) {
-        title
-      }
-    }.to_gql
-    ```
+  ```ruby
+  # variable: :<type>, ...
 
-    ```graphql
-    query movies($genre: Genre = ACTION)
-    {
-      movies(genre: $genre)
-      {
-        title
-      }
+  puts GraphQL::DSL.query(:capsules, status: :String!) {
+    capsules(find: { status: :$status }) {
+      type
+      status
+      landings
     }
-    ```
+  }.to_gql
+  ```
+
+  ```graphql
+  query capsules($status: String!)
+  {
+    capsules(find: {status: $status})
+    {
+      type
+      status
+      landings
+    }
+  }
+  ```
+</details>
+
+<details>
+  <summary>Use <code>Array</code> notation</summary>
+
+  ```ruby
+  # variable: [<type>, <default value>, <directives>], ...
+  
+  puts GraphQL::DSL.query(:capsules, status: [:String!, "active"]) {
+    capsules(find: { status: :$status }) {
+      type
+      status
+      landings
+    }
+  }.to_gql
+  ```
+
+  ```graphql
+  query capsules($status: String! = "active")
+  {
+    capsules(find: {status: $status})
+    {
+      type
+      status
+      landings
+    }
+  }
+  ```
+</details>
+
+<details>
+  <summary>Use <code>Hash</code> notation</summary>
+
+  ```ruby
+  # variable: { 
+  #   type: <type>, 
+  #   default: <default value>, 
+  #   directives: <directives>
+  # }, ...
+
+  puts GraphQL::DSL.query(:capsules, status: { type: :String!, default: "active" }) {
+    capsules(find: { status: :$status }) {
+      type
+      status
+      landings
+    }
+  }.to_gql
+  ```
+
+  ```graphql
+  query capsules($status: String! = "active")
+  {
+    capsules(find: {status: $status})
+    {
+      type
+      status
+      landings
+    }
+  }
+  ```
+</details>
+
+:bulb: More information about type definitions you can find [here]().
+
+:bulb: More information about directive definitions you can find [here]().
 
 ## 💻 Development
 
