@@ -59,6 +59,11 @@ module ReadmeUpdater # rubocop:disable Style/Documentation
     )
   }x.freeze
 
+  EXAMPLES_REGEXPS = [
+    NONCOLLAPSABLE_EXAMPLE_REGEXP,
+    COLLAPSABLE_EXAMPLE,
+  ].freeze
+
   def update
     readme = File.read(README_FILE)
     readme = update_version(readme)
@@ -84,10 +89,7 @@ module ReadmeUpdater # rubocop:disable Style/Documentation
   end
 
   def update_examples(readme)
-    [
-      NONCOLLAPSABLE_EXAMPLE_REGEXP,
-      COLLAPSABLE_EXAMPLE,
-    ].reduce(readme) do |str, regexp|
+    EXAMPLES_REGEXPS.reduce(readme) do |str, regexp|
       str.gsub(regexp) do
         before_code = Regexp.last_match(:before)
         after_code = Regexp.last_match(:after)
@@ -106,7 +108,7 @@ module ReadmeUpdater # rubocop:disable Style/Documentation
       extend GraphQL::DSL
 
       def self.puts(obj)
-        obj
+        "#{obj}\n"
       end
     end
 
@@ -116,18 +118,13 @@ module ReadmeUpdater # rubocop:disable Style/Documentation
   def format_example(ruby_code_result, before_code, after_code, graphql_block)
     indent = graphql_block[/\A\s*/]
 
-    before_code = before_code.empty? ? nil : before_code
-    after_code = after_code.empty? ? nil : after_code
-
     [
-      before_code&.rstrip,
-      '',
-      '```graphql'.gsub(/^/, indent),
-      ruby_code_result.gsub(/^/, indent).rstrip,
-      '```'.gsub(/^/, indent),
-      after_code&.rstrip,
-      '',
-    ].compact.join("\n")
+      before_code,
+      "```graphql\n".gsub(/^/, indent),
+      ruby_code_result.gsub(/^/, indent),
+      "```\n".gsub(/^/, indent),
+      after_code,
+    ].compact.join
   end
 end
 

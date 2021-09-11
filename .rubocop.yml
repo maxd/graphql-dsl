@@ -14,9 +14,6 @@ Layout/FirstArrayElementIndentation:
 Layout/ArgumentAlignment:
   EnforcedStyle: with_fixed_indentation
 
-Metrics/MethodLength:
-  Max: 20
-
 Naming/FileName:
   Exclude:
     - lib/graphql-dsl.rb
