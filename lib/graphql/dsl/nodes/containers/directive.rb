@@ -35,6 +35,7 @@ module GraphQL
         def from(value)
           case value
           when Directive then value
+          when Symbol, String then from_symbol_or_string(value)
           when Hash then from_hash(value)
           when Array then from_array(value)
           else
@@ -43,6 +44,16 @@ module GraphQL
         end
 
         private
+
+        ##
+        # Create directive container from Symbol or String
+        #
+        # @param name [String, Symbol] directive name
+        #
+        # @return [Directive] directive container
+        def from_symbol_or_string(name)
+          new(name, {})
+        end
 
         ##
         # Create directive container from Hash
