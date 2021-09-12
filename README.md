@@ -276,38 +276,10 @@ puts GraphQL::DSL.query(:capsules, type: :String, status: [:String!, 'active']) 
 Choose appropriate notation to define variable type, default value and directives:
 
 <details>
-  <summary>Use <code>String</code> notation</summary>
-    
-  ```ruby
-  # variable: "<type>", ...
-
-  puts GraphQL::DSL.query(:capsules, status: "String!") {
-    capsules(find: { status: :$status }) {
-      type
-      status
-      landings
-    }
-  }.to_gql
-  ```
-
-  ```graphql
-  query capsules($status: String!)
-  {
-    capsules(find: {status: $status})
-    {
-      type
-      status
-      landings
-    }
-  }
-  ```
-</details>
-
-<details>
-  <summary>Use <code>Symbol</code> notation</summary>
+  <summary>Use <code>Symbol</code> or <code>String</code> notation</summary>
   
   ```ruby
-  # variable: :<type>, ...
+  # variable: (:<type> | "<type>"), ...
 
   puts GraphQL::DSL.query(:capsules, status: :String!) {
     capsules(find: { status: :$status }) {
@@ -434,34 +406,10 @@ puts GraphQL::DSL.query(:capsules, { status: [:String!, 'active'] }, [ [ :priori
 Choose appropriate notation to define directive:
 
 <details>
-  <summary>Use <code>String</code> notation</summary>
+  <summary>Use <code>Symbol</code> or <code>String</code> notation</summary>
 
   ```ruby
-  # "<name>", ...
-
-  puts GraphQL::DSL.query(:rockets, {}, ["lowPriority"]) {
-     rockets {
-        name
-    }
-  }.to_gql
-  ```
-
-  ```graphql
-  query rockets @lowPriority
-  {
-    rockets
-    {
-      name
-    }
-  }
-  ```
-</details>
-
-<details>
-  <summary>Use <code>Symbol</code> notation</summary>
-
-  ```ruby
-  # :<name>, ...
+  # (:<name> | "name"), ...
    
   puts GraphQL::DSL.query(:rockets, {}, [ :lowPriority ]) {
      rockets {
