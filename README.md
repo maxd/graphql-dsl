@@ -304,6 +304,36 @@ Choose appropriate notation to define variable type, default value and directive
 </details>
 
 <details>
+  <summary>Use <code>__var</code> method notation</summary>
+
+  ```ruby
+  # __var <name>, <type>, [default: <default value>], [directives: <directives>]
+
+  puts GraphQL::DSL.query(:capsules) {
+     __var :status, :String!, default: "active"
+     
+    capsules(find: { status: :$status }) {
+      type
+      status
+      landings
+    }
+  }.to_gql
+  ```
+
+  ```graphql
+  query capsules($status: String! = "active")
+  {
+    capsules(find: {status: $status})
+    {
+      type
+      status
+      landings
+    }
+  }
+  ```
+</details>
+
+<details>
   <summary>Use <code>Array</code> notation</summary>
 
   ```ruby
