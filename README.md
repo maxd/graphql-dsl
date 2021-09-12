@@ -429,6 +429,169 @@ puts GraphQL::DSL.query(:capsules, { status: [:String!, 'active'] }, [ [ :priori
 
 :bulb: _More information about directives you can find [here](#directives)._
 
+### Selection Set
+
+[Selection Set](https://spec.graphql.org/draft/#sec-Selection-Sets) is a block that contains fields, spread or
+internal fragments. Operations (`query`, `mutation`, `subscription`), fragment operations, spread and internal fragments 
+must have `Selection Set` for select or update (in case of mutation) data. Even a field can contains `Selection Set`. 
+
+```ruby
+puts GraphQL::DSL.query {    # this is `Selection Set` of query
+  company {                  # this is `Selection Set` of `company` field
+    name
+    ceo
+    cto
+  }
+}.to_gql
+```
+
+<details>
+  <summary>STDOUT</summary>
+
+  ```graphql
+  {
+    company
+    {
+      name
+      ceo
+      cto
+    }
+  }
+  ```
+</details>
+
+### Field
+
+[Selection Set](#selection-set) should contains one or more fields to select or update (in case of mutation) data.
+
+To create field just declare it name inside of `Selection Set` block:
+
+```ruby
+puts GraphQL::DSL.query {    
+  company {                  # this is `company` field
+    name                     # this is `name` fields declared in `Selection Set` of `company` field 
+  }
+}.to_gql
+```
+
+<details>
+  <summary>STDOUT</summary>
+
+  ```graphql
+  {
+    company
+    {
+      name
+    }
+  }
+  ```
+</details>
+```
+
+As you can see above some fields can have `Selection Set` and allow to declare sub-fields. 
+
+In rare cases will be impossible to declare field in such way because its name can conflict with Ruby's keywords and 
+methods. In this case you can declare field use `__field` method:
+
+```ruby
+# __field <name>, [__alias: <alias name>], [__directives: <directives>], [<arguments>]
+
+puts GraphQL::DSL.query {
+  __field(:class) {          # `class` is Ruby's keyword
+     __field(:object_id)     # `object_id` is `Object` method
+  }
+}.to_gql
+```
+
+<details>
+  <summary>STDOUT</summary>
+
+  ```graphql
+  {
+    class
+    {
+      object_id
+    }
+  }
+  ```
+</details>
+```
+
+To rename field in GraphQL response specify alias in `__alias` argument:
+
+```ruby
+puts GraphQL::DSL.query {
+  company {
+     name __alias: :businessName
+  }
+}.to_gql
+```
+
+<details>
+  <summary>STDOUT</summary>
+
+  ```graphql
+  {
+    company
+    {
+      businessName: name
+    }
+  }
+  ```
+</details>
+```
+
+Some field can accept arguments and change their data base on them:
+
+```ruby
+puts GraphQL::DSL.query {
+  company {
+    revenue currency: :RUB   # convert revenue value to Russian Rubles
+  }
+}.to_gql
+```
+
+<details>
+  <summary>STDOUT</summary>
+
+  ```graphql
+  {
+    company
+    {
+      revenue(currency: RUB)
+    }
+  }
+  ```
+</details>
+```
+
+Any field can have directives. Pass them though `__directives` argument:
+
+```ruby
+puts GraphQL::DSL.query(:company, additionalInfo: :Boolean) {
+  company {
+    name 
+    revenue __directives: [[:include, if: :$additionalInfo]]
+  }
+}.to_gql
+```
+
+<details>
+  <summary>STDOUT</summary>
+
+  ```graphql
+  query company($additionalInfo: Boolean)
+  {
+    company
+    {
+      name
+      revenue @include(if: $additionalInfo)
+    }
+  }
+  ```
+</details>
+```
+
 ### Directives
 
 :warning: Non-official SpaceX GraphQL API doesn't support any directives therefore examples below will be fail with error.
