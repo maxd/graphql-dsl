@@ -204,14 +204,18 @@ puts GraphQL::DSL.query {
 }.to_gql
 ```
 
-```graphql
-{
-  rockets
+<details>
+  <summary>STDOUT</summary>
+
+  ```graphql
   {
-    name
+    rockets
+    {
+      name
+    }
   }
-}
-```
+  ```
+</details>
 
 #### Named operation
 
@@ -225,15 +229,19 @@ puts GraphQL::DSL.query(:rockets) {
 }.to_gql
 ```
 
-```graphql
-query rockets
-{
-  rockets
+<details>
+  <summary>STDOUT</summary>
+
+  ```graphql
+  query rockets
   {
-    name
+    rockets
+    {
+      name
+    }
   }
-}
-```
+  ```
+</details>
 
 #### Parameterized operation
 
@@ -249,17 +257,21 @@ puts GraphQL::DSL.query(:capsules, type: :String, status: [:String!, 'active']) 
 }.to_gql
 ```
 
-```graphql
-query capsules($type: String, $status: String! = "active")
-{
-  capsules(find: {type: $type, status: $status})
+<details>
+  <summary>STDOUT</summary>
+
+  ```graphql
+  query capsules($type: String, $status: String! = "active")
   {
-    type
-    status
-    landings
+    capsules(find: {type: $type, status: $status})
+    {
+      type
+      status
+      landings
+    }
   }
-}
-```
+  ```
+</details>
 
 Choose appropriate notation to define variable type, default value and directives:
 
@@ -397,17 +409,21 @@ puts GraphQL::DSL.query(:capsules, { status: [:String!, 'active'] }, [ [ :priori
 }.to_gql
 ```
 
-```graphql
-query capsules($status: String! = "active") @priority(level: LOW)
-{
-  capsules(find: {status: $status})
+<details>
+  <summary>STDOUT</summary>
+
+  ```graphql
+  query capsules($status: String! = "active") @priority(level: LOW)
   {
-    type
-    status
-    landings
+    capsules(find: {status: $status})
+    {
+      type
+      status
+      landings
+    }
   }
-}
-```
+  ```
+</details>
 
 :bulb: _More information about directives you can find [here](#directives)._
 
