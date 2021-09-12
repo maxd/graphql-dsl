@@ -219,7 +219,7 @@ puts GraphQL::DSL.query {
 
 #### Named operation
 
-Use strings or symbols to specify operation name:
+Use string or symbol to specify operation name:
 
 ```ruby
 puts GraphQL::DSL.query(:rockets) {
@@ -401,7 +401,7 @@ puts GraphQL::DSL.query(:capsules, { status: [:String!, 'active'] }, [ [ :priori
 
 ### Directives
 
-:warning: SpaceX GraphQL API doesn't support any directives therefore examples below will be fail with error.
+:warning: Non-official SpaceX GraphQL API doesn't support any directives therefore examples below will be fail with error.
 
 Choose appropriate notation to define directive:
 
