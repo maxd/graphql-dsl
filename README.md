@@ -198,9 +198,9 @@ Call correspond `GraphQL::DSL` method without any arguments to create anonymous 
 
 ```ruby
 puts GraphQL::DSL.query {
-   rockets {
-      name
-   }
+  rockets {
+    name
+  }
 }.to_gql
 ```
 
@@ -223,9 +223,9 @@ Use string or symbol to specify operation name:
 
 ```ruby
 puts GraphQL::DSL.query(:rockets) {
-   rockets {
-      name
-   }
+  rockets {
+    name
+  }
 }.to_gql
 ```
 
@@ -655,11 +655,11 @@ Choose appropriate notation to define directive:
   #   args: <arguments>, 
   # }, ...
 
-   puts GraphQL::DSL.query(:rockets, {}, [ { name: :priority, args: { level: :LOW } } ]) {
-      rockets {
-         name
-      }
-   }.to_gql
+  puts GraphQL::DSL.query(:rockets, {}, [ { name: :priority, args: { level: :LOW } } ]) {
+    rockets {
+      name
+    }
+  }.to_gql
   ```
 
   ```graphql
