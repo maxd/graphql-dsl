@@ -174,7 +174,7 @@ Choose an appropriate way to use GraphQL DSL:
 
 ## 👀 Examples
 
-SpaceX GraphQL API has been used for examples. So, you can test generated GraphQL queries [here](https://api.spacex.land/graphql/).  
+:bulb: _Non-official SpaceX GraphQL API has been used for most of examples. So, you can test generated GraphQL queries [here](https://api.spacex.land/graphql/)._  
 
 ### Operations
 
@@ -190,7 +190,7 @@ To create these operations use correspond GraphQL DSL methods:
 * `GraphQL::DSL#mutation`
 * `GraphQL::DSL#subscription`
 
-**Note**: _All of them have the same signatures therefore all examples below will use `query` operation._
+:bulb: _All of them have the same signatures therefore all examples below will use `query` operation._
 
 #### Anonymous operation
 
@@ -379,9 +379,9 @@ Choose appropriate notation to define variable type, default value and directive
   ```
 </details>
 
-:bulb: More information about type definitions you can find [here]().
+:bulb: _More information about type definitions you can find [here]()._
 
-:bulb: More information about directives you can find [here](#directives).
+:bulb: _More information about directives you can find [here](#directives)._
 
 #### Operation's directives
 
@@ -409,7 +409,7 @@ query capsules($status: String! = "active") @priority(level: LOW)
 }
 ```
 
-:bulb: More information about directives you can find [here](#directives).
+:bulb: _More information about directives you can find [here](#directives)._
 
 ### Directives
 
