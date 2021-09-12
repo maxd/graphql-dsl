@@ -486,7 +486,6 @@ puts GraphQL::DSL.query {
   }
   ```
 </details>
-```
 
 As you can see above some fields can have `Selection Set` and allow to declare sub-fields. 
 
@@ -515,7 +514,6 @@ puts GraphQL::DSL.query {
   }
   ```
 </details>
-```
 
 To rename field in GraphQL response specify alias in `__alias` argument:
 
@@ -539,7 +537,6 @@ puts GraphQL::DSL.query {
   }
   ```
 </details>
-```
 
 Some field can accept arguments and change their data base on them:
 
@@ -563,7 +560,6 @@ puts GraphQL::DSL.query {
   }
   ```
 </details>
-```
 
 Any field can have directives. Pass them though `__directives` argument:
 
@@ -590,7 +586,6 @@ puts GraphQL::DSL.query(:company, additionalInfo: :Boolean) {
   }
   ```
 </details>
-```
 
 ### Directives
 
