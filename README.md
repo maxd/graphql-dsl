@@ -174,7 +174,7 @@ Choose an appropriate way to use GraphQL DSL:
 
 ## 👀 Examples
 
-:bulb: _Non-official SpaceX GraphQL API has been used for most of examples. So, you can test generated GraphQL queries [here](https://api.spacex.land/graphql/)._  
+:bulb: _Non-official SpaceX GraphQL API is using for most of examples. So, you can test generated GraphQL queries [here](https://api.spacex.land/graphql/)._  
 
 ### Operations
 
