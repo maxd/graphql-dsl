@@ -12,7 +12,7 @@ RSpec.describe GraphQL::DSL do
     end
   end
 
-  context 'executable_document' do
+  context '#executable_document' do
     it_behaves_like 'create operation' do
       let(:test_class) do
         Class.new do
@@ -48,7 +48,7 @@ RSpec.describe GraphQL::DSL do
     end
   end
 
-  context 'query' do
+  context '#query' do
     it_behaves_like 'create operation' do
       let(:test_class) do
         Class.new do
@@ -80,7 +80,7 @@ RSpec.describe GraphQL::DSL do
     end
   end
 
-  context 'mutation' do
+  context '#mutation' do
     it_behaves_like 'create operation' do
       let(:test_class) do
         Class.new do
@@ -112,7 +112,7 @@ RSpec.describe GraphQL::DSL do
     end
   end
 
-  context 'subscription' do
+  context '#subscription' do
     it_behaves_like 'create operation' do
       let(:test_class) do
         Class.new do
@@ -144,7 +144,7 @@ RSpec.describe GraphQL::DSL do
     end
   end
 
-  context 'fragment' do
+  context '#fragment' do
     it_behaves_like 'create operation' do
       let(:test_class) do
         Class.new do
