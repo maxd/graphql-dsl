@@ -204,7 +204,8 @@ RSpec.describe GraphQL::DSL do
           is_expected.to have_attributes(
             type: :Type1,
             default: GraphQL::DSL::UNDEFINED,
-            directives: [])
+            directives: []
+          )
         end
       end
 
@@ -216,7 +217,8 @@ RSpec.describe GraphQL::DSL do
           is_expected.to have_attributes(
             type: :Type1,
             default: 1,
-            directives: [])
+            directives: []
+          )
         end
       end
 
@@ -228,7 +230,8 @@ RSpec.describe GraphQL::DSL do
           is_expected.to have_attributes(
             type: :Type1,
             default: 1,
-            directives: contain_exactly(have_attributes(name: :directive1)))
+            directives: contain_exactly(have_attributes(name: :directive1))
+          )
         end
       end
     end
