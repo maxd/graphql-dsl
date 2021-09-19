@@ -189,5 +189,42 @@ module GraphQL
     end
 
     module_function :fragment
+
+    # @!group Refinement Method Summary
+
+    ##
+    # @!method directive(name, **arguments)
+    # @!scope class
+    #
+    # Create GraphQL directive
+    #
+    # @param name [String, Symbol] directive name
+    # @param arguments [Hash] arguments
+    #
+    # @return Directive
+    refine Kernel do
+      def directive(name, **arguments)
+        Directive.new(name, **arguments)
+      end
+    end
+
+    ##
+    # @!method variable(type, default = UNDEFINED, *directives)
+    # @!scope class
+    #
+    # Create GraphQL variable
+    #
+    # @param type [String, Symbol] variable type
+    # @param default [Object, nil] default value
+    # @param directives [Array<Directive, Hash, Array>] list of directives
+    #
+    # @return VariableDefinition
+    refine Kernel do
+      def variable(type, default = UNDEFINED, *directives)
+        VariableDefinition.new(type, default, directives)
+      end
+    end
+
+    # @!endgroup
   end
 end

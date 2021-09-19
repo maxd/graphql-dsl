@@ -64,6 +64,20 @@ module ReadmeUpdater # rubocop:disable Style/Documentation
     COLLAPSABLE_EXAMPLE,
   ].freeze
 
+  # FYI: lambda required to avoid restrictions of Ruby refinements i.e. impossible to call `module_eval`
+  # with refinement inside from method but possible from lambda.
+  EXECUTE_EXAMPLE_CODE = lambda do |example_code|
+    mod = Module.new do
+      extend GraphQL::DSL
+
+      def self.puts(obj)
+        "#{obj}\n"
+      end
+    end
+
+    mod.module_eval(example_code)
+  end
+
   def update
     readme = File.read(README_FILE)
     readme = update_version(readme)
@@ -96,23 +110,11 @@ module ReadmeUpdater # rubocop:disable Style/Documentation
         ruby_code = Regexp.last_match(:ruby_code)
         graphql_block = Regexp.last_match(:graphql_block)
 
-        ruby_code_result = execute_example_code(ruby_code)
+        ruby_code_result = EXECUTE_EXAMPLE_CODE.call(ruby_code)
 
         format_example(ruby_code_result, before_code, after_code, graphql_block)
       end
     end
-  end
-
-  def execute_example_code(example_code)
-    mod = Module.new do
-      extend GraphQL::DSL
-
-      def self.puts(obj)
-        "#{obj}\n"
-      end
-    end
-
-    mod.module_eval(example_code)
   end
 
   def format_example(ruby_code_result, before_code, after_code, graphql_block)

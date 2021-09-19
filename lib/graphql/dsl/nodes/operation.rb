@@ -12,7 +12,7 @@ module GraphQL
       attr_reader :__operation_type
 
       ##
-      # @return [Array<VariableDefinition>] variable definitions
+      # @return [Hash<Symbol, VariableDefinition>] variable definitions
       attr_reader :__variable_definitions
 
       ##
@@ -31,9 +31,13 @@ module GraphQL
       # @param directives [Array<Directive, Hash, Array>] list of directives
       # @param block [Proc] declare DSL for sub-fields
       def initialize(operation_type, name = nil, variable_definitions = {}, directives = [], &block)
+        variable_definitions.each do |variable_name, _|
+          raise Error, 'Variable name must be specified' if variable_name.nil? || variable_name.empty?
+        end
+
         @__operation_type = operation_type
-        @__variable_definitions = variable_definitions.map do |variable_name, variable_definition|
-          VariableDefinition.from(variable_name, variable_definition)
+        @__variable_definitions = variable_definitions.transform_values do |variable_definition|
+          VariableDefinition.from(variable_definition)
         end
         @__directives = directives.map { |directive| Directive.from(directive) }
 
@@ -50,7 +54,7 @@ module GraphQL
       #
       # @return [void]
       def __var(name, type, default: UNDEFINED, directives: [])
-        @__variable_definitions << VariableDefinition.new(name, type, default, directives)
+        @__variable_definitions[name] = VariableDefinition.new(type, default, directives)
       end
     end
   end

@@ -9,7 +9,10 @@
 `graphql-dsl` lets you easy create GraphQL queries by code:
 
 ```ruby
-puts query(:aliveCharacters, species: [:String!, 'Human']) {
+extend GraphQL::DSL # Required to include `query` method 
+using GraphQL::DSL # Required to refine `variable` method
+
+puts query(:aliveCharacters, species: variable(:String!, 'Human')) {
   characters(filter: { status: 'Alive', species: :$species }) {
     results {
       name
@@ -248,7 +251,9 @@ puts GraphQL::DSL.query(:rockets) {
 Pass variable definitions to second argument of correspond `GraphQL::DSL` method:
 
 ```ruby
-puts GraphQL::DSL.query(:capsules, type: :String, status: [:String!, 'active']) {
+using GraphQL::DSL # Required to refine `variable` method
+
+puts GraphQL::DSL.query(:capsules, type: :String, status: variable(:String!, 'active')) {
   capsules(find: { type: :$type, status: :$status }) {
     type
     status
@@ -279,7 +284,7 @@ Choose appropriate notation to define variable type, default value and directive
   <summary>Use <code>Symbol</code> or <code>String</code> notation</summary>
   
   ```ruby
-  # variable: (:<type> | "<type>"), ...
+  # <variable name>: (:<type> | "<type>"), ...
 
   puts GraphQL::DSL.query(:capsules, status: :String!) {
     capsules(find: { status: :$status }) {
@@ -304,10 +309,40 @@ Choose appropriate notation to define variable type, default value and directive
 </details>
 
 <details>
+  <summary>Use <code>variable</code> refinement method notation</summary>
+  
+  ```ruby
+  # <variable name>: variable(:<type> | "<type>", [<default value>], [<directives>]), ...
+
+  using GraphQL::DSL # Required to refine `variable` method
+
+  puts GraphQL::DSL.query(:capsules, status: variable(:String!, 'active')) {
+    capsules(find: { status: :$status }) {
+      type
+      status
+      landings
+    }
+  }.to_gql
+  ```
+
+  ```graphql
+  query capsules($status: String! = "active")
+  {
+    capsules(find: {status: $status})
+    {
+      type
+      status
+      landings
+    }
+  }
+  ```
+</details>
+
+<details>
   <summary>Use <code>__var</code> method notation</summary>
 
   ```ruby
-  # __var <name>, <type>, [default: <default value>], [directives: <directives>]
+  # __var <variable name>, <type>, [default: <default value>], [directives: <directives>]
 
   puts GraphQL::DSL.query(:capsules) {
      __var :status, :String!, default: "active"
@@ -337,7 +372,7 @@ Choose appropriate notation to define variable type, default value and directive
   <summary>Use <code>Array</code> notation</summary>
 
   ```ruby
-  # variable: [<type>, <default value>, <directives>], ...
+  # <variable name>: [<type>, [<default value>], [<directives>]], ...
   
   puts GraphQL::DSL.query(:capsules, status: [:String!, "active"]) {
     capsules(find: { status: :$status }) {
@@ -365,10 +400,10 @@ Choose appropriate notation to define variable type, default value and directive
   <summary>Use <code>Hash</code> notation</summary>
 
   ```ruby
-  # variable: { 
+  # <variable name>: { 
   #   type: <type>, 
-  #   default: <default value>, 
-  #   directives: <directives>
+  #   [default: <default value>], 
+  #   [directives: <directives>]
   # }, ...
 
   puts GraphQL::DSL.query(:capsules, status: { type: :String!, default: "active" }) {
@@ -402,7 +437,9 @@ Choose appropriate notation to define variable type, default value and directive
 Pass operation's directives to third argument of correspond `GraphQL::DSL` method:
 
 ```ruby
-puts GraphQL::DSL.query(:capsules, { status: [:String!, 'active'] }, [ [ :priority, level: :LOW ] ]) {
+using GraphQL::DSL # Required to refine `variable` and `directive` methods
+
+puts GraphQL::DSL.query(:capsules, { status: variable(:String!, 'active') }, [ directive(:priority, level: :LOW) ]) {
   capsules(find: { status: :$status }) {
     type
     status
@@ -564,10 +601,12 @@ puts GraphQL::DSL.query {
 Any field can have directives. Pass them though `__directives` argument:
 
 ```ruby
+using GraphQL::DSL # Required to refine `directive` method
+
 puts GraphQL::DSL.query(:company, additionalInfo: :Boolean) {
   company {
     name 
-    revenue __directives: [[:include, if: :$additionalInfo]]
+    revenue __directives: [ directive(:include, if: :$additionalInfo) ]
   }
 }.to_gql
 ```
@@ -618,10 +657,36 @@ Choose appropriate notation to define directive:
 </details>
 
 <details>
+  <summary>Use <code>directive</code> refinement method notation</summary>
+
+  ```ruby
+  # directive(<directive name>, [<arguments>]), ...
+
+  using GraphQL::DSL # Required to refine `directive` method
+
+  puts GraphQL::DSL.query(:rockets, {}, [ directive(:lowPriority) ]) {
+     rockets {
+        name
+     }
+  }.to_gql
+  ```
+
+  ```graphql
+  query rockets @lowPriority
+  {
+    rockets
+    {
+      name
+    }
+  }
+  ```
+</details>
+
+<details>
   <summary>Use <code>Array</code> notation</summary>
 
   ```ruby
-  # variable: [<name>, <arguments>], ...
+  # variable: [<directive name>, [<arguments>]], ...
 
   puts GraphQL::DSL.query(:rockets, {}, [ [ :priority, level: :LOW ] ]) {
      rockets {
@@ -647,7 +712,7 @@ Choose appropriate notation to define directive:
   ```ruby
   # variable: { 
   #   name: <name>, 
-  #   args: <arguments>, 
+  #   [args: <arguments>] 
   # }, ...
 
   puts GraphQL::DSL.query(:rockets, {}, [ { name: :priority, args: { level: :LOW } } ]) {

@@ -4,10 +4,9 @@ RSpec.describe GraphQL::DSL::VariableDefinition do
   context '#initialize' do
     context 'with all arguments' do
       subject(:variable_definition) do
-        described_class.new(:variable1, :Type1, 1, [[:directive1, { a: 1 }]])
+        described_class.new(:Type1, 1, [[:directive1, { a: 1 }]])
       end
 
-      it('expected name') { expect(variable_definition.name).to eq(:variable1) }
       it('expected type') { expect(variable_definition.type).to eq(:Type1) }
       it('expected default value') { expect(variable_definition.default).to eq(1) }
       it('expected directives') do
@@ -18,9 +17,8 @@ RSpec.describe GraphQL::DSL::VariableDefinition do
 
   context '#from' do
     shared_examples 'create variable definition' do
-      subject(:variable_definition) { described_class.from(:variable1, value) }
+      subject(:variable_definition) { described_class.from(value) }
 
-      it('expected name') { expect(variable_definition.name).to eq(:variable1) }
       it('expected type') { expect(variable_definition.type).to eq(:Type1) }
       it('expected default value') { expect(variable_definition.default).to eq(1) }
       it('expected directives') do
@@ -30,7 +28,7 @@ RSpec.describe GraphQL::DSL::VariableDefinition do
 
     context 'with variable definition' do
       it_behaves_like 'create variable definition' do
-        let(:value) { described_class.new(:variable1, :Type1, 1, [[:directive1, { a: 1 }]]) }
+        let(:value) { described_class.new(:Type1, 1, [[:directive1, { a: 1 }]]) }
       end
     end
 
@@ -49,9 +47,8 @@ RSpec.describe GraphQL::DSL::VariableDefinition do
     context 'with symbol' do
       let(:value) { :Type1 }
 
-      subject(:variable_definition) { described_class.from(:variable1, value) }
+      subject(:variable_definition) { described_class.from(value) }
 
-      it('expected name') { expect(variable_definition.name).to eq(:variable1) }
       it('expected type') { expect(variable_definition.type).to eq(:Type1) }
       it('expected default value') { expect(variable_definition.default).to eq(GraphQL::DSL::UNDEFINED) }
       it('expected directives') { expect(variable_definition.directives).to be_empty }
@@ -60,9 +57,8 @@ RSpec.describe GraphQL::DSL::VariableDefinition do
     context 'with string' do
       let(:value) { 'Type1' }
 
-      subject(:variable_definition) { described_class.from(:variable1, value) }
+      subject(:variable_definition) { described_class.from(value) }
 
-      it('expected name') { expect(variable_definition.name).to eq(:variable1) }
       it('expected type') { expect(variable_definition.type).to eq('Type1') }
       it('expected default value') { expect(variable_definition.default).to eq(GraphQL::DSL::UNDEFINED) }
       it('expected directives') { expect(variable_definition.directives).to be_empty }

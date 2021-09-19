@@ -175,4 +175,62 @@ RSpec.describe GraphQL::DSL do
       end
     end
   end
+
+  context 'refinements' do
+    using described_class
+
+    context 'Kernel#directive' do
+      context 'with name' do
+        subject { directive(:directive1) }
+
+        it { is_expected.to be_a GraphQL::DSL::Directive }
+        it { is_expected.to have_attributes(name: :directive1, arguments: {}) }
+      end
+
+      context 'with arguments' do
+        subject { directive(:directive1, a: 1) }
+
+        it { is_expected.to be_a GraphQL::DSL::Directive }
+        it { is_expected.to have_attributes(name: :directive1, arguments: { a: 1 }) }
+      end
+    end
+
+    context 'Kernel#variable' do
+      context 'with type' do
+        subject { variable(:Type1) }
+
+        it { is_expected.to be_a GraphQL::DSL::VariableDefinition }
+        it do
+          is_expected.to have_attributes(
+            type: :Type1,
+            default: GraphQL::DSL::UNDEFINED,
+            directives: [])
+        end
+      end
+
+      context 'with default' do
+        subject { variable(:Type1, 1) }
+
+        it { is_expected.to be_a GraphQL::DSL::VariableDefinition }
+        it do
+          is_expected.to have_attributes(
+            type: :Type1,
+            default: 1,
+            directives: [])
+        end
+      end
+
+      context 'with directives' do
+        subject { variable(:Type1, 1, directive(:directive1)) }
+
+        it { is_expected.to be_a GraphQL::DSL::VariableDefinition }
+        it do
+          is_expected.to have_attributes(
+            type: :Type1,
+            default: 1,
+            directives: contain_exactly(have_attributes(name: :directive1)))
+        end
+      end
+    end
+  end
 end
