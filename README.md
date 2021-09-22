@@ -668,6 +668,152 @@ puts GraphQL::DSL.executable_document {
   ```
 </details>
 
+### Fragments
+
+Fragments may contains common repeated selections of fields and can be reused in different operations.
+Each fragment must have a name, type and optional directives.
+
+```ruby
+  # fragment(<fragment name>, <type>, [<directives>])
+  fragment(:ship, :Ship) {
+    id
+    name
+  }
+```
+
+Fragment spread is using to insert fragment to other operations or fragments. Use `__frgment` command to create fragment
+spread and insert fragment by its name.
+
+```ruby
+puts GraphQL::DSL.executable_document {
+  query(:cargo_ships) {
+    ships(find: { type: "Cargo" }) {
+      __fragment :ship
+    }
+  }
+  query(:barges) {
+    ships(find: { type: "Barge" }) {
+      __fragment :ship
+    }
+  }
+  
+  fragment(:ship, :Ship) {
+    id
+    name
+  }
+}.to_gql
+```
+
+<details>
+  <summary>STDOUT</summary>
+
+  ```graphql
+  query cargo_ships
+  {
+    ships(find: {type: "Cargo"})
+    {
+      ...ship
+    }
+  }
+  
+  query barges
+  {
+    ships(find: {type: "Barge"})
+    {
+      ...ship
+    }
+  }
+  
+  fragment ship on Ship
+  {
+    id
+    name
+  }
+  ```
+</details>
+
+### Inline fragments
+
+Inline fragments helps to define fields from heterogeneous collections 
+(collections which can contains different types of objects). Use `__inline_fragment` to insert inline fragment 
+to operation or fragment.
+
+```ruby
+puts GraphQL::DSL.query {
+  messages {
+    __inline_fragment(:AdSection) {
+      title
+      image
+    }
+    
+    __inline_fragment(:MessageSection) {
+      title
+      message
+      author
+    }
+  }
+}.to_gql
+```
+
+<details>
+  <summary>STDOUT</summary>
+
+  ```graphql
+  {
+    messages
+    {
+      ... on AdSection
+      {
+        title
+        image
+      }
+      ... on MessageSection
+      {
+        title
+        message
+        author
+      }
+    }
+  }
+  ```
+</details>
+
+Inline fragments may also be used to apply a directive to a group of fields:
+
+```ruby
+using GraphQL::DSL # Required to refine `directive` method
+
+puts GraphQL::DSL.query(:company, additionalInfo: :Boolean) {
+  company {
+    name
+    
+    __inline_fragment(nil, __directives: [ directive(:include, if: :$additionalInfo) ]) {
+      revenue
+      valuation
+    }
+  }
+}.to_gql
+```
+
+<details>
+  <summary>STDOUT</summary>
+
+  ```graphql
+  query company($additionalInfo: Boolean)
+  {
+    company
+    {
+      name
+      ... @include(if: $additionalInfo)
+      {
+        revenue
+        valuation
+      }
+    }
+  }
+  ```
+</details>
+
 ### Directives
 
 :warning: Non-official SpaceX GraphQL API doesn't support any directives therefore examples below will be fail with error.
