@@ -626,6 +626,48 @@ puts GraphQL::DSL.query(:company, additionalInfo: :Boolean) {
   ```
 </details>
 
+### Executable Document
+
+Executable Document helps to union several operations or fragments to one request:
+
+```ruby
+puts GraphQL::DSL.executable_document {
+  query(:companies) {
+    company {
+      name
+    }
+  }
+  
+  query(:rockets) {
+    rockets {
+      name
+    }
+  }
+}.to_gql
+```
+
+<details>
+  <summary>STDOUT</summary>
+
+  ```graphql
+  query companies
+  {
+    company
+    {
+      name
+    }
+  }
+  
+  query rockets
+  {
+    rockets
+    {
+      name
+    }
+  }
+  ```
+</details>
+
 ### Directives
 
 :warning: Non-official SpaceX GraphQL API doesn't support any directives therefore examples below will be fail with error.
