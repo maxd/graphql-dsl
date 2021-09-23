@@ -932,19 +932,19 @@ Choose appropriate notation to define directive:
   ```
 </details>
 
-# Types
+### Types
 
 Types for operation variables and fragments may be defined in several ways in GraphQL DSL.
 
-## Named Types
+#### Named Types
 
 Named Type can be declared like a symbol or string, for instance: `:Int`, `'Int'` 
 
-## List Types
+#### List Types
 
 List Type can be declared like a string only, for instance: `'[Int]'`
 
-## Not Null Types
+#### Not Null Types
 
 Not Null Type can be declared like a string or symbol, for instance: `:Int!`, `'Int!'`, `'[Int!]!'`
 
