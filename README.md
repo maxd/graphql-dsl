@@ -195,7 +195,7 @@ To create these operations use correspond GraphQL DSL methods:
 
 :bulb: _All of them have the same signatures therefore all examples below will use `query` operation._
 
-#### Anonymous operation
+#### Anonymous operations
 
 Call correspond `GraphQL::DSL` method without any arguments to create anonymous operation:
 
@@ -220,7 +220,7 @@ puts GraphQL::DSL.query {
   ```
 </details>
 
-#### Named operation
+#### Named operations
 
 Use string or symbol to specify operation name:
 
@@ -246,7 +246,7 @@ puts GraphQL::DSL.query(:rockets) {
   ```
 </details>
 
-#### Parameterized operation
+#### Parameterized operations
 
 Pass variable definitions to second argument of correspond `GraphQL::DSL` method:
 
@@ -466,7 +466,7 @@ puts GraphQL::DSL.query(:capsules, { status: variable(:String!, 'active') }, [ d
 
 :bulb: _More information about directives you can find [here](#directives)._
 
-### Selection Set
+### Selection Sets
 
 [Selection Set](https://spec.graphql.org/draft/#sec-Selection-Sets) is a block that contains fields, spread or
 internal fragments. Operations (`query`, `mutation`, `subscription`), fragment operations, spread and internal fragments 
@@ -497,7 +497,7 @@ puts GraphQL::DSL.query {    # this is `Selection Set` of query
   ```
 </details>
 
-### Field
+### Fields
 
 [Selection Set](#selection-set) should contains one or more fields to select or update (in case of mutation) data.
 
@@ -626,7 +626,7 @@ puts GraphQL::DSL.query(:company, additionalInfo: :Boolean) {
   ```
 </details>
 
-### Executable Document
+### Executable Documents
 
 Executable Document helps to union several operations or fragments to one request:
 
