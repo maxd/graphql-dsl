@@ -280,11 +280,13 @@ puts GraphQL::DSL.query(:capsules, type: :String, status: variable(:String!, 'ac
 
 Choose appropriate notation to define variable type, default value and directives:
 
+:bulb: _See more about types definition [here](#types)._
+
 <details>
   <summary>Use <code>Symbol</code> or <code>String</code> notation</summary>
   
   ```ruby
-  # <variable name>: (:<type> | "<type>"), ...
+  # <variable name>: <type>, ...
 
   puts GraphQL::DSL.query(:capsules, status: :String!) {
     capsules(find: { status: :$status }) {
@@ -312,7 +314,7 @@ Choose appropriate notation to define variable type, default value and directive
   <summary>Use <code>variable</code> refinement method notation</summary>
   
   ```ruby
-  # <variable name>: variable(:<type> | "<type>", [<default value>], [<directives>]), ...
+  # <variable name>: variable(<type>, [<default value>], [<directives>]), ...
 
   using GraphQL::DSL # Required to refine `variable` method
 
@@ -372,7 +374,7 @@ Choose appropriate notation to define variable type, default value and directive
   <summary>Use <code>Array</code> notation</summary>
 
   ```ruby
-  # <variable name>: [<type>, [<default value>], [<directives>]], ...
+  # <variable name>: [ <type>, [<default value>], [<directives>] ], ...
   
   puts GraphQL::DSL.query(:capsules, status: [:String!, "active"]) {
     capsules(find: { status: :$status }) {
@@ -427,8 +429,6 @@ Choose appropriate notation to define variable type, default value and directive
   }
   ```
 </details>
-
-:bulb: _More information about type definitions you can find [here]()._
 
 :bulb: _More information about directives you can find [here](#directives)._
 
@@ -673,18 +673,23 @@ puts GraphQL::DSL.executable_document {
 Fragments may contains common repeated selections of fields and can be reused in different operations.
 Each fragment must have a name, type and optional directives.
 
+:bulb: _See more about type definitions [here](#types)._
+
 ```ruby
-  # fragment(<fragment name>, <type>, [<directives>])
-  fragment(:ship, :Ship) {
-    id
-    name
-  }
+# fragment(<fragment name>, <type>, [<directives>])
+
+fragment(:ship, :Ship) {
+  id
+  name
+}
 ```
 
 Fragment spread is using to insert fragment to other operations or fragments. Use `__frgment` command to create fragment
 spread and insert fragment by its name.
 
 ```ruby
+# __fragment(<fragment name>, [__directives: <directives>])
+
 puts GraphQL::DSL.executable_document {
   query(:cargo_ships) {
     ships(find: { type: "Cargo" }) {
@@ -738,7 +743,11 @@ Inline fragments helps to define fields from heterogeneous collections
 (collections which can contains different types of objects). Use `__inline_fragment` to insert inline fragment 
 to operation or fragment.
 
+:bulb: _See more about type definitions [here](#types)._
+
 ```ruby
+# __inline_fragment([<type>]) { Selections Set }
+
 puts GraphQL::DSL.query {
   messages {
     __inline_fragment(:AdSection) {
@@ -782,6 +791,8 @@ Inline fragments may also be used to apply a directive to a group of fields:
 
 ```ruby
 using GraphQL::DSL # Required to refine `directive` method
+
+# __inline_fragment([<type>]) { Selections Set }
 
 puts GraphQL::DSL.query(:company, additionalInfo: :Boolean) {
   company {
@@ -920,6 +931,22 @@ Choose appropriate notation to define directive:
   }
   ```
 </details>
+
+# Types
+
+Types for operation variables and fragments may be defined in several ways in GraphQL DSL.
+
+## Named Types
+
+Named Type can be declared like a symbol or string, for instance: `:Int`, `'Int'` 
+
+## List Types
+
+List Type can be declared like a string only, for instance: `'[Int]'`
+
+## Not Null Types
+
+Not Null Type can be declared like a string or symbol, for instance: `:Int!`, `'Int!'`, `'[Int!]!'`
 
 ## 💻 Development
 
