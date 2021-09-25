@@ -69,10 +69,12 @@ RSpec.describe GraphQL::DSL::Formatter do
               end
             end
 
-            context 'with directives' do
+            context 'with directives', :factories do
               subject(:result) do
+                directives = [directive(:directive1, a: 1)]
+
                 format_operation(operation(operation_type, name) {
-                  __var :a, :String, directives: [[:directive1, { a: 1 }]]
+                  __var :a, :String, directives: directives
                 })
               end
 
@@ -87,9 +89,9 @@ RSpec.describe GraphQL::DSL::Formatter do
         it_behaves_like 'format', :operation1
       end
 
-      context 'with directives' do
+      context 'with directives', :factories do
         subject(:result) do
-          format_operation(operation(operation_type, :operation1, {}, [[:directive1, { a: 1 }]]))
+          format_operation(operation(operation_type, :operation1, {}, [directive(:directive1, a: 1)]))
         end
 
         it 'valid result' do

@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
-RSpec.describe GraphQL::DSL::Operation do
+RSpec.describe GraphQL::DSL::Operation, :factories do
+  let(:directives) { [directive(:directive1, a: 1)] }
+
   context '#initialize' do
     context 'with all arguments' do
       subject(:operation) do
-        described_class.new(:query, :query1, { a: :String }, [[:directive1, { a: 1 }]]) {
+        described_class.new(:query, :query1, { a: :String }, directives) {
           subfield1
         }
       end
@@ -16,7 +18,7 @@ RSpec.describe GraphQL::DSL::Operation do
         expect(operation.__variable_definitions.values).to all be_a(GraphQL::DSL::VariableDefinition)
       end
       it('expected directives') do
-        expect(operation.__directives).to all be_a(GraphQL::DSL::Directive)
+        expect(operation.__directives).to eq(directives)
       end
 
       it 'expected nodes' do

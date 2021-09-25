@@ -1,17 +1,19 @@
 # frozen_string_literal: true
 
-RSpec.describe GraphQL::DSL::InlineFragment do
+RSpec.describe GraphQL::DSL::InlineFragment, :factories do
+  let(:directives) { [directive(:directive1, a: 1)] }
+
   context '#initializer' do
     context 'with all arguments' do
       subject(:inline_fragment) do
-        described_class.new(:Type1, [[:directive1, { a: 1 }]]) {
+        described_class.new(:Type1, directives) {
           subfield1
         }
       end
 
       it('expected type') { expect(inline_fragment.__type).to eq(:Type1) }
       it('expected directives') do
-        expect(inline_fragment.__directives).to all be_a(GraphQL::DSL::Directive)
+        expect(inline_fragment.__directives).to eq(directives)
       end
 
       it 'expected nodes' do

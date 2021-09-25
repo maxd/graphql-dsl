@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
-RSpec.describe GraphQL::DSL::Field do
+RSpec.describe GraphQL::DSL::Field, :factories do
+  let(:directives) { [directive(:directive1, a: 1)] }
+
   context '#initialize' do
     context 'with all arguments' do
       subject(:field) do
-        described_class.new(:field1, :alias1, { a: 1 }, [[:directive1, { a: 1 }]]) {
+        described_class.new(:field1, :alias1, { a: 1 }, directives) {
           subfield1
         }
       end

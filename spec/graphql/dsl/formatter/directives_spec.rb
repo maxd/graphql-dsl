@@ -3,7 +3,7 @@
 RSpec.describe GraphQL::DSL::Formatter do
   let(:formatter) { described_class.new }
 
-  context '#format_directives' do
+  context '#format_directives', :factories do
     def format_directives(directives, is_const: false)
       directives = directives.map { |directive| GraphQL::DSL::Directive.from(directive) }
       formatter.send(:format_directives, directives, is_const)
@@ -14,10 +14,10 @@ RSpec.describe GraphQL::DSL::Formatter do
     end
 
     context 'with directives' do
-      it { expect(format_directives([{ name: :directive1 }])).to eq('@directive1') }
-      it { expect(format_directives([{ name: 'directive1' }])).to eq('@directive1') }
+      it { expect(format_directives([directive(:directive1)])).to eq('@directive1') }
+      it { expect(format_directives([directive('directive1')])).to eq('@directive1') }
 
-      it { expect(format_directives([{ name: :directive1, args: { a: 1 } }])).to eq('@directive1(a: 1)') }
+      it { expect(format_directives([directive(:directive1, a: 1)])).to eq('@directive1(a: 1)') }
     end
   end
 

@@ -44,32 +44,5 @@ RSpec.describe GraphQL::DSL::Directive do
         let(:expected_arguments) { {} }
       end
     end
-
-    context 'with hash' do
-      it_behaves_like 'create directive' do
-        let(:value) { { name: :directive1, args: { a: 1 } } }
-
-        let(:expected_name) { :directive1 }
-      end
-
-      it_behaves_like 'create directive' do
-        let(:value) { { name: 'directive1', args: { a: 1 } } }
-
-        let(:expected_name) { 'directive1' }
-      end
-    end
-
-    context 'with array' do
-      it_behaves_like 'create directive' do
-        let(:value) { [:directive1, { a: 1 }] }
-
-        let(:expected_name) { :directive1 }
-      end
-
-      it_behaves_like 'create directive' do
-        let(:value) { ['directive1', { a: 1 }] }
-        let(:expected_name) { 'directive1' }
-      end
-    end
   end
 end

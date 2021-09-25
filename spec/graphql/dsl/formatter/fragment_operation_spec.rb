@@ -46,9 +46,9 @@ RSpec.describe GraphQL::DSL::Formatter do
       it_behaves_like 'result', :Type1
     end
 
-    context 'with directives' do
+    context 'with directives', :factories do
       subject(:result) do
-        format_fragment_operation(fragment_operator(:fragment1, :Type1, [[:directive1, { a: 1 }]]))
+        format_fragment_operation(fragment_operator(:fragment1, :Type1, [directive(:directive1, a: 1)]))
       end
 
       it 'valid result' do

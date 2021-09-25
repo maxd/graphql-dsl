@@ -46,11 +46,11 @@ RSpec.describe GraphQL::DSL::Formatter do
       end
     end
 
-    context 'with directives' do
+    context 'with directives', :factories do
       subject(:result) do
         format_field(field('field1', nil, {}, [
-          [:directive1, { a: 1 }],
-          [:directive2, { b: 2 }],
+          directive(:directive1, a: 1),
+          directive(:directive2, b: 2),
         ]))
       end
 

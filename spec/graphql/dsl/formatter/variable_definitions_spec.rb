@@ -21,41 +21,35 @@ RSpec.describe GraphQL::DSL::Formatter do
     end
   end
 
-  context '#format_variable_definition' do
-    def format_variable_definition(variable_definition)
-      variable_name, variable_signature = variable_definition.first
-      variable_definition = GraphQL::DSL::VariableDefinition.from(variable_signature)
-
+  context '#format_variable_definition', :factories do
+    def format_variable_definition(variable_name, variable_definition)
       formatter.send(:format_variable_definition, variable_name, variable_definition)
     end
 
     it 'validate type definition', :aggregate_failures do
-      expect { format_variable_definition(a: {}) }.to raise_error GraphQL::DSL::Error,
+      expect { format_variable_definition(:a, variable(nil)) }.to raise_error GraphQL::DSL::Error,
         /Variable type must be specified/
-      expect { format_variable_definition(a: { type: nil }) }.to raise_error GraphQL::DSL::Error,
+      expect { format_variable_definition(:a, variable(:'')) }.to raise_error GraphQL::DSL::Error,
         /Variable type must be specified/
-      expect { format_variable_definition(a: { type: :'' }) }.to raise_error GraphQL::DSL::Error,
-        /Variable type must be specified/
-      expect { format_variable_definition(a: { type: '' }) }.to raise_error GraphQL::DSL::Error,
+      expect { format_variable_definition(:a, variable('')) }.to raise_error GraphQL::DSL::Error,
         /Variable type must be specified/
     end
 
-    it { expect(format_variable_definition(a: { type: :String })).to eq('$a: String') }
-    it { expect(format_variable_definition(a: { type: 'String' })).to eq('$a: String') }
+    it { expect(format_variable_definition(:a, variable(:String))).to eq('$a: String') }
+    it { expect(format_variable_definition(:a, variable('String'))).to eq('$a: String') }
 
-    it { expect(format_variable_definition(a: { type: :String, default: 'Value' })).to eq('$a: String = "Value"') }
-    it { expect(format_variable_definition(a: { type: 'String', default: 'Value' })).to eq('$a: String = "Value"') }
+    it { expect(format_variable_definition(:a, variable(:String, 'Value'))).to eq('$a: String = "Value"') }
+    it { expect(format_variable_definition(:a, variable('String', 'Value'))).to eq('$a: String = "Value"') }
 
     it do
-      expect(format_variable_definition(a: {
-        type: :String,
-        default: 'Value',
-        directives: [[:directive1, { a: 1 }], [:directive2, { b: 2 }]],
-      })).to eq('$a: String = "Value" @directive1(a: 1) @directive2(b: 2)')
+      directives = [directive(:directive1, a: 1), directive(:directive2, b: 2)]
+      variable_definition = format_variable_definition(:a, variable(:String, 'Value', directives))
+
+      expect(variable_definition).to eq('$a: String = "Value" @directive1(a: 1) @directive2(b: 2)')
     end
 
     it 'variables restricted in default values' do
-      expect { format_variable_definition(a: { type: :String, default: :$variable }) }
+      expect { format_variable_definition(:a, variable(:String, :$variable1)) }
         .to raise_error GraphQL::DSL::Error, /Value must be constant/
     end
   end

@@ -23,9 +23,9 @@ RSpec.describe GraphQL::DSL::Formatter do
       it_behaves_like 'result', :fragment1
     end
 
-    context 'with directives' do
+    context 'with directives', :factories do
       subject(:result) do
-        format_fragment_spread(fragment_spread(:fragment1, [[:directive1, { a: 1 }]]))
+        format_fragment_spread(fragment_spread(:fragment1, [directive(:directive1, a: 1)]))
       end
 
       it('valid result') { expect(result).to eq('...fragment1 @directive1(a: 1)') }

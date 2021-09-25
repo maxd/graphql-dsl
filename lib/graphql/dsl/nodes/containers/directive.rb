@@ -27,62 +27,18 @@ module GraphQL
 
       class << self
         ##
-        # Create directive container from Hash, Array or Directive
+        # Create directive container from argument value
         #
-        # @param value [Directive, Hash, Array] Hash, Array or Directive
+        # @param value [] argument value
         #
         # @return [Directive] directive container
         def from(value)
           case value
           when Directive then value
-          when Symbol, String then from_symbol_or_string(value)
-          when Hash then from_hash(value)
-          when Array then from_array(value)
+          when Symbol, String then new(value)
           else
             raise Error.new('Unsupported format of directive', class: value.class.name, value: value)
           end
-        end
-
-        private
-
-        ##
-        # Create directive container from Symbol or String
-        #
-        # @param name [String, Symbol] directive name
-        #
-        # @return [Directive] directive container
-        def from_symbol_or_string(name)
-          new(name, {})
-        end
-
-        ##
-        # Create directive container from Hash
-        #
-        # @param hash [Hash] directive parameters
-        # @option hash [String, Symbol] :name directive name
-        # @option hash [Hash] :args arguments
-        #
-        # @return [Directive] directive container
-        def from_hash(hash)
-          name = hash[:name]
-          arguments = hash.fetch(:args, {})
-
-          new(name, arguments)
-        end
-
-        ##
-        # Create directive container from Array
-        #
-        # @param array [Array] directive parameters
-        # @option array [String, Symbol] 0 directive name
-        # @option array [Hash] 1 arguments
-        #
-        # @return [Directive] directive container
-        def from_array(array)
-          name = array[0]
-          arguments = array.fetch(1, {})
-
-          new(name, arguments)
         end
       end
     end

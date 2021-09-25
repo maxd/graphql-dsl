@@ -51,9 +51,9 @@ RSpec.describe GraphQL::DSL::Formatter do
       end
     end
 
-    context 'with directives' do
+    context 'with directives', :factories do
       subject(:result) do
-        format_inline_fragment(inline_fragment(:Type1, [[:directive1, { a: 1 }]]) {
+        format_inline_fragment(inline_fragment(:Type1, [directive(:directive1, a: 1)]) {
           field1
         })
       end
