@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    graphql-dsl (0.1.0)
+    graphql-dsl (1.0.0)
 
 GEM
   remote: https://rubygems.org/

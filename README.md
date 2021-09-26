@@ -53,7 +53,7 @@ and support these features:
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'graphql-dsl', '~> 0.1.0'
+gem 'graphql-dsl', '~> 1.0.0'
 ```
 
 And then execute `bundle install`.
