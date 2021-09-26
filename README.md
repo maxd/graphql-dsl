@@ -38,6 +38,16 @@ query aliveCharacters($species: String! = "Human")
 }
 ```
 
+## 🧩 Supported GraphQL features
+
+The GraphQL DSL base on [draft](https://spec.graphql.org/draft/) version of GraphQL specification (updated at Wed, Sep 15, 2021)
+and support these features:
+
+- [x] Executable Documents (exclude type system definition documents)
+- [x] All operations (`query`, `mutation`, `subscription`) and their features (variable, directives, selection sets, etc.)
+- [x] All field features (aliases, arguments, directives, etc.)
+- [x] Fragments (include inline fragments)
+
 ## ⚙️ Installation
 
 Add this line to your application's Gemfile:
