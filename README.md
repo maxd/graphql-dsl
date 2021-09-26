@@ -9,9 +9,11 @@
 `graphql-dsl` lets you easy create GraphQL queries by code:
 
 ```ruby
-extend GraphQL::DSL # Required to include `query` method 
-using GraphQL::DSL # Required to refine `variable` method
+extend GraphQL::DSL # Include DSL methods like `query`, `mutation`, etc. 
+using GraphQL::DSL  # Include refine methods like `variable` and `directive` if required.
 
+# Query alive characters from Rick and Morty unofficial GraphQL API:
+#   https://rickandmortyapi.com/graphql
 puts query(:aliveCharacters, species: variable(:String!, 'Human')) {
   characters(filter: { status: 'Alive', species: :$species }) {
     results {
@@ -75,14 +77,13 @@ Choose an appropriate way to use GraphQL DSL:
       ```
     </details>
 
-1. Extend class or module with `GraphQL:DSL` module
+1. Extend class or module use `GraphQL::DSL` module
 
     ```ruby
     module SpaceXQueries
       extend GraphQL::DSL
       
       # Create constant with GraphQL query
-   
       ROCKETS = query {
         rockets {
           name
@@ -141,7 +142,7 @@ Choose an appropriate way to use GraphQL DSL:
       ```
     </details>
 
-1. Include `GraphQL:DSL` module to class
+1. Include `GraphQL::DSL` module to class
 
     ```ruby
     class SpaceXQueries
@@ -177,11 +178,12 @@ Choose an appropriate way to use GraphQL DSL:
 
 ## 👀 Examples
 
-:bulb: _Non-official SpaceX GraphQL API is using for most of examples. So, you can test generated GraphQL queries [here](https://api.spacex.land/graphql/)._  
+:bulb: _Non-official SpaceX GraphQL and Rick and Morty APIs are using for most of examples. 
+So, you can test generated GraphQL queries [here](https://api.spacex.land/graphql/) and [here](https://rickandmortyapi.com/graphql)._  
 
 ### Operations
 
-GraphQL support three types of operations: 
+The GraphQL support three types of operations: 
 
 * `query` - for fetch data.
 * `mutation` - for update data.
@@ -251,7 +253,7 @@ puts GraphQL::DSL.query(:rockets) {
 Pass variable definitions to second argument of correspond `GraphQL::DSL` method:
 
 ```ruby
-using GraphQL::DSL # Required to refine `variable` method
+using GraphQL::DSL # Include refined `variable` method
 
 puts GraphQL::DSL.query(:capsules, type: :String, status: variable(:String!, 'active')) {
   capsules(find: { type: :$type, status: :$status }) {
@@ -283,7 +285,7 @@ Choose appropriate notation to define variable type, default value and directive
 :bulb: _See more about types definition [here](#types)._
 
 <details>
-  <summary>Use <code>Symbol</code> or <code>String</code> notation</summary>
+  <summary>Use <code>Symbol</code> or <code>String</code></summary>
   
   ```ruby
   # <variable name>: <type>, ...
@@ -311,7 +313,7 @@ Choose appropriate notation to define variable type, default value and directive
 </details>
 
 <details>
-  <summary>Use <code>variable</code> refinement method notation</summary>
+  <summary>Use <code>variable</code> refined method</summary>
   
   ```ruby
   # <variable name>: variable(<type>, [<default value>], [<directives>]), ...
@@ -341,7 +343,7 @@ Choose appropriate notation to define variable type, default value and directive
 </details>
 
 <details>
-  <summary>Use <code>__var</code> method notation</summary>
+  <summary>Use <code>__var</code> method</summary>
 
   ```ruby
   # __var <variable name>, <type>, [default: <default value>], [directives: <directives>]
@@ -377,7 +379,7 @@ Choose appropriate notation to define variable type, default value and directive
 Pass operation's directives to third argument of correspond `GraphQL::DSL` method:
 
 ```ruby
-using GraphQL::DSL # Required to refine `variable` and `directive` methods
+using GraphQL::DSL # Include refined `variable` and `directive` methods
 
 puts GraphQL::DSL.query(:capsules, { status: variable(:String!, 'active') }, [ directive(:priority, level: :LOW) ]) {
   capsules(find: { status: :$status }) {
@@ -772,7 +774,7 @@ puts GraphQL::DSL.query(:company, additionalInfo: :Boolean) {
 Choose appropriate notation to define directive:
 
 <details>
-  <summary>Use <code>Symbol</code> or <code>String</code> notation</summary>
+  <summary>Use <code>Symbol</code> or <code>String</code></summary>
 
   ```ruby
   # (:<name> | "name"), ...
@@ -796,12 +798,12 @@ Choose appropriate notation to define directive:
 </details>
 
 <details>
-  <summary>Use <code>directive</code> refinement method notation</summary>
+  <summary>Use refined <code>directive</code> method</summary>
 
   ```ruby
   # directive(<directive name>, [<arguments>]), ...
 
-  using GraphQL::DSL # Required to refine `directive` method
+  using GraphQL::DSL # Include refined `directive` method
 
   puts GraphQL::DSL.query(:rockets, {}, [ directive(:lowPriority) ]) {
      rockets {
@@ -823,7 +825,7 @@ Choose appropriate notation to define directive:
 
 ### Types
 
-Types for operation variables and fragments may be defined in several ways in GraphQL DSL.
+Types for operation variables and fragments may be declared in several ways in GraphQL DSL.
 
 #### Named Types
 
