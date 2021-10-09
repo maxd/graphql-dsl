@@ -889,3 +889,4 @@ follow the [code of conduct](https://github.com/maxd/graphql-dsl/blob/master/COD
 
 * [Introduction to GraphQL](https://graphql.org/learn/)
 * [GraphQL Specification](https://spec.graphql.org/)
+* Inspired by [gqli.rb](https://github.com/contentful-labs/gqli.rb) gem
