@@ -186,7 +186,7 @@ Choose an appropriate way to use GraphQL DSL:
       ```
     </details>
 
-## 👀 Examples
+## 👀 Documentation
 
 :bulb: _Non-official SpaceX GraphQL and Rick and Morty APIs are using for most of examples. 
 So, you can test generated GraphQL queries [here](https://api.spacex.land/graphql/) and [here](https://rickandmortyapi.com/graphql)._  
@@ -849,7 +849,7 @@ List Type can be declared like a string only, for instance: `'[Int]'`
 
 Not Null Type can be declared like a string or symbol, for instance: `:Int!`, `'Int!'`, `'[Int!]!'`
 
-## 🚲 Example
+## 🚲 Example App
 
 [graphql-dsl-example](https://github.com/maxd/graphql-dsl-example) shows how to use GraphQL DSL in Ruby applications.
 
