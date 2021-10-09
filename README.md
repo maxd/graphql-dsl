@@ -853,7 +853,7 @@ Not Null Type can be declared like a string or symbol, for instance: `:Int!`, `'
 
 [graphql-dsl-example](https://github.com/maxd/graphql-dsl-example) shows how to use GraphQL DSL in Ruby applications.
 
-## Roadmap
+## 🛣 Roadmap
 
 * [ ] `[Fearure]` Implement `ExecutableDocument#include` to include external operations
 * [ ] `[Fearure]` Strict validation of any argument
