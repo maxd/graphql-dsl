@@ -853,6 +853,13 @@ Not Null Type can be declared like a string or symbol, for instance: `:Int!`, `'
 
 [graphql-dsl-example](https://github.com/maxd/graphql-dsl-example) shows how to use GraphQL DSL in Ruby applications.
 
+## Roadmap
+
+* [ ] `[Fearure]` Implement `ExecutableDocument#include` to include external operations
+* [ ] `[Fearure]` Strict validation of any argument
+* [ ] `[Fearure]` Compact format of GraphQL queries
+* [ ] `[Improvement]` Overload `__inline_fragment` for signature without type
+
 ## 💻 Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `bundle exec rspec` to run the tests. 
